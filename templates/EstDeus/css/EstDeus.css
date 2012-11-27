@@ -1,0 +1,16 @@
+#Sidebar {float: right; padding-right: 80px;} 
+.settings-menu {float: right;}
+.pluginDetails {font-size: smaller;}
+#FFContainer {height: 100%;}
+#contentArea {min-height: 100%; position: relative; background-color: #0FF; padding: 0px; padding-bottom: 50px;}
+#ContentWrap {width: 50%; margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; }
+.navbar {margin-bottom: 0px !important;}
+.BreadCrumbs {width: 50%; margin: auto;}
+.NotificationArea {width: 50%; margin: auto;}
+.login-module {background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; margin-left: 20px; width: 70%;}
+#mod_login input[type="text"], input[type="password"] {width: 100px;}
+#Sidebar {width: 18%;}
+#PluginReadme h3 {margin-top: 50px;}
+#PluginReadme {margin-bottom: 20px;}
+td.editicon {width:2%;}
+td.delicon {width:2%;}

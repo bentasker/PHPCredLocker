@@ -1,0 +1,248 @@
+<?php
+/** Main HTML Output generation
+*
+* Copyright (C) 2012 B Tasker
+* Released under GNU GPL V2
+* See LICENSE
+*
+*/
+
+defined('_CREDLOCK') or die;
+
+
+
+class genOutput{
+
+
+function genDefaultPage(){
+
+$str = "<span class='basic-content default-page'>";
+if (BTMain::getUser()->name){
+
+$str .= 'Welcome to the cred handling system. Please use the menu&apos;s to proceed';
+
+}else{
+
+$str .= 'Please log-in to continue';
+
+
+}
+
+return $str . "</span>\n";
+
+}
+
+
+
+
+
+/** Call the relevant template
+*
+*/
+function callTemplate(){
+
+
+// Load the config so we know which template to call
+
+$template = BTMain::getConf()->template;
+
+require "templates/$template/index.php";
+
+
+}
+
+
+/** Load a view and return the output
+*
+* @arg view string
+*/
+function loadView($view){
+
+ob_start;
+require "views/" . str_replace(".","/",$view) . ".php";
+return ob_get_clean();
+}
+
+
+
+function BreadCrumbs(){
+$count = count($GLOBALS['BREADCRUMB']);
+?>
+<ul class="breadcrumb">
+ <li>
+    <a href="index.php">Home</a>
+ </li>
+<?php foreach ($GLOBALS['BREADCRUMB'] as $crumb){?>
+ <li>
+  <span class="divider">/</span>
+    <a href="<?php echo $crumb['url']; ?>"><?php echo $crumb['name']; ?></a> 
+</li>
+  
+
+<?php }?>
+ 
+</ul>
+<?php
+
+}
+
+
+/** Generate the HTML for any relevant Notifications
+*
+*/
+function Notifications(){
+
+
+$str[] = '';
+if (BTMain::getVar('LoginSuccess')){
+
+$str[] = "<div class='alert alert-success'>Logged in Successfully</div>";
+
+}
+
+if (BTMain::getVar('LoginFailed')){
+
+$str[] = "<div class='alert alert-error'>Invalid Username or Password</div>";
+
+}
+
+if (BTMain::getVar('InvalidSession')){
+$str[] = "<div class='alert alert-error'>Your session is invalid (it may have expired) please log-in to continue</div>";
+}
+
+
+if (BTMain::getVar('LoggedOut')){
+
+$str[] = "<div class='alert alert-info'>You have been logged out</div>";
+}
+
+if ($GLOBALS['Notifications']['addCustSuccess']){
+$str[] = "<div class='alert alert-success'>Customer added successfully</div>";
+}
+
+
+if ($GLOBALS['Notifications']['addCustFail']){
+$str[] = "<div class='alert alert-error'>Customer not added</div>";
+}
+
+
+if ($GLOBALS['Notifications']['EditCustSuccess']){
+$str[] = "<div class='alert alert-success'>Customer edited successfully</div>";
+}
+
+if ($GLOBALS['Notifications']['NoSuchCustomer']){
+$str[] = "<div class='alert alert-error'>The Specified Record doesn't exist (or you don't have access to it)</div>";
+}
+
+
+if ($GLOBALS['Notifications']['EditCustFail']){
+$str[] = "<div class='alert alert-error'>Customer not edited</div>";
+}
+
+
+if ($GLOBALS['Notifications']['addCredSuccess']){
+$str[] = "<div class='alert alert-success'>Credential Stored successfully</div>";
+}
+
+
+if ($GLOBALS['Notifications']['addCredFail']){
+$str[] = "<div class='alert alert-error'>Credential Failed to Store</div>";
+}
+
+
+
+
+
+if ($GLOBALS['Notifications']['addGroupSuccess']){
+$str[] = "<div class='alert alert-success'>Group Successfully Stored</div>";
+}
+
+if ($GLOBALS['Notifications']['addGroupFail']){
+$str[] = "<div class='alert alert-error'>Group not Stored</div>";
+}
+
+if ($GLOBALS['Notifications']['addCredTypeSuccess']){
+$str[] = "<div class='alert alert-success'>Credential Type Stored</div>";
+}
+
+
+if ($GLOBALS['Notifications']['addCredTypeFail']){
+$str[] = "<div class='alert alert-error'>Credential Type Not Stored</div>";
+}
+
+if ($GLOBALS['Notifications']['NoCredTypes']){
+$str[] = "<div class='alert alert-info' id='CredTypeNeedsAdding'>You need to specify some Credential Types in System Settings before you can add Credentials</div><script type='text/javascript'>noCredTypes();</script>";
+}
+
+return implode("\n",$str);
+
+}
+
+
+
+/** Push the required headers
+*
+*/
+function headContents(){
+?>
+<title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
+<script src="Resources/main.js" type="text/javascript"></script>
+<?php
+
+}
+
+
+
+
+/** Load a module by name
+*
+* @arg module - string
+*
+*/
+function loadModule($module){
+
+require "modules/$module/$module.php";
+
+
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+class notifications{
+
+
+function setNotification($notification){
+
+$GLOBALS['Notifications'][$notification] = 1;
+
+
+}
+
+
+
+function setBreadcrumb($path){
+
+$GLOBALS['BREADCRUMB'] = $path;
+
+}
+
+
+
+}
+
+$notifications = new notifications;
+
+
+
+?>
