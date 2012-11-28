@@ -39,7 +39,8 @@ if (isset($plugins->Auth)){
 
     ?>
     <tr>
-	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td><td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Auth">View ReadMe</a></td>
+	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td>
+	<td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Auth">Plugin Info</a></td>
     </tr>
     <?php
     }
