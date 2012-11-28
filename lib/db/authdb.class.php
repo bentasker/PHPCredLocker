@@ -11,6 +11,26 @@ defined('_CREDLOCK') or die;
 class AuthDB extends BTDB{
 
 
+
+/** Delete the specified User
+*
+* @arg username string
+*
+* @return boolean
+*/
+function DelUser($username){
+
+$username = $this->StringEscape($username);
+$sql = "DELETE FROM Users WHERE `username`='$username'";
+$this->setQuery($sql);
+
+return $this->runQuery();
+}
+
+
+
+
+
 /** Create a new user in the database
 *
 * @arg user - Object containing all User details to be inserted
@@ -20,14 +40,14 @@ class AuthDB extends BTDB{
 function addUser($user){
 
 
-
+$crypt = new Crypto;
 $user->username = $this->StringEscape($user->username);
 $user->groups = $this->StringEscape(implode(",",$user->groups));
-$user->pass = $this->StringEscape($user->pass);
+$user->pass = $this->StringEscape($crypt->encrypt($user->pass.":".$user->salt,'auth'));
 $user->RealName = $this->StringEscape($user->RealName);
 
 $sql = "INSERT INTO Users (`username`,`Name`,`pass`,`membergroup`) ".
-"VALUES('{$user->username}','{$user->RealName}','{$user->pass}:{$user->salt}','{$user->groups}')";
+"VALUES('{$user->username}','{$user->RealName}','{$user->pass}','{$user->groups}')";
 
 $this->setQuery($sql);
 
@@ -48,6 +68,61 @@ $result = $this->runQuery();
     }
 
 }
+
+
+/** Edit user
+*
+* @arg user - Object containing all User details to be inserted
+* 
+* @return boolean
+*/
+function editUser($user){
+
+
+
+$user->username = $this->StringEscape($user->username);
+$user->groups = $this->StringEscape(implode(",",$user->groups));
+$user->RealName = $this->StringEscape($user->RealName);
+
+
+$sql = "Update Users SET `username`='{$user->username}',`Name`='{$user->RealName}',`membergroup`='{$user->groups}'";
+
+
+if ($user->pass){
+
+$crypt = new Crypto;
+
+$user->pass = $this->StringEscape($crypt->encrypt($user->pass.":".$user->salt,'auth'));
+$sql .= ", `pass`= '{$user->pass}'";
+}
+
+$sql .= " WHERE `username`='{$user->username}'";
+
+
+
+
+
+$this->setQuery($sql);
+
+$result = $this->runQuery();
+
+    
+    if ($result){
+    // Insert was successful, we need to add to the audit log
+    $log = new Logging;
+    $log->logEntry($user->username,1);
+    return true;
+
+    }else{
+    // Insert failed, return false.
+
+    return false;
+
+    }
+
+}
+
+
 
 
 
@@ -72,6 +147,27 @@ return mysql_fetch_object($res);
 }
 
 return false;
+
+
+}
+
+
+
+
+/** Get a user's details
+*
+* @arg username string
+*
+* @return object
+*/
+function getUserDets($username){
+
+$username = $this->StringEscape($username);
+$sql = "SELECT Name, membergroup FROM Users WHERE username='$username'";
+$this->setQuery($sql);
+
+return $this->loadResult();
+
 
 
 }

@@ -40,8 +40,8 @@ foreach ($users as $user){
 <tr id="User<?php echo $user->username; ?>">
   <td><?php echo $user->username; ?></td>
   <td><?php echo $user->Name;?></td>
-  <td class="editicon"><i class='icon-pencil'></i></td>
-  <td class="delicon"><i class='icon-remove'></i></td>
+  <td class="editicon" onclick="window.location.href='index.php?option=editUser&frmUsername=<?php echo $user->username; ?>';"><i class='icon-pencil'></i></td>
+  <td class="delicon" onclick="delUser('<?php echo $user->username;?>');"><i class='icon-remove'></i></td>
 </tr>
 
 

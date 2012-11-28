@@ -20,7 +20,7 @@ function createSalt(){
 
 $x=0;
 while ($x <= 100){
-$salt .= mt_rand();
+$salt .= mt_rand(10,10000);
 $x++;
 }
 
@@ -29,6 +29,40 @@ return md5($salt.date('y-m-dHis'));
 }
 
 
+
+/** Edit the specified User
+*
+* @arg username - string
+* @arg pass - string
+* @arg RealName - String
+* @arg groups - array
+*/
+function editUser($username,$pass,$RName, $groups){
+
+
+if (!empty($pass)){
+// We need to create a salt for the password
+$user->salt = $this->createSalt();
+
+// Salt the password
+$user->pass = md5($pass.$user->salt);
+// Get the plaintext password out of memory
+unset($pass);
+
+}else{
+$user->pass = false;
+}
+
+$user->RealName = $RName;
+$user->groups = $groups;
+$user->username = $username;
+
+
+
+
+$db = new AuthDB;
+return $db->editUser($user);
+}
 
 
 
@@ -78,7 +112,10 @@ $db = new AuthDB;
   return false;
    }
 
-$pass = explode(":",$user->pass);
+
+$crypt = new Crypto;
+$pass = explode(":",$crypt->decrypt($user->pass,'auth'));
+unset($crypt);
 
 // Get the valid hash out of memory as we have it in an array anyway
 unset($user->pass);
@@ -88,12 +125,12 @@ return false;
 }
 
 // Create a Session ID
-$sessID = md5(date('YmdHis') . mt_rand() . mt_rand() . $username . $pass[0]);
-
-
+$sessID = md5(date('YmdHis') . mt_rand(10,80000) . mt_rand(11,500) . $username . mt_rand(0,90000));
 // Get the hashes out of memory
 unset($password);
 unset($pass);
+
+
 
 
 

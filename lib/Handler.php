@@ -12,6 +12,7 @@ require_once 'lib/db/db_common.php';
 require_once 'lib/auth.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/db/loggingdb.class.php';
+require_once 'lib/crypto.php';
 
 
 $html = new genOutput;
@@ -33,7 +34,6 @@ $html = new genOutput;
 
 // Load some extra libraries
 require_once 'lib/db/Customer.php';
-require_once 'lib/crypto.php';
 require_once 'lib/db/Credentials.php';
 
 $cred = new CredDB;
@@ -131,6 +131,11 @@ break;
 case 'viewUsers':
 $html->content = $html->loadView('user.list');
 break;
+
+case 'editUser':
+$html->content = $html->loadView('user.edit');
+break;
+
 
 default:
 $html->content = $html->genDefaultPage();

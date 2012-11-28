@@ -62,7 +62,11 @@ foreach ($groups as $group){
 
 $plaintext = $crypt->decrypt($group->Name,'Groups');
 
-$grps[$plaintext] = "<span class='checkbox'><input type='checkbox' name='frmGroup[]' value='{$group->id}'>$plaintext</span>";
+$grps[$plaintext] = "<span class='checkbox'><input type='checkbox' name='frmGroup[]' value='{$group->id}'";
+
+if (in_array($group->id,$Ugroups)): $grps[$plaintext] .= " checked"; endif;
+
+$grps[$plaintext] .= ">$plaintext</span>";
 
 }
 unset($crypt->keys);

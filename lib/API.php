@@ -12,6 +12,7 @@ require_once 'lib/db/db_common.php';
 require_once 'lib/auth.class.php';
 require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/plugins.php';
+require_once 'lib/crypto.php';
 
  // See if the user has an active session (must have to continue)
     if (BTMain::getsessVar('Session')){
@@ -26,7 +27,7 @@ require_once 'lib/plugins.php';
     die;
     }
    
-require_once 'lib/crypto.php';
+
 
 echo "1|..|";
 
@@ -68,6 +69,20 @@ echo "0|..|\n";
 }
 
 break;
+
+
+
+case 'delUser':
+BTMain::checkSuperAdmin();
+$db = new AuthDB;
+if ( $db->DelUser(BTMain::getVar('id'))){
+echo "1|..|\n";
+}else{
+echo "0|..|\n";
+}
+
+break;
+
 
 
 case 'delCredType':

@@ -50,7 +50,7 @@ $notifications->setBreadcrumb($path);
 <input type="hidden" name="option" value="addUser">
 <input type="hidden" name="addUserSubmitted" value="1">
 
-<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername">
+<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" autocomplete="off">
 
 
 

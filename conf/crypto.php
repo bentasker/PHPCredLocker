@@ -16,6 +16,7 @@ defined('_CREDLOCK') or die;
 $crypt->Groups = '9876';
 $crypt->Customer = '1234';
 $crypt->CredType = 'zxy';
+$crypt->auth = 'b170d1920cfe9d1000107c4a59f6cc81';
 
 // These are used to encrypt the creds themselves.
 $crypt->Cre1 = 'abcd';
