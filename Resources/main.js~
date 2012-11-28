@@ -39,7 +39,7 @@ var counter=''
 	 
 	 
 	   if (RealName.value == null || RealName.value == ''){
-	  RealName.className = 'frmEntryMissed'; 
+	  username.className = 'frmEntryMissed'; 
 	  error = 1;
 	 }
 	  

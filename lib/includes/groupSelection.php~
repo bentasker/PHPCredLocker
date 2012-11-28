@@ -55,8 +55,7 @@ unset($grps);
 </select>
 
 <?php else:?>
-
-<fieldset class='groupsMultiSelect' id='groupsMultiSelect'><legend>Select Groups</legend>
+<fieldset class='groupsMultiSelect'><legend>Select Groups</legend>
 <?php
 foreach ($groups as $group){
 

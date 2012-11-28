@@ -273,7 +273,7 @@ return false;
 */
 function listUsers(){
 
-$sql = "SELECT username, Name FROM Users ORDER BY username ASC";
+$sql = "SELECT username, name FROM Users ORDER BY username ASC";
 $this->setQuery($sql);
 
 return $this->loadResults();

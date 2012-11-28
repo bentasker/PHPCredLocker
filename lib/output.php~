@@ -179,7 +179,7 @@ $str[] = "<div class='alert alert-success'>User Stored Successfully</div>";
 }
 
 if ($GLOBALS['Notifications']['UserStoreFail']){
-$str[] = "<div class='alert alert-error'>User Failed to Store</div>";
+$str[] = "<div class='alert alert-success'>User Failed to Store</div>";
 }
 
 

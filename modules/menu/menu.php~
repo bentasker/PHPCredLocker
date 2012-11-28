@@ -64,7 +64,8 @@ endif; ?>
       <li><a href="index.php?option=viewUsers">Users</a></li>
       <li><a href="index.php?option=viewGrps">User Groups</a></li>
       <li><a href="index.php?option=listCredTypes">Credential Types</a></li>
-      <li><a href="index.php?option=pluginInfo">Plugins</a></li>  
+      <li><a href="index.php?option=pluginInfo">Plugins</a></li>
+      
       </ul>
 
 </ul>

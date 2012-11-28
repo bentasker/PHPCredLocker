@@ -12,10 +12,10 @@ $conf->template = 'EstDeus';
 $conf->ProgName = 'PHPCredLocker';
 
 // Set the DB details
-$conf->dbname = "";
-$conf->dbserver = "";
-$conf->dbuser = "";
-$conf->dbpass = "";
+$conf->dbname = "VirCreds";
+$conf->dbserver = "localhost";
+$conf->dbuser = "root";
+$conf->dbpass = "Password12";
 
 // Session expiry time (minutes)
 $conf->sessionexpiry = 15;

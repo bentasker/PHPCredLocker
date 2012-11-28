@@ -92,7 +92,7 @@ function buildACLQuery(){
 $groups = BTMain::getUser()->groups;
 
 if (!in_array("-1",$groups)){
-return "`Group`=" . implode(" OR `Group`=",$groups) ;
+return "`Group`=" . implode(" OR `Group`=",$groups) . "' '";
 }else{
 return "`Group` LIKE \"%\" ";
 }

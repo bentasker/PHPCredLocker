@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.37, for debian-linux-gnu (i486)
 --
 -- Host: localhost    Database: VirCreds
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.10
+-- Server version	5.1.37-1ubuntu5
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -188,6 +188,7 @@ CREATE TABLE `Users` (
   `pass` varchar(150) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `membergroup` longtext,
+  `Usergroup` int(11) DEFAULT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -198,7 +199,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES ('ben','bafae57c37864b8787f0204e1d8f195c:1234','Ben','-1,');
+INSERT INTO `Users` VALUES ('ben','bafae57c37864b8787f0204e1d8f195c:1234','Ben','-1,',NULL);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-26 18:58:56
+-- Dump completed on 2012-11-28 20:03:21
