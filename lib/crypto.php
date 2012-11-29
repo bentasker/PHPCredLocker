@@ -38,7 +38,7 @@ function addKey($newkey,$newid){
 $this->loadConfig();
 
 // Trim to the required keylength
-$newkey = substr( $this->$keyLength, 0,$this->cipher->keyLength);
+$newkey = substr( $newkey, 0,$this->cipher->keyLength);
 
 
    $cryptconf = fopen(getcwd() . '/conf/crypto.php','a');
@@ -46,7 +46,7 @@ $newkey = substr( $this->$keyLength, 0,$this->cipher->keyLength);
 	  
 
 
-$str = "\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
+$str = "\n\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
 
 fwrite($cryptconf,$str);
 	

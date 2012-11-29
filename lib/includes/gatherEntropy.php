@@ -21,8 +21,6 @@ $notifications->RequireScript('entropy');
 // Are we processing the generated or outputting the field
 if ($submitted):
 
-$arr = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','!','#','?','.','<','[',']','%','$','£','"');
-
 
 $entropy = BTMain::getVar('gEntropy');
 
@@ -34,11 +32,17 @@ $arrlength = count($arr) - 1;
 
       while ($x > 0){
 
-      $key = mt_rand(0,$arrlength);
-      $ecryptkey .= mt_rand(0,$arrlength);
+      $key = mt_rand(32,254);
+      $ecryptkey .= mt_rand(32,254);
 
-      $seed .= $arr[$key];
-      $ecrypt .= $arr[$ecryptkey];
+	if ($key == 127 || $ecryptkey == 127){
+	// Skip the delete char
+	continue;
+	}
+
+
+      $seed .= chr($key);
+      $ecrypt .= mt_rand(0,99000) . chr($ecryptkey);
 
       $x--;
       }
@@ -55,7 +59,7 @@ $crypt = new Crypto;
 
 
 $newkey = $crypt->encrypt($newkey,'ONEWAY',$ecrypt);
-// new key is 1120 bits (generally)
+
 
 
 
@@ -76,7 +80,7 @@ Move the mouse and click Randomly in the box below to create entropy for Key Gen
 <div style="display: none;"><input type="text" id="countsremaining" value="30" name="clicksremaining"> Clicks Remaining</div>
 
 <script type="text/javascript">
-var count=30;
+var count=15;
 document.getElementById('ClickDiv').onclick=function(e){document.getElementById('content').value += whereAt(e); count=count-1; document.getElementById('countsremaining').value = count; if(count == 0){document.getElementById('ClickDiv').className = 'EntropyDiv EntropyGenerated';}};
 </script>
 </div>
