@@ -24,16 +24,17 @@ if ($submitted):
 
 $entropy = BTMain::getVar('gEntropy');
 
-$entropyseed = mt_rand(0,90000);
+$entropyseed = mt_rand(1000,999000);
 
-$x = 80;
+$x = 500;
 $arrlength = count($arr) - 1;
 
 
       while ($x > 0){
 
       $key = mt_rand(32,254);
-      $ecryptkey .= mt_rand(32,254);
+      $ecryptkey = mt_rand(32,254);
+      $prekey = mt_rand(32,254);
 
 	if ($key == 127 || $ecryptkey == 127){
 	// Skip the delete char
@@ -43,13 +44,15 @@ $arrlength = count($arr) - 1;
 
       $seed .= chr($key);
       $ecrypt .= mt_rand(0,99000) . chr($ecryptkey);
+      $prkey .= chr($prekey);
 
       $x--;
       }
 
+$prkey = substr($prkey, mt_rand(0,475), 25);
 
 
-$newkey = $entropyseed . $entropy . $seed;
+$newkey = $entropyseed . $prkey . $entropy . $seed;
 
 
 
@@ -59,7 +62,6 @@ $crypt = new Crypto;
 
 
 $newkey = $crypt->encrypt($newkey,'ONEWAY',$ecrypt);
-
 
 
 
