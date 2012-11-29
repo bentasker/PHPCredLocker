@@ -19,6 +19,9 @@ $crypt->CredType = 'zxy';
 $crypt->auth = 'b170d1920cfe9d1000107c4a59f6cc81';
 
 
+$cipher->keyLength = 1024;
+
+
 /** If you're on PHP >= 5.3 you can set this to OpenSSL, otherwise use Mcrypt **/
 $cipher->Engine = 'OpenSSL';
 

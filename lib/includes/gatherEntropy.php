@@ -6,7 +6,7 @@
 * See LICENSE
 *
 *
-* Set the variable multiselect to 1 before calling this file to display checkboxes
+* 
 */
 
 defined('_CREDLOCK') or die;
@@ -24,22 +24,24 @@ if ($submitted):
 $arr = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','!','#','?','.','<','[',']','%','$','£','"');
 
 
-$entropy = sha1(BTMain::getVar('gEntropy'));
+$entropy = BTMain::getVar('gEntropy');
 
 $entropyseed = mt_rand(0,90000);
 
-$x = 50;
+$x = 80;
 $arrlength = count($arr) - 1;
-while ($x > 0){
 
-$key = mt_rand(0,$arrlength);
-$ecryptkey .= mt_rand(0,$arrlength);
 
-$seed .= $arr[$key];
-$ecrypt .= $arr[$ecryptkey];
+      while ($x > 0){
 
-$x--;
-}
+      $key = mt_rand(0,$arrlength);
+      $ecryptkey .= mt_rand(0,$arrlength);
+
+      $seed .= $arr[$key];
+      $ecrypt .= $arr[$ecryptkey];
+
+      $x--;
+      }
 
 
 
@@ -53,7 +55,7 @@ $crypt = new Crypto;
 
 
 $newkey = $crypt->encrypt($newkey,'ONEWAY',$ecrypt);
-
+// new key is 1120 bits (generally)
 
 
 

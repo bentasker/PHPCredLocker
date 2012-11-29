@@ -34,16 +34,22 @@ $this->cipher = $cipher;
 */
 function addKey($newkey,$newid){
 
-    if (!$cryptconf = fopen(getcwd() . '/conf/crypto.php','a')){
-	  return false;
-	  }
+
+$this->loadConfig();
+
+// Trim to the required keylength
+$newkey = substr( $this->$keyLength, 0,$this->cipher->keyLength);
+
+
+   $cryptconf = fopen(getcwd() . '/conf/crypto.php','a');
+	  
+	  
 
 
 $str = "\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
 
-    if (!fwrite($cryptconf,$str)){
-	return false;
-	}
+fwrite($cryptconf,$str);
+	
 
 
 unset($newkey);

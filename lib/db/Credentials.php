@@ -88,7 +88,7 @@ $id = $this->insertID();
 if ($id){
 $log = new Logging;
 $log->logEntry($id,15);
-return true;
+return $id;
 }else{
 return false;
 }
