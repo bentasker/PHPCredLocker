@@ -11,7 +11,7 @@
 defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 global $notifications;
-
+$notifications->RequireScript('passwordmeter');
 
 if (BTMain::getVar('addUserSubmitted')){
 
@@ -54,14 +54,16 @@ $notifications->setBreadcrumb($path);
 
 
 
-<label for="frmPass">Password</label><input type="password" name="frmPass" id="frmPass"><span id="PassNoMatch" style="display: none;" class="alert alert-error"></span>
+<label for="frmPass">Password</label><input type="password" name="frmPass" autocomplete="off" onkeyup="testPassword(this.value);" id="frmPass">
+<span id="passStrength"></span>
+<div id="PassNoMatch" style="display: none;" class="alert alert-error"></div>
 
 <label for="frmPassConf">Password Confirm</label><input type="password" name="frmPassConf" id="frmPassConf">
 
 <label for="frmRName">Real Name</label><input type="text" name="frmRName" id="frmRName">
 
 <label for="frmSuperAdmin">SuperAdmin</label><input type="checkbox" value="1" name="frmSuperAdmin" id="frmSuperAdmin">
-
+<input type="hidden" id="passScore" disabled="true">
 <?php 
 
 $multiselect = 1;

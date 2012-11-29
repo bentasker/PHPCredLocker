@@ -2,7 +2,7 @@
 .settings-menu {float: right;}
 .pluginDetails {font-size: smaller;}
 #FFContainer {height: 100%;}
-#contentArea {min-height: 100%; position: relative; background-color: #0FF; padding: 0px; padding-bottom: 50px;}
+#contentArea {min-height: 100%; position: relative; background-color: #333399; padding: 0px; padding-bottom: 50px;}
 #ContentWrap {width: 50%; margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; }
 .navbar {margin-bottom: 0px !important;}
 .BreadCrumbs {width: 50%; margin: auto;}

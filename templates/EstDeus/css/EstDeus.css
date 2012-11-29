@@ -19,3 +19,10 @@ td.delicon {width:2%;}
 
 
 .frmEntryMissed {border: 1px red solid !important;}
+
+
+.strongPass {color: Green;}
+.strongerPass {color: Green;}
+.mediocrePass {color: orange;}
+.weakPass {color: red;}
+.veryweakPass {color: red;}

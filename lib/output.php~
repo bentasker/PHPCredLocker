@@ -179,7 +179,7 @@ $str[] = "<div class='alert alert-success'>User Stored Successfully</div>";
 }
 
 if ($GLOBALS['Notifications']['UserStoreFail']){
-$str[] = "<div class='alert alert-success'>User Failed to Store</div>";
+$str[] = "<div class='alert alert-error'>User Failed to Store</div>";
 }
 
 
@@ -198,6 +198,12 @@ function headContents(){
 <title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
 <script src="Resources/main.js" type="text/javascript"></script>
 <?php
+foreach ($GLOBALS['RequireScript'] as $script){
+
+
+
+}
+
 
 }
 
@@ -240,6 +246,9 @@ $GLOBALS['Notifications'][$notification] = 1;
 }
 
 
+function RequireScript($script){
+$GLOBALS['RequireScript'][] = $script;
+}
 
 function setBreadcrumb($path){
 

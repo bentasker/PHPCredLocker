@@ -7,6 +7,18 @@ var counter=''
 	  
 	  var pass = document.getElementById('frmPass');
 	  var nomatch = document.getElementById('PassNoMatch');
+	  var passscore = document.getElementById('passScore');
+	  
+	  if (passscore.value != 'strong' && passscore.value != 'stronger'){
+	    
+	    nomatch.innerHTML = "Password is too weak";
+	   nomatch.style.display = 'inline-block';
+	   
+	   return false;
+	    
+	  }
+	  
+	  
 	  
 	 if (pass.value != document.getElementById('frmPassConf').value){
 	   nomatch.innerHTML = "Passwords don't match";

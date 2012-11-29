@@ -198,6 +198,10 @@ function headContents(){
 <title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
 <script src="Resources/main.js" type="text/javascript"></script>
 <?php
+foreach ($GLOBALS['RequireScript'] as $script){
+?><script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script><?php
+}
+
 
 }
 
@@ -240,6 +244,9 @@ $GLOBALS['Notifications'][$notification] = 1;
 }
 
 
+function RequireScript($script){
+$GLOBALS['RequireScript'][] = $script;
+}
 
 function setBreadcrumb($path){
 

@@ -11,7 +11,7 @@
 defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 global $notifications;
-
+$notifications->RequireScript('passwordmeter');
 
 if (BTMain::getVar('addUserSubmitted')){
 
@@ -19,10 +19,10 @@ $username = BTMain::getVar('frmUsername');
 $pass = BTMain::getVar('frmPass');
 $RName = BTMain::getVar('frmRName');
 
-$groups = implode(",",BTMain::getVar('frmGroup'));
+$groups = BTMain::getVar('frmGroup');
 
 if (BTMain::getVar('frmSuperAdmin')){
-$groups = "-1,".$groups;
+$groups[] = "-1";
 }
 
 
@@ -50,7 +50,7 @@ $notifications->setBreadcrumb($path);
 <input type="hidden" name="option" value="addUser">
 <input type="hidden" name="addUserSubmitted" value="1">
 
-<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername">
+<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" autocomplete="off">
 
 
 
