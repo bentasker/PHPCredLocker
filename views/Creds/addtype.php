@@ -13,10 +13,10 @@ global $notifications;
 
 if (BTMain::getVar('AddCredType')){
 $db = new CredDB;
+$crypt = new Crypto;
 
 
-
-  if ($db->AddCredType(BTMain::getVar('frmName'))){
+  if ($newid = $db->AddCredType(BTMain::getVar('frmName'))){
     $notifications->setNotification("addCredTypeSuccess");
     ?><script type="text/javascript">if (document.getElementById('CredTypeNeedsAdding')){ document.getElementById('CredTypeNeedsAdding').style.display = 'none';}</script><?php
     }else{
@@ -24,6 +24,16 @@ $db = new CredDB;
 
 
   }
+$submitted = 1;
+include('lib/includes/gatherEntropy.php');
+unset($submitted);
+ 
+if(!$crypt->addKey($newkey,$newid)){
+
+
+$notifications->setNotification("KeyGenerationFailed");
+}
+
 }
 
 
@@ -40,6 +50,12 @@ $notifications->setBreadcrumb($path);
 
 <label for="frmName">Credential Type</label>
 <input type="text" id="frmName" name="frmName">
+
+
+<?php
+include('lib/includes/gatherEntropy.php');
+?>
+
 
 <input type="submit" class="btn btn-primary" value="Add Credential Type">
 </form>

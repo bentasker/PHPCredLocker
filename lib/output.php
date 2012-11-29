@@ -182,6 +182,10 @@ if ($GLOBALS['Notifications']['UserStoreFail']){
 $str[] = "<div class='alert alert-error'>User Failed to Store</div>";
 }
 
+if ($GLOBALS['Notifications']['KeyGenerationFailed']){
+
+$str[] = "<div class='alert alert-error'>Unable to add Crypto Key to config file. You <b>must</b> do this manually before you can add creds to this CredType</div>";
+}
 
 
 return implode("\n",$str);

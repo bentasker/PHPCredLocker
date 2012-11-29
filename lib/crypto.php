@@ -25,6 +25,36 @@ $this->cipher = $cipher;
 
 
 
+/** Add a key to the config file
+*
+* @arg newkey string
+* @arg newtype - string
+*
+* @return
+*/
+function addKey($newkey,$newid){
+
+    if (!$cryptconf = fopen(getcwd() . '/conf/crypto.php','a')){
+	  return false;
+	  }
+
+
+$str = "\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
+
+    if (!fwrite($cryptconf,$str)){
+	return false;
+	}
+
+
+unset($newkey);
+unset($str);
+fclose($cryptconf);
+return true;
+}
+
+
+
+
 /** Pass string to configured engine for encryption
 *
 * @arg string - plaintext string to encrypt
@@ -33,15 +63,24 @@ $this->cipher = $cipher;
 * @return string - Ciphertext
 *
 */
-function encrypt($string,$type){
+function encrypt($string,$type,$key = null){
 $this->loadConfig();
 $fn = "encrypt_{$this->cipher->Engine}";
-$ciphertext = $this->$fn($string,$type);
 
-if ($this->safety == 1){
-unset($this->keys);
-}
 
+
+  if ($type != 'ONEWAY'){
+    $ciphertext = $this->$fn($string,$type);
+
+      if ($this->safety == 1){
+      unset($this->keys);
+      }
+  }else{
+  unset($this->keys);
+  $this->keys->ONEWAY = $key;
+  $ciphertext = $this->$fn($string,$type);
+
+  }
 return $ciphertext;
 }
 
