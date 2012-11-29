@@ -1,6 +1,5 @@
-var count=30;
-var counter=''
-
+var counter=false;
+var cancel='';
 	
 	function comparePwds(){
 	  
@@ -139,12 +138,23 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       clicky.innerHTML = 'Failed to retrieve credentials. Click to try again';
       return false;
     }
-     
+    
+    var limit = document.getElementById('defaultInterval').value;
+    var cnt = document.getElementById('PassCount'+id);
+     cnt.value = limit;
+     var count = limit;
       Address.innerHTML = resp[2];
       Pass.innerHTML = resp[1];
       User.innerHTML = resp[3];
-      count=30;
       clicky.innerHTML = 'Displaying Password for ' +count+ ' seconds';
+      
+      if (counter){
+	cancel=1;
+	
+	setTimeout(function() {cancel=false; counter=setInterval("Credtimer('"+id+"')", 1000);},1000);
+	return;
+      }
+      
       counter=setInterval("Credtimer('"+id+"')", 1000);
       
       }
@@ -485,15 +495,17 @@ xmlhttp.send('option=delCred&id='+id);
 
 function Credtimer(id)
 {
-  count=count-1;
-  
+  var cnt = document.getElementById('PassCount'+id);
+  var count=cnt.value-1;
+  cnt.value = count;
   var field = document.getElementById('retrievePassword'+id);
   
   
   
-  if (count <= 0)
+  if (count <= 0 || cancel == 1)
   {
      clearInterval(counter);
+     
      field.innerHTML = 'Display Password';
      document.getElementById('Address'+id).innerHTML = '';
      document.getElementById('UserName'+id).innerHTML = '';
@@ -503,6 +515,10 @@ function Credtimer(id)
 
   field.innerHTML = 'Displaying Password for ' +count+ ' seconds';
 }
+
+
+
+
 
 
 function checkNewCred(){

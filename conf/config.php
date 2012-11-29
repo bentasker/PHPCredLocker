@@ -20,6 +20,8 @@ $conf->dbpass = "Password12";
 // Session expiry time (minutes)
 $conf->sessionexpiry = 15;
 
+// Time in seconds to display credentials for
+$conf->CredDisplay = 30;
 
 // Display SQL errors?
 $conf->showDBErrors = 1;

@@ -45,6 +45,7 @@ $notifications->setBreadcrumb($path);
 <h1>Credentials for <?php echo $customer; ?></h1>
 <button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred&cust=<?php echo BTMain::getVar('id'); ?>';" class='btn btn-primary'>Add Credential</button>
 <br /><Br />
+<input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
 <table class='credTbl table table-hover' id='CredsTbl'>
 <tr><th>Credential Type</th><th></th><th>Address</th><th>Username</th><th>Password</th><th></th><th></th></tr>
 
@@ -62,8 +63,9 @@ foreach ($customers as $customer){
     <?php echo $crypt->decrypt($customer->CredName,'CredType');?>
   </td>
   
-  <td>
-    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>' onclick="getCreds('<?php echo $customer->id;?>');">Display Password</span>
+  <td class="passViewNotif" onclick="getCreds('<?php echo $customer->id;?>');">
+    <input type="hidden" id="PassCount<?php echo $customer->id;?>" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
+    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display Password</span>
   </td>
 
   <td>
