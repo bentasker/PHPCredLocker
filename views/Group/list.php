@@ -34,7 +34,7 @@ $plaintext = $crypt->decrypt($grp->Name,'Groups');
 $groups[$plaintext] = $grp->id;
 
 }
-unset($crypt->keys);
+
 
 ksort($groups);
 

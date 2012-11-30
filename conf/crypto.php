@@ -22,8 +22,17 @@ $crypt->auth = 'b170d1920cfe9d1000107c4a59f6cc81';
 $cipher->keyLength = 1024;
 
 
-/** If you're on PHP >= 5.3 you can set this to OpenSSL, otherwise use Mcrypt **/
-$cipher->Engine = 'OpenSSL';
+/**  Default: auto  - will use OpenSSL if available
+
+Usually you won't want to change this, if however you've just migrated from a server that only had Mcrypt you may want to set to use that
+
+Values:
+auto
+OpenSSL
+Mcrypt
+
+**/
+$cipher->Engine = 'auto';
 
 
 /*     MCrypt Specific             */

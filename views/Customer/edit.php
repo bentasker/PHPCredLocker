@@ -77,7 +77,3 @@ $preselect = $customer->Group;
 <input type="submit" class="btn btn-primary" value="Edit Customer">
 </form>
 
-
-<?php
-unset($crypt->keys);
-?>

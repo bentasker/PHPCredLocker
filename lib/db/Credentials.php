@@ -194,10 +194,19 @@ function addCred($cust,$credtype,$cred,$clicky,$group = 1,$address = '', $uname 
 
 // Encrypt the relevant parts
 $crypt = new Crypto;
-$cred = $crypt->encrypt($cred,'Cre'.$credtype);
-$address = $crypt->encrypt($address,'Cre'.$credtype);
-$uname = $crypt->encrypt($uname,'Cre'.$credtype);
 
+
+if (!empty($address)){
+$address = $crypt->encrypt($address,'Cre'.$credtype);
+}
+
+if (!empty($uname)){
+$uname = $crypt->encrypt($uname,'Cre'.$credtype);
+}
+
+if (!empty($cred)){
+$cred = $crypt->encrypt($cred,'Cre'.$credtype);
+}
 
 $address = $this->StringEscape($address);
 $uname = $this->StringEscape($uname);
@@ -285,8 +294,6 @@ $sql .= "`UName`='$uname',";
 $sql = rtrim($sql,",");
 
 $sql .= " WHERE id='$id' AND ($ACL)";
-
-echo $sql;
 
 $this->setQuery($sql);
 

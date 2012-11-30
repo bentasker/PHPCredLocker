@@ -30,7 +30,7 @@ $name = $crypt->decrypt($cred->Name,'CredType');
 $creds[$name] = $cred->id;
 
 }
-unset($crypt->keys);
+
 ksort($creds);
 ?>
 <h1>Credential Types</h1>

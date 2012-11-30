@@ -47,7 +47,7 @@ $str .= ">$plaintext</option>";
 $grps[$plaintext] = $str;
 
 }
-unset($crypt->keys);
+
 ksort($grps);
 echo implode("\n",$grps);
 unset($grps);
@@ -69,7 +69,7 @@ if (in_array($group->id,$Ugroups)): $grps[$plaintext] .= " checked"; endif;
 $grps[$plaintext] .= ">$plaintext</span>";
 
 }
-unset($crypt->keys);
+
 ksort($grps);
 echo implode("\n",$grps);
 unset($grps);

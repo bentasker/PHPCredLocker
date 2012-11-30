@@ -9,13 +9,16 @@
 
 class Crypto{
 
+protected $keys;
+protected $cipher;
+
 
 public $safety = 1;
 
 /** Load the Crypto Settings
 *
 */
-function loadConfig(){
+protected function loadConfig(){
 if (!isset($this->keys)){
 require 'conf/crypto.php';
 $this->keys = $crypt;
@@ -71,6 +74,17 @@ return true;
 */
 function encrypt($string,$type,$key = null){
 $this->loadConfig();
+
+
+    if ($this->cipher->Engine == 'auto'){
+
+	  if (function_exists('openssl_encrypt')){
+	  $this->cipher->Engine = 'OpenSSL';
+	  }else{
+	  $this->cipher->Engine = 'Mcrypt';
+	  }
+    }
+
 $fn = "encrypt_{$this->cipher->Engine}";
 
 
@@ -128,6 +142,17 @@ return mcrypt_encrypt($this->cipher->Encryption,$this->keys->$type,$string, $thi
 */ 
 function decrypt($ciphertext,$type){
 $this->loadConfig();
+
+ if ($this->cipher->Engine == 'auto'){
+
+	  if (function_exists('openssl_encrypt')){
+	  $this->cipher->Engine = 'OpenSSL';
+	  }else{
+	  $this->cipher->Engine = 'Mcrypt';
+	  }
+    }
+
+
 $fn = "decrypt_{$this->cipher->Engine}";
 $plaintext = $this->$fn($ciphertext,$type);
 

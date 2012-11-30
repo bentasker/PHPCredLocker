@@ -137,8 +137,8 @@ $lastname = $crypt->decrypt($res->ContactSurname,'Customer');
 $email = $crypt->decrypt($res->Email,'Customer');
 $credtype = $crypt->decrypt($res->CredType,'CredType');
 
-// Unload the keys from memory
-unset($crypt->keys);
+
+
 
 
   switch($data->action){

@@ -37,7 +37,7 @@ defined('_CREDLOCK') or die;
 		    }
 		}
 	  
-	unset($crypt->keys);
+	
 	ksort($cust);
 	echo implode("\n",$cust);
 	echo "<li class='divider'></li>\n<li><a href='index.php?option=viewCustomers'>View All</a></li>";
