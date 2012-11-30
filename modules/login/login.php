@@ -11,9 +11,16 @@
 <div id='mod_login' class='login-module'>
 
 <?php if (!empty(BTMain::getUser()->name)): ?>
-Hi <?php echo BTMain::getUser()->name; ?>
-<li><a href='index.php?option=logout'>Log Out</a></li>
+<div class="btn-group"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><?php echo BTMain::getUser()->name; ?>
 
+<span class="caret"></span></a>
+  <ul class="dropdown-menu">
+
+      <li><a href='index.php?option=logout'>Log Out</a></li>
+      <li><a href='index.php?option=changePassword'>Change Password</a></li>
+
+  </ul>
+</div>
 
 <?php else: 
 	      // Attempt to log user in if they've already submitted

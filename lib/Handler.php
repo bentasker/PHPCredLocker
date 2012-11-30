@@ -136,6 +136,10 @@ case 'editUser':
 $html->content = $html->loadView('user.edit');
 break;
 
+case 'changePassword':
+$html->content = $html->loadView('user.changePass');
+break;
+
 
 default:
 $html->content = $html->genDefaultPage();
