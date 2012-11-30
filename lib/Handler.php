@@ -78,6 +78,11 @@ case 'addCred':
 $html->content = $html->loadView('Creds.add');
 break;
 
+
+case 'viewByType':
+$html->content = $html->loadView('Creds.bytype');
+break;
+
 case 'editCred':
 $html->content = $html->loadView('Creds.edit');
 break;

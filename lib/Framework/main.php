@@ -88,13 +88,18 @@ return "sess=" . BTMain::getVar('sess') . "&hsh=" . BTMain::getVar('hsh');
 /** Take the User's groups and turn into part of a WHERE statement
 *
 */
-function buildACLQuery(){
+function buildACLQuery($tbl = false){
 $groups = BTMain::getUser()->groups;
+$tab ='';
+
+if ($tbl){
+$tab = "$tbl.";
+}
 
 if (!in_array("-1",$groups)){
-return "`Group`=" . implode(" OR `Group`=",$groups) ;
+return "$tab`Group`=" . implode(" OR $tab`Group`=",$groups) ;
 }else{
-return "`Group` LIKE \"%\" ";
+return "$tab`Group` LIKE \"%\" ";
 }
 
 

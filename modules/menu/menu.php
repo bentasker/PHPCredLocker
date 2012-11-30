@@ -12,13 +12,15 @@ defined('_CREDLOCK') or die;
 <ul class="nav">
 <li class="divider-vertical"></li>
 
+<?php if (BTMain::getUser()->name):?>
+
   <li class="nav dropdown">
 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers</a>
       <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
       <li><a href="index.php?option=addCustomer">Add Customer</a></li>
       <li class="divider"></li>
-	  <?php if (BTMain::getUser()->name):
-
+	  
+<?php
 
 	  $itemcount = 0;
 	  $custs = new CustDB;
@@ -43,14 +45,39 @@ defined('_CREDLOCK') or die;
 	echo "<li class='divider'></li>\n<li><a href='index.php?option=viewCustomers'>View All</a></li>";
 
 
+?>
 
-endif; ?>
 
 
     </ul>
   </li>
 <li class="divider-vertical"></li>
 
+<li class="nav dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">Credential Type</a>
+      <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
+      
+	    <?php
+		  $crdtypes=new CredDB;
+		  $credtypes = $crdtypes->getCredTypes();
+
+		      foreach ($credtypes as $credtype){
+
+			  $plaintext = $crypt->decrypt($credtype->Name,'CredType');
+			  $cred[$plaintext] = "<li id='Custmenu{$credtype->id}'><a href='index.php?option=viewByType&id={$credtype->id}'>$plaintext</a></li>";
+
+		      }
+	
+		  ksort($cred);
+		  echo implode("\n",$cred);
+?>
+
+      </ul>
+</li>
+<li class="divider-vertical"></li>
+
+
+<?php endif; ?>
 
 
 </ul>

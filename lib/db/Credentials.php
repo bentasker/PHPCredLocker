@@ -68,6 +68,29 @@ return $this->loadResult();
 }
 
 
+/** Fetch All Credentials for a given type
+*
+* @arg type id
+*
+* @return object
+*/
+function getCredsbyType($id){
+$id = $this->StringEscape($id);
+$ACL = BTMain::buildACLQuery('a');
+$CustACL = BTMain::buildACLQuery('b');
+
+$sql = "SELECT a.id, b.Name FROM Cred as a LEFT JOIN Cust as b on a.cust=b.id WHERE CredType='$id' AND ($ACL) AND ($CustACL)";
+$this->setQuery($sql);
+
+return $this->loadResults();
+
+
+
+}
+
+
+
+
 /** Add a new Credential Type
 *
 * @arg Name string
@@ -101,7 +124,7 @@ return false;
 */
 function getCredTypes(){
 
-$sql = "SELECT * FROM CredTypes ORDER BY Name ASC";
+$sql = "SELECT * FROM CredTypes";
 $this->setQuery($sql);
 return $this->loadResults();
 }
