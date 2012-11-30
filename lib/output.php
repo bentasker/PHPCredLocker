@@ -59,7 +59,15 @@ require "templates/$template/index.php";
 function loadView($view){
 
 ob_start;
-require "views/" . str_replace(".","/",$view) . ".php";
+$template = BTMain::getConf()->template;
+$view = str_replace(".","/",$view);
+	// Check for template level override
+    if (file_exists("templates/". $template . "html/views/" . $view . ".php")){
+	require "templates/". $template . "html/views/" . $view . ".php";
+    }else{
+	require "views/" . $view . ".php";
+
+    }
 return ob_get_clean();
 }
 
@@ -219,8 +227,15 @@ foreach ($GLOBALS['RequireScript'] as $script){
 */
 function loadModule($module){
 
-require "modules/$module/$module.php";
+$template = BTMain::getConf()->template;
 
+
+	// Check for template override
+	    if (file_exists("templates/$template/html/modules/$module/$module.php")){
+		require "templates/$template/html/modules/$module/$module.php";
+	    }else{
+		require "modules/$module/$module.php";
+	    }
 
 
 
