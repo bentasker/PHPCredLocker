@@ -111,9 +111,16 @@ return $db->addUser($user);
 function ProcessLogIn($username,$password){
 $db = new AuthDB;
 
+
+// Trim trailing space from username & password (issue on mobiles with auto-predict)
+$password = rtrim($password,"");
+$username = rtrim($username,"");
+
   if (!$user = $db->retrieveUserCreds($username)){
   return false;
    }
+
+
 
 
 $crypt = new Crypto;
