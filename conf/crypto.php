@@ -36,7 +36,7 @@ $cipher->Engine = 'auto';
 
 
 /*     MCrypt Specific             */
-$cipher->Encryption = MCRYPT_RIJNDAEL_256;
+$cipher->MCrypt->Encryption = MCRYPT_RIJNDAEL_256;
 $cipher->MCrypt->mode = MCRYPT_MODE_ECB;
 
 

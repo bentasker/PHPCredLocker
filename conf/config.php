@@ -8,8 +8,16 @@
 */
 defined('_CREDLOCK') or die;
 
+// Redirect non SSL connections to a SSL one?
+$conf->forceSSL = false;
+
+//URL for SSL connections
+$conf->SSLURL = '';
+
+// Template Name
 $conf->template = 'EstDeus';
 
+// Application Name
 $conf->ProgName = 'PHPCredLocker';
 
 // Set the DB details

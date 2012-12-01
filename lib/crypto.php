@@ -130,7 +130,7 @@ return openssl_encrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 */ 
 function encrypt_Mcrypt($string,$type){
 
-return mcrypt_encrypt($this->cipher->Encryption,$this->keys->$type,$string, $this->cipher->MCrypt->mode);
+return mcrypt_encrypt($this->cipher->MCrypt->Encryption,$this->keys->$type,$string, $this->cipher->MCrypt->mode);
 }
 
 
@@ -189,7 +189,7 @@ return openssl_decrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 * @return plaintext string
 */
 function decrypt_Mcrypt($ciphertext,$type){
-return mcrypt_decrypt($this->cipher->Encryption,$this->keys->$type,$ciphertext, $this->cipher->MCrypt->mode);
+return mcrypt_decrypt($this->cipher->MCrypt->Encryption,$this->keys->$type,$ciphertext, $this->cipher->MCrypt->mode);
 }
 
 
