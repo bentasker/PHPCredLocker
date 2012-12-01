@@ -17,8 +17,36 @@ function RequireScript($script){
 echo "<script src='../Resources/$script.js' type='text/javascript'></script>\n";
 }
 
+function RequireCSS($css){
+echo "<link rel='stylesheet' type='text/css' href='../Resources/$css.css' />\n";
 }
 
+}
+
+
+/** Use the Entropy to create a key
+*
+*/
+function credlocker_install_stage_7(){
+$submitted=1;
+require 'lib/includes/gatherEntropy.php';
+
+
+if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
+echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
+return;
+
+}
+
+$str = "\$crypt->auth = '$newkey';\n";
+fwrite($fh,$str);
+
+fclose($fh);
+
+
+
+
+}
 
 
 /** Generate a key for authentication
@@ -26,22 +54,17 @@ echo "<script src='../Resources/$script.js' type='text/javascript'></script>\n";
 */
 function credlocker_install_stage_6(){
 $notifications = new notifications;
-
 ?>
 
 <h1>Create Authentication Key</h1>
 
-Now we're going to create an ecryption key which will be used to secure all user accounts. To do so, we need to generate random data, so please move your mouse and click randomly in the box below until it turns green
+Now we're going to create an encryption key which will be used to secure all user accounts. To do so, we need to generate random data, so please move your mouse and click randomly in the box below until it turns green
 <br/><br /><form method="POST">
 <input type="hidden" name="stage" value="7">
+<?php require 'lib/includes/gatherEntropy.php'; ?>
+<input type="submit" class="btn btn-primary" value="Generate Key">
+</form>
 <?php
-
-require 'lib/includes/gatherEntropy.php';
-
-
-
-
-
 }
 
 
@@ -553,8 +576,6 @@ endif;
 <Style type="text/css">
 .testPass {color: green;}
 .testFail {color: red; font-weight: bold;}
-.EntropyDiv {width: 100%; height: 400px; border-radius: 5px; border: 1px black solid; background: red;}
-.EntropyGenerated {border: 1px green solid; background: green;}
 </style>
 </head>
 <body>
@@ -573,7 +594,7 @@ first_install_stage();
 chdir(dirname(__FILE__)."/../");
 require_once 'lib/Framework/main.php';
 
-if ($_POST['stage'] == '5'){
+if (($_POST['stage'] >= '5') && ($_POST['stage'] <= '9')){
 require_once 'lib/crypto.php';
 
 }

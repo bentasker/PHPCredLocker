@@ -208,6 +208,14 @@ return implode("\n",$str);
 function headContents(){
 ?>
 <title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
+
+<?php
+foreach ($GLOBALS['RequireCSS'] as $css){
+?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
+}
+
+?>
+
 <script src="Resources/main.js" type="text/javascript"></script>
 <?php
 foreach ($GLOBALS['RequireScript'] as $script){
@@ -262,6 +270,10 @@ $GLOBALS['Notifications'][$notification] = 1;
 
 }
 
+function RequireCSS($file){
+
+$GLOBALS['RequireCSS'][] = $file;
+}
 
 function RequireScript($script){
 $GLOBALS['RequireScript'][] = $script;

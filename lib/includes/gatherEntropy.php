@@ -12,10 +12,6 @@
 defined('_CREDLOCK') or die;
 
 
-if (!isset($notifications)){
-global $notificiations;
-}
-$notifications->RequireScript('entropy');
 
 
 // Are we processing the generated or outputting the field
@@ -70,6 +66,12 @@ $newkey = $crypt->encrypt($newkey,'ONEWAY',$ecrypt);
 
 
 else:
+
+      if (!isset($notifications)){
+	    global $notificiations;
+      }
+$notifications->RequireScript('entropy');
+$notifications->RequireCSS('Entropy');
 
 
 ?>
