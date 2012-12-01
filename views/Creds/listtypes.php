@@ -19,7 +19,7 @@ $crypt->safemode = 0;
 
 $credtypes = $db->getCredTypes();
 
-$path = array(array('name'=>'Credential Types','url'=>'index.php?option=listCredTypes'));
+$path = array(array('name'=>Lang::_("Cred Types"),'url'=>'index.php?option=listCredTypes'));
 
 $notifications->setBreadcrumb($path);
 
@@ -33,12 +33,12 @@ $creds[$name] = $cred->id;
 
 ksort($creds);
 ?>
-<h1>Credential Types</h1>
+<h1><?php echo Lang::_("Cred Types");?></h1>
 <br />
-<button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addCredType';">Add Credential Type</button><br />
+<button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addCredType';">Add <?php echo Lang::_("Credential Type");?></button><br />
 <br />
 <table class="table table-hover">
-<tr><th>Credential Type</th><th></th><th></th></tr>
+<tr><th><?php echo Lang::_("Credential Type");?></th><th></th><th></th></tr>
 
 
 <?php 
@@ -55,4 +55,4 @@ foreach ($creds as $key=>$value){
 
 <?php } ?>
 </table>
-<button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addCredType';">Add Credential Type</button><br />
+<button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addCredType';">Add <?php echo Lang::_("Credential Type");?></button><br />

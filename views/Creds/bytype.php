@@ -30,7 +30,7 @@ $typename = $crypt->decrypt($credtype->Name,'CredType');
 
 
 
-$path = array(array('name'=>'View By Credential Type','url'=>'#'),array('name'=>$typename, 'url'=>'index.php?option=viewByType&id='.$id));
+$path = array(array('name'=>'View By '. Lang::_("Credential Type"),'url'=>'#'),array('name'=>$typename, 'url'=>'index.php?option=viewByType&id='.$id));
 
 $notifications->setBreadcrumb($path);
 
@@ -48,13 +48,19 @@ $creds[$name."|".$cred->id] = $cred->id;
 
 ksort($creds);
 ?>
-<h1>View by Credential Type <i><?php echo $typename;?></i></h1>
+
+<h1>View by <?php echo Lang::_("Credential Type");?> <i><?php echo $typename;?></i></h1>
+
+
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>" disabled="true">
 <br />
-<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add Credential</button>
+<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add <?php echo Lang::_("Credential");?></button>
 <br />
+
+
 <table class="table table-hover">
-<tr><th>Customer</th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
+<tr><th><?php echo Lang::_("Customer");?></th><th></th><th><?php echo Lang::_("Address");?></th>
+<th><?php echo Lang::_("User");?></th><th><?php echo Lang::_("Password");?></th><th></th><th></th></tr>
 
 
 <?php 
@@ -87,4 +93,4 @@ $key = $k[0];
 
 <?php } ?>
 </table>
-<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add Credential</button><br />
+<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add <?php echo Lang::_("Credential");?></button><br />

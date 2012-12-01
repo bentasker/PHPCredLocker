@@ -37,18 +37,19 @@ $notifications->setNotification("KeyGenerationFailed");
 }
 
 
-$path = array(array('name'=>'Credential Types','url'=>'index.php?option=listCredTypes'),array('name'=>'Add Credential Type','url'=>'index.php?option=addCredType'));
+$path = array(array('name'=>Lang::_("Cred Types"),'url'=>'index.php?option=listCredTypes'),
+array('name'=>'Add '.Lang::_("Credential Type"),'url'=>'index.php?option=addCredType'));
 
 $notifications->setBreadcrumb($path);
 
 ?>
-<h1>Add Credential Type</h1>
+<h1>Add <?php echo Lang::_("Credential Type");?></h1>
 
 <form method="POST">
 <input type="hidden" name="option" value="addCredType">
 <input type="hidden" name="AddCredType" value="1">
 
-<label for="frmName">Credential Type</label>
+<label for="frmName"><?php echo Lang::_("Credential Type");?></label>
 <input type="text" id="frmName" name="frmName">
 
 
@@ -57,5 +58,5 @@ include('lib/includes/gatherEntropy.php');
 ?>
 
 
-<input type="submit" class="btn btn-primary" value="Add Credential Type">
+<input type="submit" class="btn btn-primary" value="Add <?php echo Lang::_("Credential Type");?>">
 </form>

@@ -163,10 +163,10 @@ $credtype = $crypt->decrypt($res->CredType,'CredType');
 
 
 // Create the support ticket subject
-$subject = BTMain::getConf()->ProgName . ": $credtype Credentials $access by {$user->Name} at ". date($this->dateformat);
+$subject = BTMain::getConf()->ProgName . ": $credtype " . Lang::_("Credential") ." $access by {$user->Name} at ". date($this->dateformat);
 
 // Create the support ticket content
-$desc = date($this->dateformat) . ": User {$user->Name} $access the $credtype credentials for this account";
+$desc = date($this->dateformat) . ": User {$user->Name} $access the $credtype " . Lang::_("Credential") ." for this account";
 
 // Build the request
 $fields = array(

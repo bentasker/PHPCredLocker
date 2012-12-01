@@ -8,7 +8,8 @@
 */
 defined('_CREDLOCK') or die;
 require_once 'lib/output.php';
-require_once 'lib/db/db_common.php';
+//require_once 'lib/db/db_common.php';
+require_once 'lib/lang.php';
 require_once 'lib/auth.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/db/loggingdb.class.php';

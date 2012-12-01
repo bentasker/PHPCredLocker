@@ -15,9 +15,9 @@ defined('_CREDLOCK') or die;
 <?php if (BTMain::getUser()->name):?>
 
   <li class="nav dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers</a>
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Customers");?></a>
       <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
-      <li><a href="index.php?option=addCustomer">Add Customer</a></li>
+      <li><a href="index.php?option=addCustomer">Add <?php echo Lang::_("Customer");?></a></li>
       <li class="divider"></li>
 	  
 <?php
@@ -54,7 +54,7 @@ defined('_CREDLOCK') or die;
 <li class="divider-vertical"></li>
 
 <li class="nav dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">Credential Type</a>
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
       <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
       
 	    <?php
@@ -89,8 +89,8 @@ defined('_CREDLOCK') or die;
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class='icon-white icon-cog'></i></a>
       <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
       <li><a href="index.php?option=viewUsers">Users</a></li>
-      <li><a href="index.php?option=viewGrps">User Groups</a></li>
-      <li><a href="index.php?option=listCredTypes">Credential Types</a></li>
+      <li><a href="index.php?option=viewGrps"><?php echo Lang::_("User Groups");?></a></li>
+      <li><a href="index.php?option=listCredTypes"><?php echo Lang::_("Cred Types");?></a></li>
       <li><a href="index.php?option=pluginInfo">Plugins</a></li>  
       </ul>
 

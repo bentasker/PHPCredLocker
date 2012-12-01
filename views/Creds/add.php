@@ -29,7 +29,7 @@ if (BTMain::getVar('addCredSubmitted')){
 
 }
 
-$path = array(array('name'=>'Credentials','url'=>'#'),array('name'=>'Add','url'=>'index.php?option=addCred&cust='.BTMain::getVar('cust')));
+$path = array(array('name'=>Lang::_("Credentials"),'url'=>'#'),array('name'=>'Add','url'=>'index.php?option=addCred&cust='.BTMain::getVar('cust')));
 
 $notifications->setBreadcrumb($path);
 
@@ -52,7 +52,7 @@ $customers = $custs->getAllCustomers();
 
 
 
-<label for='FrmCustomer'>Customer</label><select name="cust" id="FrmCustomer">
+<label for='FrmCustomer'><?php echo Lang::_("Customer");?></label><select name="cust" id="FrmCustomer">
 
 <?php
 $crypt = new Crypto;
@@ -79,28 +79,28 @@ echo implode("\n",$custdets);
 
 </select>
 
-<label for='FrmCredType'>Credential Type</label><select id="FrmCredType" name="FrmCredType">
+<label for='FrmCredType'><?php echo Lang::_("Credential Type");?></label><select id="FrmCredType" name="FrmCredType">
 <?php 
-foreach ($credtypes as $cred){
+      foreach ($credtypes as $cred){
 
-?>
-<option value="<?php echo $cred->id;?>"><?php echo $crypt->decrypt($cred->Name,'CredType');?></option>
-<?php
+      ?>
+	  <option value="<?php echo $cred->id;?>"><?php echo $crypt->decrypt($cred->Name,'CredType');?></option>
+      <?php
 
-}
-unset($crypt);
-?>
+      }
+      unset($crypt);
+  ?>
 </select>
 
-<label for="frmUser">User</label><input type="text" name="frmUser" id="frmUser">
+<label for="frmUser"><?php echo Lang::_("User");?></label><input type="text" name="frmUser" id="frmUser">
 
-<label for="frmCredential">Credentials</label><textarea id="frmCredential" name="frmCredential"></textarea>
+<label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential"></textarea>
 
-<label for="frmAddress">Address</label><input type="text" name="frmAddress" id="frmAddress">
+<label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 
 
 
 <?php include 'lib/includes/groupSelection.php'; ?>
 
-<input type="submit" class="btn btn-primary" value="Add Credential">
+<input type="submit" class="btn btn-primary" value="Add <?php echo Lang::_("Credential");?>">
 </form>

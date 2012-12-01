@@ -12,6 +12,7 @@
 
 defined('_CREDLOCK') or die;
 
+require_once 'lib/Framework/db_common.php';
 
 class BTMain{
 

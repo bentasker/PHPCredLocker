@@ -67,7 +67,7 @@ $preselect = $cred->Group;
 
 
 
-$path = array(array('name'=>'Credentials','url'=>'#'),array('name'=>'Edit','url'=>'index.php?option=editCred&id='.$id));
+$path = array(array('name'=>Lang::_("Credentials"),'url'=>'#'),array('name'=>'Edit','url'=>'index.php?option=editCred&id='.$id));
 
 $notifications->setBreadcrumb($path);
 
@@ -89,9 +89,9 @@ $crypt->safety = 0;
 
 
 ?>
-<h1>Edit Credential</h1>
+<h1>Edit <?php echo Lang::_("Credential");?></h1>
 
-<i>Leave a field blank to delete the credential</i>
+<i>Leave a field blank to delete the <?php echo Lang::_("Credential");?> element</i>
 
 <form method="POST" onsubmit="return checkEditCred();">
 
@@ -102,7 +102,7 @@ $crypt->safety = 0;
 
 
 
-<label for='FrmCredType'>Credential Type</label><select id="FrmCredType" name="FrmCredType" disabled='disabled'>
+<label for='FrmCredType'><?php echo Lang::_("Credential Type");?></label><select id="FrmCredType" name="FrmCredType" disabled='disabled'>
 <?php 
 foreach ($credtypes as $cred){
 
@@ -119,15 +119,15 @@ unset($crypt);
 ?>
 </select>
 
-<label for="frmUser">User</label><input type="text" name="frmUser" id="frmUser" value="NOCHANGE">
+<label for="frmUser"><?php echo Lang::_("User");?></label><input type="text" name="frmUser" id="frmUser" value="NOCHANGE">
 
-<label for="frmCredential">Credentials</label><textarea id="frmCredential" name="frmCredential">NOCHANGE</textarea>
+<label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential">NOCHANGE</textarea>
 
-<label for="frmAddress">Address</label><input type="text" name="frmAddress" id="frmAddress" value="NOCHANGE">
+<label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress" value="NOCHANGE">
 
 
 
 <?php include 'lib/includes/groupSelection.php'; ?>
 
-<input type="submit" class="btn btn-primary" value="Edit Credential">
+<input type="submit" class="btn btn-primary" value="Edit <?php echo Lang::_("Credential");?>">
 </form>
