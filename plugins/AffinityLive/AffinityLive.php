@@ -17,7 +17,7 @@ class plugin_AffinityLive_Logging{
 *
 */
 function config(){
-require 'plugins/AffinityLive/config.php';
+require 'conf/plugins/AffinityLive/config.php';
 }
 
 
