@@ -6,7 +6,7 @@
 * See LICENSE
 *
 */
-
+defined('_CREDLOCK') or die;
 global $notifications;
 if (BTMain::getVar('AddCustSubmitted')){
 

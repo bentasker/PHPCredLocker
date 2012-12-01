@@ -6,7 +6,7 @@
 * See LICENSE
 *
 */
-
+defined('_CREDLOCK') or die;
 ?>
 <div id='mod_login' class='login-module'>
 

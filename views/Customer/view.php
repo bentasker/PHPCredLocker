@@ -6,6 +6,7 @@
 * See LICENSE
 *
 */
+defined('_CREDLOCK') or die;
 global $notifications;
 $custom = new CustDB;
 $custom->connreuse = 1;

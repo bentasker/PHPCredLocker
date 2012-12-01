@@ -10,7 +10,7 @@
 */
 
 
-
+defined('_CREDLOCK') or die;
 
 
 class BTMain{

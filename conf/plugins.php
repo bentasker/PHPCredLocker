@@ -6,7 +6,7 @@
 * See LICENSE
 *
 */ 
-
+defined('_CREDLOCK') or die;
 
 $plugins->Auth = array();
 $plugins->Logging = array('AffinityLive');

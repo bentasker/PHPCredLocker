@@ -6,6 +6,8 @@
 * See LICENSE
 *
 */
+defined('_CREDLOCK') or die;
+
 require_once 'lib/db/authdb.class.php';
 
 class ProgAuth{

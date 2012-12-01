@@ -6,6 +6,7 @@
 * See LICENSE
 *
 */
+defined('_CREDLOCK') or die;
 
 // Set this to false to disable the plugin
 $this->active = false;

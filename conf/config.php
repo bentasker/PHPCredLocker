@@ -6,6 +6,7 @@
 * See LICENSE
 *
 */
+defined('_CREDLOCK') or die;
 
 $conf->template = 'EstDeus';
 

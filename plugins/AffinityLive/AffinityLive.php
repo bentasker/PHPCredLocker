@@ -6,7 +6,7 @@
 * See LICENSE
 *
 */
-
+defined('_CREDLOCK') or die;
 
 /** Class for logging plugin support
 *

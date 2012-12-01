@@ -6,7 +6,7 @@
 *
 */
 
-
+defined('_CREDLOCK') or die;
 
 class BTDB{
 
