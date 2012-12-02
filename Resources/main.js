@@ -612,6 +612,48 @@ function noCredTypes(){
 
 
 
+function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
+  
+  var menu = document.getElementById(menu);
+  
+  var menuentry;
+  
+  
+    var table = document.getElementById(tbl);
+  
+  var lim = 0;
+  
+  
+  var ind;
+  var item;
+  
+	for (var r = 0; r < table.rows.length; r++){
+		if ( lim == limit) { break; }
+		ind = table.rows[r].cells[3].innerHTML;
+		if (ind == type ){
+		  
+		  
+		  item = document.createElement('li');
+		  item.id = menucode + table.rows[r].cells[2].innerHTML
+		  item.innerHTML = table.rows[r].cells[cellNr].innerHTML;
+		  menu.appendChild(item);
+		  
+		  lim = lim + 1;
+		  }
+		
+	}
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
 /****                  SEARCH FUNCTIONS                 *******/
 
 
@@ -642,6 +684,7 @@ function SearchTable(val,tbl,dispdiv,cellNr){
   
   var suche = val.toLowerCase();
   var table = document.getElementById(tbl);
+  var res;
   
 
   
@@ -649,8 +692,18 @@ function SearchTable(val,tbl,dispdiv,cellNr){
 	for (var r = 0; r < table.rows.length; r++){
 		ele = table.rows[r].cells[cellNr].innerHTML.replace(/<[^>]+>/g,"");
 		if (ele.toLowerCase().indexOf(suche)>=0 ){
+		  
+		  
+		  // Work out how to display
+		  
+		   res = document.createElement('div');
+		    res.class = 'SearchResult';
+		    res.onclick = 'window.location.href="index.php?option=viewCust&id='+table.rows[r].cells[3].innerHTML +'";';
+		    res.innerHTML = table.rows[r].cells[cellNr].innerHTML;
+		  disp.appendChild(res);
+		  
 		  disp.style.display = 'block';
-		  disp.innerHTML += table.rows[r].cells[cellNr].innerHTML;
+		  
 
 		  }
 		

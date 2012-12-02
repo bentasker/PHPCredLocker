@@ -12,42 +12,96 @@ defined('_CREDLOCK') or die;
 <ul class="nav">
 <li class="divider-vertical"></li>
 
-<?php if (BTMain::getUser()->name):?>
-
-  <li class="nav dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Customers");?></a>
-      <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
-      <li><a href="index.php?option=addCustomer">Add <?php echo Lang::_("Customer");?></a></li>
-      <li class="divider"></li>
-	  
-<?php
-
-	  $itemcount = 0;
-	  $custs = new CustDB;
-	  $customers = $custs->getAllCustomers();
-	  $crypt = new Crypto;
-	  $crypt->safety = 0;
-
-		foreach ($customers as $customer){
-
-		$plaintext = $crypt->decrypt($customer->Name,'Customer');
-		$cust[$plaintext] = "<li id='Custmenu{$customer->id}'><a href='index.php?option=viewCust&id={$customer->id}'>$plaintext</a></li>";
-		$itemcount++;
-
-		    if ($itemcount == 10){
-		    break;
-		    }
-		}
-	  
-	
-	ksort($cust);
-	echo implode("\n",$cust);
-	echo "<li class='divider'></li>\n<li><a href='index.php?option=viewCustomers'>View All</a></li>";
+<?php if (BTMain::getUser()->name):
 
 
+
+
+
+  $custs = new CustDB;
+  $crdtypes=new CredDB;
+  $crypt = new Crypto;
+  $crypt->safety = 0;
+
+
+// Output a hidden table so we can use JS to build the menus (avoids having the cleartext strings in Server memory more than once
 ?>
 
 
+
+<table id="SearchListing" style="display: none;">
+<?php
+		foreach ($custs->getAllCustomers() as $customer){
+ob_start();
+$plaintext = $crypt->decrypt($customer->Name,'Customer');
+?>
+
+<tr>
+  <td>
+      
+      <?php echo $plaintext; ?>
+      
+  </td><td><?php echo Lang::_("Customer"); ?>:</td><td><?php echo $customer->id;?></td><td>1</td>
+</tr>
+
+<?php
+$tbl[$plaintext] = ob_get_clean();
+
+}
+
+
+ksort($tbl);
+echo implode("\n",$tbl);
+
+	foreach ($crdtypes->getCredTypes() as $credtype){
+ ob_start();
+ $plaintext = $crypt->decrypt($credtype->Name,'CredType');
+
+?>
+
+<tr>
+  <td>
+      
+	    <?php echo $plaintext; ?>
+      
+  </td><td><?php echo Lang::_("Credential Type"); ?>:</td><td><?php echo $credtype->id;?></td><td>2</td>
+</tr>
+
+<?php
+			  
+$cred[$plaintext] = ob_get_clean();
+
+}
+
+ksort($cred);
+echo implode("\n",$cred);
+?>
+</table>
+
+
+
+
+
+
+
+
+
+  <li class="nav dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Customers");?></a>
+      <ul class="dropdown-menu" role="menu" id='CustDropDownMenu' aria-Labelled-by='dLabel'>
+      <li><a href="index.php?option=addCustomer">Add <?php echo Lang::_("Customer");?></a></li>
+      <li class="divider"></li>
+	  
+	
+
+
+
+<script type="text/javascript">
+CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
+</script>
+
+<li class='divider'></li>
+<li><a href='index.php?option=viewCustomers'>View All</a></li>
 
     </ul>
   </li>
@@ -55,22 +109,11 @@ defined('_CREDLOCK') or die;
 
 <li class="nav dropdown">
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
-      <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
+      <ul class="dropdown-menu" role="menu" id='TypeDropDownMenu' aria-Labelled-by='dLabel'>
       
-	    <?php
-		  $crdtypes=new CredDB;
-		  $credtypes = $crdtypes->getCredTypes();
-
-		      foreach ($credtypes as $credtype){
-
-			  $plaintext = $crypt->decrypt($credtype->Name,'CredType');
-			  $cred[$plaintext] = "<li id='Custmenu{$credtype->id}'><a href='index.php?option=viewByType&id={$credtype->id}'>$plaintext</a></li>";
-
-		      }
-	
-		  ksort($cred);
-		  echo implode("\n",$cred);
-?>
+	  <script type="text/javascript">
+CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 5, 'TypeMenu');
+</script>
 
       </ul>
 </li>
