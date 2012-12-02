@@ -124,27 +124,16 @@ Next we'll create the Administrator account for this install
 }
 
 
+
+
+
+
 /** Use the Entropy to create a key
 *
 */
 function credlocker_install_stage_13(){
-$submitted=1;
-require 'lib/includes/gatherEntropy.php';
 
-
-if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
-echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
-return;
-
-}
-
-$str = "\$crypt->Groups = '$newkey';\n";
-fwrite($fh,$str);
-
-fclose($fh);
-
-echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
-
+writeCryptoKey("Groups","Groups");
 credlocker_install_stage_14();
 
 
@@ -176,23 +165,8 @@ Now we're going to create an encryption key which will be used to secure all Gro
 *
 */
 function credlocker_install_stage_11(){
-$submitted=1;
-require 'lib/includes/gatherEntropy.php';
 
-
-if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
-echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
-return;
-
-}
-
-$str = "\$crypt->Customer = '$newkey';\n";
-fwrite($fh,$str);
-
-fclose($fh);
-
-echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
-
+writeCryptoKey("Customer","Customer Data");
 credlocker_install_stage_12();
 
 
@@ -225,23 +199,7 @@ Now we're going to create an encryption key which will be used to secure all Cus
 *
 */
 function credlocker_install_stage_9(){
-$submitted=1;
-require 'lib/includes/gatherEntropy.php';
-
-
-if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
-echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
-return;
-
-}
-
-$str = "\$crypt->CredType = '$newkey';\n";
-fwrite($fh,$str);
-
-fclose($fh);
-
-echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
-
+writeCryptoKey("CredType","Credential Types");
 credlocker_install_stage_10();
 
 
@@ -276,23 +234,7 @@ Now we're going to create an encryption key which will be used to secure all Cre
 *
 */
 function credlocker_install_stage_7(){
-$submitted=1;
-require 'lib/includes/gatherEntropy.php';
-
-
-if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
-echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
-return;
-
-}
-
-$str = "\$crypt->auth = '$newkey';\n";
-fwrite($fh,$str);
-
-fclose($fh);
-
-echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
-
+writeCryptoKey("auth","Authentication");
 credlocker_install_stage_8();
 
 
@@ -750,6 +692,11 @@ $rm = file_exists($path);
 
 
 
+
+
+
+
+
 ?>
 </td>
 </tr>
@@ -806,7 +753,34 @@ endif;
 }
 
 
+/** Write the specified Crypto Key to the crypto config
+*
+* @arg key - The KeyName
+* @arg text - The text to display to the user
+*
+*
+*/
+function writeCryptoKey($keyname,$text){
 
+$submitted=1;
+require 'lib/includes/gatherEntropy.php';
+
+
+if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
+echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
+return;
+
+}
+
+$str = "\$crypt->$keyname = '$newkey';\n";
+fwrite($fh,$str);
+
+fclose($fh);
+
+echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>";
+
+
+}
 
 
 ?> 
