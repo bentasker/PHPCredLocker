@@ -29,3 +29,7 @@ td.delicon {width:2%;}
 
 
 .passViewNotif {font-size: small;}
+
+#SearchResBox {position: absolute; z-index: 9999; background-color: white; border: 1px solid; padding: 0px;}
+.SearchResult {padding-left: 2px; padding-right: 2px;}
+.SearchResult:hover {background-color: grey; color: white}

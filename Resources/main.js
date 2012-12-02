@@ -614,6 +614,18 @@ function noCredTypes(){
 
 /****                  SEARCH FUNCTIONS                 *******/
 
+
+function positionResults(SearchBox,ResBox){
+  
+ var search = document.getElementById(SearchBox);
+ var res = document.getElementById(ResBox);
+ 
+ res.style.left = search.offsetLeft +'px';
+ res.style.top = eval( search.offsetTop + search.offsetHeight );
+ 
+ res.style.width = search.offsetWidth +'px';
+}
+
 function SearchTable(val,tbl,dispdiv,cellNr){
   
   // Many thanks to http://www.vonloesch.de/node/23 for the headstart on this function!

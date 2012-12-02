@@ -82,6 +82,9 @@ defined('_CREDLOCK') or die;
 
 </ul>
 
+<div class="pull-right">
+<?php $this->loadModule('search'); ?>
+
 
 <?php if (BTMain::checkisSuperAdmin()):?>
 <ul class="nav settings-menu pull-right">
@@ -95,7 +98,7 @@ defined('_CREDLOCK') or die;
       </ul>
 
 </ul>
-
+</div>
 <?php endif;?>
 
 
