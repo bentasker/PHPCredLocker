@@ -181,12 +181,16 @@ function testPassword(passwd)
 		}
 		else if (intScore > 34 && intScore < 45)
 		{
+		  document.getElementById('PassNoMatch').style.display = 'none';
 		   strVerdict = "strong"
 		}
 		else
 		{
+		  document.getElementById('PassNoMatch').style.display = 'none';
 		   strVerdict = "stronger"
 		}
+		
+		
 	
 	document.getElementById('passScore').value = (strVerdict)
 	document.getElementById('passStrength').innerHTML = "Password is " + (strVerdict)

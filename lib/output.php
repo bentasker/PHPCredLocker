@@ -212,7 +212,7 @@ function headContents(){
 <?php
 foreach ($GLOBALS['RequireCSS'] as $css){
 ?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
-}
+<?php}
 
 ?>
 
@@ -253,6 +253,8 @@ $template = BTMain::getConf()->template;
 
 
 }
+
+
 
 
 

@@ -23,6 +23,254 @@ echo "<link rel='stylesheet' type='text/css' href='../Resources/$css.css' />\n";
 
 }
 
+class Logging{
+
+function LogEntry($cred,$action){
+return;
+}
+
+}
+
+/** Remove the installation directory
+*
+*/
+function credlocker_install_stage_17(){
+
+if (unlink(__FILE__) && rmdir(dirname(__FILE__))){
+// Successfully removed
+header('Location: ../index.php');
+die;
+}else{
+
+echo "<div class='alert alert-error'>Unable to remove the Installation directory. Please remove <i>Install</i> manually</div>";
+
+}
+
+}
+
+
+
+/** Inform the user of the final step
+*
+*/
+function credlocker_install_stage_16(){
+?>
+<h1>System Configured</h1>
+
+PHPCredLocker is installed and configured, all that remains is to remove the installation directory! 
+
+To do this automatically, click the button below. Alternatively manually remove the directory <i>Install</i>. 
+
+Once removed, you'll be able to log into the system with the details you just provided. Before you can add Credentials to the system, you'll need to create at least one Credential Type from the administration menu.
+
+<form method="POST">
+<input type="hidden" name="stage" value="17">
+<input type="submit" class="btn btn-primary" value="Remove Installation Directory">
+</form>
+<?php
+
+}
+
+
+
+/** Create the admin user
+*
+*/
+function credlocker_install_stage_15(){
+require 'lib/auth.class.php';
+
+$auth = new ProgAuth;
+
+if ($auth->createUser($_POST['UserName'],$_POST['frmPass'],$_POST['RealName'], array("-1"))){
+
+echo "<div class='alert alert-success'>Added User Successfully</div>";
+
+}else{
+echo "<div class='alert alert-error'>Could not add user, please try again</div>";
+}
+
+
+credlocker_install_stage_16();
+}
+
+
+/** Get the user to provide details necessary to create the admin user
+*
+*/
+function credlocker_install_stage_14(){
+notifications::RequireScript('passwordmeter');
+notifications::RequireScript('main');
+?>
+<h1>Create Administrator Account</h1>
+Next we'll create the Administrator account for this install
+
+
+<form method="POST" onsubmit="return validateUserAdd();">
+<input type="hidden" name="stage" value="15">
+<input type="hidden" id="passScore" disabled="true">
+
+
+<table>
+<tr><th>Username</th><td><input type="text" name="UserName" id="frmUsername"></td><td></td></tr>
+<tr><th>Real Name</th><td><input type="text" name="RealName" id="frmRName"></td><td></td></tr>
+<tr><th>Password</th><td><input type="password" name="frmPass" id="frmPass" autocomplete="off" onkeyup="testPassword(this.value);"></td><td><span id="passStrength"></span><div id="PassNoMatch" style="display: none;" class="alert alert-error"></div></td></tr>
+<tr><th>Confirm Password</th><td><input type="password" name="frmPassConf" autocomplete="off" id="frmPassConf"></td><td></td></tr>
+</table>
+<input type="submit" class="btn btn-primary" value="Create User">
+</form>
+
+<?php
+
+}
+
+
+/** Use the Entropy to create a key
+*
+*/
+function credlocker_install_stage_13(){
+$submitted=1;
+require 'lib/includes/gatherEntropy.php';
+
+
+if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
+echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
+return;
+
+}
+
+$str = "\$crypt->Groups = '$newkey';\n";
+fwrite($fh,$str);
+
+fclose($fh);
+
+echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
+
+credlocker_install_stage_14();
+
+
+}
+
+
+
+/** Generate a key for authentication
+*
+*/
+function credlocker_install_stage_12(){
+$notifications = new notifications;
+?>
+
+<h1>Create Group Key - Last One!</h1>
+
+Now we're going to create an encryption key which will be used to secure all Group Data. To do so, we need to generate random data, so please move your mouse and click randomly in the box below until it turns green
+<br/><br /><form method="POST">
+<input type="hidden" name="stage" value="13">
+<?php require 'lib/includes/gatherEntropy.php'; ?>
+<input type="submit" class="btn btn-primary" value="Generate Key">
+</form>
+<?php
+}
+
+
+
+/** Use the Entropy to create a key
+*
+*/
+function credlocker_install_stage_11(){
+$submitted=1;
+require 'lib/includes/gatherEntropy.php';
+
+
+if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
+echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
+return;
+
+}
+
+$str = "\$crypt->Customer = '$newkey';\n";
+fwrite($fh,$str);
+
+fclose($fh);
+
+echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
+
+credlocker_install_stage_12();
+
+
+}
+
+
+
+/** Generate a key for authentication
+*
+*/
+function credlocker_install_stage_10(){
+$notifications = new notifications;
+?>
+
+<h1>Create Customer Key</h1>
+
+Now we're going to create an encryption key which will be used to secure all Customer Data. To do so, we need to generate random data, so please move your mouse and click randomly in the box below until it turns green
+<br/><br /><form method="POST">
+<input type="hidden" name="stage" value="11">
+<?php require 'lib/includes/gatherEntropy.php'; ?>
+<input type="submit" class="btn btn-primary" value="Generate Key">
+</form>
+<?php
+}
+
+
+
+
+/** Use the Entropy to create a key
+*
+*/
+function credlocker_install_stage_9(){
+$submitted=1;
+require 'lib/includes/gatherEntropy.php';
+
+
+if (!$fh = fopen(dirname(__FILE__)."/../conf/crypto.php",'a')){
+echo "<div class='alert alert-error'>Unable to append to Cryptographic config file, please check permissions and try again</div>";
+return;
+
+}
+
+$str = "\$crypt->CredType = '$newkey';\n";
+fwrite($fh,$str);
+
+fclose($fh);
+
+echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
+
+credlocker_install_stage_10();
+
+
+}
+
+
+
+/** Generate a key for authentication
+*
+*/
+function credlocker_install_stage_8(){
+$notifications = new notifications;
+?>
+
+<h1>Create CredType Key</h1>
+
+Now we're going to create an encryption key which will be used to secure all Credential Categories. To do so, we need to generate random data, so please move your mouse and click randomly in the box below until it turns green
+<br/><br /><form method="POST">
+<input type="hidden" name="stage" value="9">
+<?php require 'lib/includes/gatherEntropy.php'; ?>
+<input type="submit" class="btn btn-primary" value="Generate Key">
+</form>
+<?php
+}
+
+
+
+
+
 
 /** Use the Entropy to create a key
 *
@@ -43,7 +291,9 @@ fwrite($fh,$str);
 
 fclose($fh);
 
+echo "<div class='alert alert-success'>Created Cryptographic key for Authentication</div>";
 
+credlocker_install_stage_8();
 
 
 }
@@ -594,7 +844,7 @@ first_install_stage();
 chdir(dirname(__FILE__)."/../");
 require_once 'lib/Framework/main.php';
 
-if (($_POST['stage'] >= '5') && ($_POST['stage'] <= '9')){
+if (((($_POST['stage'] >= '5') && ($_POST['stage'] <= '13')) || ($_POST['stage'] == 15))) {
 require_once 'lib/crypto.php';
 
 }
