@@ -608,3 +608,55 @@ function noCredTypes(){
   
   
 }
+
+
+
+
+/****                  SEARCH FUNCTIONS                 *******/
+
+function SearchTable(val,tbl,dispdiv,cellNr){
+  
+  // Many thanks to http://www.vonloesch.de/node/23 for the headstart on this function!
+
+  // Reset the display div
+  var disp = document.getElementById(dispdiv);   
+  disp.innerHTML = '';
+  
+
+  // Only search after 3 chars have been entered
+  if (val.length < 3){
+    return;     
+    }
+  
+  var suche = val.toLowerCase();
+  var table = document.getElementById(tbl);
+  
+
+  
+  var ele;
+	for (var r = 0; r < table.rows.length; r++){
+		ele = table.rows[r].cells[cellNr].innerHTML.replace(/<[^>]+>/g,"");
+		if (ele.toLowerCase().indexOf(suche)>=0 ){
+		  disp.style.display = 'block';
+		  disp.innerHTML += table.rows[r].cells[cellNr].innerHTML;
+
+		  }
+		
+	}
+  
+}
+
+
+
+function hideSearchDiv(dispdiv){
+  var div = document.getElementById(dispdiv);
+  div.style.display = 'none';
+}
+
+
+
+function checkExistingSearch(val,div){
+      if (val.length > 3){
+	  document.getElementById(div).style.display = 'block';
+	  }
+}
