@@ -215,7 +215,7 @@ foreach ($GLOBALS['RequireCSS'] as $css){
 <?php
 }
 ?>
-
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="Resources/main.js" type="text/javascript"></script>
 <?php
 foreach ($GLOBALS['RequireScript'] as $script){

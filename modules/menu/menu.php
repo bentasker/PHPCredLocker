@@ -42,6 +42,7 @@ $plaintext = $crypt->decrypt($customer->Name,'Customer');
       <?php echo $plaintext; ?>
       
   </td><td><?php echo Lang::_("Customer"); ?>:</td><td><?php echo $customer->id;?></td><td>1</td>
+<td>index.php?option=viewCust&id=<?php echo $customer->id;?></td><td>viewCust</td>
 </tr>
 
 <?php
@@ -65,6 +66,7 @@ echo implode("\n",$tbl);
 	    <?php echo $plaintext; ?>
       
   </td><td><?php echo Lang::_("Credential Type"); ?>:</td><td><?php echo $credtype->id;?></td><td>2</td>
+<td>&id=<?php echo $credtype->id;?></td><td>viewByType</td>
 </tr>
 
 <?php
@@ -91,17 +93,7 @@ echo implode("\n",$cred);
       <ul class="dropdown-menu" role="menu" id='CustDropDownMenu' aria-Labelled-by='dLabel'>
       <li><a href="index.php?option=addCustomer">Add <?php echo Lang::_("Customer");?></a></li>
       <li class="divider"></li>
-	  
-	
 
-
-
-<script type="text/javascript">
-CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
-</script>
-
-<li class='divider'></li>
-<li><a href='index.php?option=viewCustomers'>View All</a></li>
 
     </ul>
   </li>
@@ -111,9 +103,7 @@ CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
       <ul class="dropdown-menu" role="menu" id='TypeDropDownMenu' aria-Labelled-by='dLabel'>
       
-	  <script type="text/javascript">
-CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 5, 'TypeMenu');
-</script>
+
 
       </ul>
 </li>
@@ -125,7 +115,7 @@ CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 5, 'TypeMenu');
 
 </ul>
 
-<div class="pull-right">
+<div class="pull-right" style="position: relative">
 <?php $this->loadModule('search'); ?>
 
 
@@ -143,5 +133,3 @@ CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 5, 'TypeMenu');
 </ul>
 </div>
 <?php endif;?>
-
-

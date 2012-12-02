@@ -626,6 +626,7 @@ function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
   
   var ind;
   var item;
+  var str;
   
 	for (var r = 0; r < table.rows.length; r++){
 		if ( lim == limit) { break; }
@@ -634,8 +635,9 @@ function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
 		  
 		  
 		  item = document.createElement('li');
-		  item.id = menucode + table.rows[r].cells[2].innerHTML
-		  item.innerHTML = table.rows[r].cells[cellNr].innerHTML;
+		  item.id = menucode + table.rows[r].cells[2].innerHTML;		  
+		  
+		  item.innerHTML = "<a href='index.php?option="+table.rows[r].cells[5].innerHTML+"&id="+table.rows[r].cells[2].innerHTML+"'>"+table.rows[r].cells[cellNr].innerHTML+"</a>";
 		  menu.appendChild(item);
 		  
 		  lim = lim + 1;
@@ -662,15 +664,40 @@ function positionResults(SearchBox,ResBox){
  var search = document.getElementById(SearchBox);
  var res = document.getElementById(ResBox);
  
+ 
+ 
+ 
  res.style.left = search.offsetLeft +'px';
- res.style.top = eval( search.offsetTop + search.offsetHeight );
+ res.style.top = eval( search.offsetTop + search.offsetHeight + 3 )+'px';
  
  res.style.width = search.offsetWidth +'px';
 }
 
-function SearchTable(val,tbl,dispdiv,cellNr){
+function SearchTable(val,tbl,dispdiv,cellNr,e){
   
   // Many thanks to http://www.vonloesch.de/node/23 for the headstart on this function!
+
+
+
+var keynum = 0;
+
+if(window.event) { keynum = window.event.keyCode; }  // IE (sucks)
+else if(e.which) { keynum = e.which; }    // Netscape/Firefox/Opera
+
+if(keynum === 38) { // up
+    //Move selection up
+    selectResult('up');
+    return;
+}
+
+if(keynum === 40) { // down
+    //Move selection down
+    selectResult('down');
+    
+    return;
+}
+
+
 
   // Reset the display div
   var disp = document.getElementById(dispdiv);   
@@ -682,10 +709,12 @@ function SearchTable(val,tbl,dispdiv,cellNr){
     return;     
     }
   
+  positionResults("SearchBox",dispdiv);
+  
   var suche = val.toLowerCase();
   var table = document.getElementById(tbl);
   var res;
-  
+  var num = 0;
 
   
   var ele;
@@ -693,13 +722,19 @@ function SearchTable(val,tbl,dispdiv,cellNr){
 		ele = table.rows[r].cells[cellNr].innerHTML.replace(/<[^>]+>/g,"");
 		if (ele.toLowerCase().indexOf(suche)>=0 ){
 		  
-		  
+		num=num+1;  
 		  // Work out how to display
 		  
 		   res = document.createElement('div');
-		    res.class = 'SearchResult';
-		    res.onclick = 'window.location.href="index.php?option=viewCust&id='+table.rows[r].cells[3].innerHTML +'";';
-		    res.innerHTML = table.rows[r].cells[cellNr].innerHTML;
+		   res.id = 'SearchResult'+num; 
+		   res.className = 'SearchResult';
+		   res.setAttribute('link',table.rows[r].cells[5].innerHTML);
+		   res.setAttribute('entID',table.rows[r].cells[2].innerHTML);
+		   
+		    
+		    res.innerHTML = "<a href='index.php?option=" + table.rows[r].cells[5].innerHTML + "&id="+table.rows[r].cells[2].innerHTML+"'>"+ table.rows[r].cells[cellNr].innerHTML + "</a>";
+		    
+		    
 		  disp.appendChild(res);
 		  
 		  disp.style.display = 'block';
@@ -710,6 +745,46 @@ function SearchTable(val,tbl,dispdiv,cellNr){
 	}
   
 }
+
+
+
+function selectResult(dir){
+ var ind;
+ var SelIndex = document.getElementById('SelectedValue');
+ var SearchResult ;
+ 
+ 
+ if (dir == 'down'){
+   
+   if (SelIndex.value != 0){
+   document.getElementById("SearchResult" + parseInt(SelIndex.value)).className = 'SearchResult';
+   }
+   
+ ind = eval(parseInt(SelIndex.value) + 1);
+ 
+
+ 
+   
+  }else{
+    document.getElementById("SearchResult" + parseInt(SelIndex.value)).className = 'SearchResult';
+ ind = eval(parseInt(SelIndex.value) - 1);  
+   if (ind == 0){ return; }
+   
+   
+ }
+ 
+ SearchResult = document.getElementById('SearchResult'+ind);
+ SearchResult.className = 'SearchResult SearchResultActive';
+  SelIndex.value = ind; 
+  document.getElementById('SrchOpt').value = SearchResult.getAttribute('link');
+  document.getElementById('SrchID').value = SearchResult.getAttribute('entID');
+  document.getElementById('SearchBox').focus();
+ 
+}
+
+
+
+
 
 
 
@@ -725,3 +800,31 @@ function checkExistingSearch(val,div){
 	  document.getElementById(div).style.display = 'block';
 	  }
 }
+
+
+
+
+
+
+/******                           Runs on load                       *****/
+
+
+
+
+
+
+
+jQuery(document).ready(function() {
+
+CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 100, 'TypeMenu');
+CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
+var menu = document.getElementById('CustDropDownMenu');
+var ele = document.createElement('li');
+ele.className='divider';
+
+menu.appendChild(ele);
+
+ele = document.createElement('li');
+ele.innerHTML = "<a href='index.php?option=viewCustomers'>View All</a></li>";
+menu.appendChild(ele);
+})
