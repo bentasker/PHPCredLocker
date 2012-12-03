@@ -128,6 +128,15 @@ echo implode("\n",$cred);
   if (BTMain::checkisSuperAdmin()):
 ?>
   <tr>
+    <td>Add User</td>
+    <td>User:</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>addUser</td>
+  </tr>
+
+  <tr>
     <td>View Users</td>
     <td>User:</td>
     <td></td>
@@ -154,6 +163,17 @@ $auth = new AuthDB;
   <?php
   }
   ?>
+
+
+  <tr>
+    <td>Add <?php echo Lang::_("UserGroup");?></td>
+    <td><?php echo Lang::_("UserGroup"); ?>:</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>addGrp</td>
+  </tr>
+
 
   <tr>
     <td>View <?php echo Lang::_("User Groups");?></td>
@@ -184,7 +204,7 @@ $auth = new AuthDB;
 
 ?>
  <tr>
-    <td>All Plugins</td>
+    <td>View Plugins</td>
     <td>Plugin:</td>
     <td></td>
     <td></td>
@@ -276,6 +296,27 @@ $plugins = $plug->listloadedPlugins();
 
 
   endif;?>
+
+
+  <tr>
+    <td>Log Out</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>logout</td>
+  </tr>
+
+  <tr>
+    <td>Change Password</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>changePassword</td>
+  </tr>
+
+
 </table>
 
 
