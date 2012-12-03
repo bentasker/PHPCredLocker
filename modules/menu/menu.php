@@ -10,7 +10,7 @@ defined('_CREDLOCK') or die;
 global $notifications;
 
 
-require "modules/menu/search-table.php";
+
 
 ?>
 
@@ -24,7 +24,7 @@ if (!BTMain::getUser()->name){
 echo "</ul>\n";
 return;
 }
-
+$this->loadModule('search-table');
 ?>
 
   <!-- Customer Menu -->
