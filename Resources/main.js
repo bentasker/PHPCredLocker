@@ -719,6 +719,7 @@ if(keynum === 40) { // down
   var num = 0;
   var id;
   var ele;
+  var add;
   
   
   
@@ -745,9 +746,15 @@ if(keynum === 40) { // down
 		     
 		   }
 		   
-		   
-		   res.setAttribute('onclick',"window.location.href = 'index.php?option="+table.rows[r].cells[5].innerHTML + "&"+id+"="+table.rows[r].cells[2].innerHTML+"';");
-		   
+		    if (table.rows[r].cells[6]){
+		      
+		     add = "&"+ table.rows[r].cells[6].innerHTML;
+		    }else{
+		     add = ''; 
+		    }
+		    
+		   res.setAttribute('onclick',"window.location.href = 'index.php?option="+table.rows[r].cells[5].innerHTML + "&"+id+"="+table.rows[r].cells[2].innerHTML+add+"';");
+		   res.setAttribute('frmName',id);
 		    
 		    res.innerHTML = table.rows[r].cells[1].innerHTML + " " +table.rows[r].cells[cellNr].innerHTML;
 		    
@@ -794,6 +801,7 @@ function selectResult(dir){
  SearchResult.className = 'SearchResult SearchResultActive';
   SelIndex.value = ind; 
   document.getElementById('SrchOpt').value = SearchResult.getAttribute('link');
+  document.getElementById('SrchID').name = SearchResult.getAttribute('frmName');
   document.getElementById('SrchID').value = SearchResult.getAttribute('entID');
   document.getElementById('SearchBox').focus();
  

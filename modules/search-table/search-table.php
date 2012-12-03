@@ -16,6 +16,7 @@
 *    <td>Classification, used by CreateMenuContent 1 = Customer, 2 = Cred Type</td>
 *    <td>id field - default id, used to form the URI params (so might set frmUsername when linking to user edit page)</td>
 *    <td>option - used to form URI Params</td>
+*    <td>Additional Params - Optional </td>
 *  </tr>
 *
 *
@@ -179,6 +180,99 @@ $auth = new AuthDB;
 
   <?php
   }
+
+
+?>
+ <tr>
+    <td>All Plugins</td>
+    <td>Plugin:</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>pluginInfo</td>
+  </tr>
+<?php
+
+$plug = new Plugins;
+$plugins = $plug->listloadedPlugins(); 
+
+      if (isset($plugins->Auth)):
+	  foreach($plugins->Auth as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (Authentication)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Auth</td>
+  </tr>
+
+	<?php
+	  }
+
+      endif;
+
+
+      if (isset($plugins->Logging)):
+	  foreach($plugins->Logging as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (Logging)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Logging</td>
+  </tr>
+
+	<?php
+	  }
+
+      endif;
+
+    if (isset($plugins->Customers)):
+  foreach($plugins->Customers as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (<?php echo Lang::_('Customers');?>)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Customers</td>
+  </tr>
+
+	<?php
+	  }
+
+    endif;
+
+    if (isset($plugins->Creds)):
+  foreach($plugins->Creds as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (<?php echo Lang::_('Credentials');?>)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Creds</td>
+  </tr>
+
+	<?php
+	  }
+
+
+      endif;
 
 
   endif;?>
