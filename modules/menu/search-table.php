@@ -5,6 +5,21 @@
 * Released under GNU GPL V2
 * See LICENSE
 *
+*
+* Usage: each row specifies a record to be parsed by the relevant Javascript function (usually SearchTable or CreateMenuContent)
+*
+*
+* <tr>
+*    <td>Text to Display </td>
+*    <td>Highlighted item (e.g. User:)</td>
+*    <td>id - the id to append to any URLS</td>
+*    <td>Classification, used by CreateMenuContent 1 = Customer, 2 = Cred Type</td>
+*    <td>id field - default id, used to form the URI params (so might set frmUsername when linking to user edit page)</td>
+*    <td>option - used to form URI Params</td>
+*  </tr>
+*
+*
+*
 */ 
 defined('_CREDLOCK') or die;
 ?>
