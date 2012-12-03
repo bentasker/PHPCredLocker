@@ -749,7 +749,7 @@ if(keynum === 40) { // down
 		   res.setAttribute('onclick',"window.location.href = 'index.php?option="+table.rows[r].cells[5].innerHTML + "&"+id+"="+table.rows[r].cells[2].innerHTML+"';");
 		   
 		    
-		    res.innerHTML = table.rows[r].cells[1].innerHTML + table.rows[r].cells[cellNr].innerHTML;
+		    res.innerHTML = table.rows[r].cells[1].innerHTML + " " +table.rows[r].cells[cellNr].innerHTML;
 		    
 		    
 		  disp.appendChild(res);
