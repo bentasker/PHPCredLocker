@@ -210,18 +210,31 @@ function headContents(){
 <title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
 
 <?php
-foreach ($GLOBALS['RequireCSS'] as $css){
-?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
-<?php
-}
+    foreach ($GLOBALS['RequireCSS'] as $css){
+	    ?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/><?php
+	}
 ?>
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="Resources/main.js" type="text/javascript"></script>
-<?php
-foreach ($GLOBALS['RequireScript'] as $script){
-?><script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script><?php
-}
 
+
+<?php
+  foreach ($GLOBALS['RequireScript'] as $script){
+      ?><script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script><?php
+    }
+
+
+  if (is_array($GLOBALS['CUSTOMJS'])):
+    ?>
+      <script type="text/javascript">
+
+      <?php echo implode("\n",$GLOBALS['CUSTOMJS']);?>
+
+      </script>
+
+<?php
+endif;
 
 }
 
@@ -284,6 +297,13 @@ $GLOBALS['RequireScript'][] = $script;
 function setBreadcrumb($path){
 
 $GLOBALS['BREADCRUMB'] = $path;
+
+}
+
+
+
+function setCustomJS($js){
+$GLOBALS['CUSTOMJS'][] = "$js";
 
 }
 

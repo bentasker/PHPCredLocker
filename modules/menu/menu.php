@@ -7,6 +7,8 @@
 *
 */ 
 defined('_CREDLOCK') or die;
+global $notifications;
+
 
 require "modules/menu/search-table.php";
 
@@ -25,11 +27,7 @@ return;
 
 ?>
 
-
-
-
-
-
+  <!-- Customer Menu -->
   <li class="nav dropdown">
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Customers");?></a>
       <ul class="dropdown-menu" role="menu" id='CustDropDownMenu' aria-Labelled-by='dLabel'>
@@ -39,16 +37,20 @@ return;
 
     </ul>
   </li>
+  <!-- Customer menu ends -->
+
+  <!-- CredType menu -->
 <li class="divider-vertical"></li>
 
 <li class="nav dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
       <ul class="dropdown-menu" role="menu" id='TypeDropDownMenu' aria-Labelled-by='dLabel'>
       
 
 
       </ul>
 </li>
+  <!-- CredType menu ends -->
 <li class="divider-vertical"></li>
 
 
@@ -57,14 +59,20 @@ return;
 
 </ul>
 
+<!-- Admin and search -->
 <div class="pull-right" style="position: relative">
-<?php $this->loadModule('search'); ?>
+
+  <!-- Search Box -->
+  <?php $this->loadModule('search'); ?>
+  <!-- Search Box ends -->
+
 
 
 <?php if (BTMain::checkisSuperAdmin()):?>
+<!-- Admin Menu -->
 <ul class="nav settings-menu pull-right">
  <li class="nav dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class='icon-white icon-cog'></i></a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class='icon-white icon-cog'></i></a>
       <ul class="dropdown-menu" role="menu" aria-Labelled-by='dLabel'>
       <li><a href="index.php?option=viewUsers">Users</a></li>
       <li><a href="index.php?option=viewGrps"><?php echo Lang::_("User Groups");?></a></li>
@@ -73,5 +81,17 @@ return;
       </ul>
 
 </ul>
-</div>
+<!-- Admin Menu Ends -->
+
+
 <?php endif;?>
+
+
+</div>
+
+
+    <!-- Call the Setup Script -->
+    <script type="text/javascript">
+    setUpMenus();
+    </script>
+

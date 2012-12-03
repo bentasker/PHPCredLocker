@@ -837,10 +837,10 @@ function checkExistingSearch(val,div){
 
 
 
-/******                           Runs on load                       *****/
 
 
 
+function setUpMenus(){
 
 
 
@@ -858,4 +858,8 @@ menu.appendChild(ele);
 ele = document.createElement('li');
 ele.innerHTML = "<a href='index.php?option=viewCustomers'>View All</a></li>";
 menu.appendChild(ele);
-})
+});
+
+
+
+}
