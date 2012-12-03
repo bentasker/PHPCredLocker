@@ -108,7 +108,7 @@ Next we'll create the Administrator account for this install
 <form method="POST" onsubmit="return validateUserAdd();">
 <input type="hidden" name="stage" value="15">
 <input type="hidden" id="passScore" disabled="true">
-
+<input type="hidden" id="minpassStrength" disabled="true" value="<?php echo BTMain::getConf()->minpassStrength;?>">
 
 <table>
 <tr><th>Username</th><td><input type="text" name="UserName" id="frmUsername"></td><td></td></tr>
@@ -568,6 +568,15 @@ function credlocker_install_stage_2(){
 </tr>
 <tr>
 <td>Display Credentials for</td><td><input type="text" name="CredDisplay" value="30" length="3"> seconds</td>
+</tr>
+<tr>
+<td>Minimum Password Strength</td><td><select name="minpassStrength">
+<option value="0-16">Very Weak</option>
+<option value="15-25">Weak</option>
+<option value="24-35">Mediocre</option>
+<option value="34-45" selected>Strong</option>
+<option value="45+">Very Strong</option>
+</td>
 </tr>
 <tr>
 <td>Expire Sessions after</td><td><input type="text" name="sessionexpiry" value="15"> minutes</td>

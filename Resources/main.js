@@ -7,16 +7,49 @@ var cancel='';
 	  var pass = document.getElementById('frmPass');
 	  var nomatch = document.getElementById('PassNoMatch');
 	  var passscore = document.getElementById('passScore');
+	  var minpass = document.getElementById('minpassStrength');
 	  
-	  if (passscore.value != 'strong' && passscore.value != 'stronger'){
+	  
+	  if (minpass){
+	  
 	    
-	    nomatch.innerHTML = "Password is too weak";
-	   nomatch.style.display = 'inline-block';
+	    var strength = minpass.value;
+	    var test;
+	    if (strength.indexOf("+") >= 0){
+		if (parseInt(passScore.value) > 45){
+		 test = true; 
+		}else{
+		 test = false; 
+		}
+	      
+	    }else{
+	      
+	      var testvars = strength.split("-");
+	      
+	      if ((parseInt(passScore.value) > testvars[0])){
+		test = true;
+		
+	      }else{
+		
+		test = false;
+	      }
+	      
+	      
+	      
+	      
+	      
+	    }
+	    
+	      if (!test){
+	    
+		nomatch.innerHTML = "Password is too weak";
+		nomatch.style.display = 'inline-block';
 	   
-	   return false;
+		return false;
 	    
 	  }
 	  
+	  }
 	  
 	  
 	 if (pass.value != document.getElementById('frmPassConf').value){

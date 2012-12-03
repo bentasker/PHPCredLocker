@@ -63,6 +63,7 @@ $notifications->setBreadcrumb($path);
 <label for="frmRName">Real Name</label><input type="text" name="frmRName" id="frmRName">
 
 <label for="frmSuperAdmin">SuperAdmin</label><input type="checkbox" value="1" name="frmSuperAdmin" id="frmSuperAdmin">
+<input type="hidden" id="minpassStrength" disabled="true" value="<?php echo BTMain::getConf()->minpassStrength;?>">
 <input type="hidden" id="passScore" disabled="true">
 <?php 
 

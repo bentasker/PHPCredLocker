@@ -192,7 +192,7 @@ function testPassword(passwd)
 		
 		
 	
-	document.getElementById('passScore').value = (strVerdict)
+	document.getElementById('passScore').value = (intScore)
 	document.getElementById('passStrength').innerHTML = "Password is " + (strVerdict)
 	document.getElementById('passStrength').className = strVerdict.replace(" ","") + "Pass";
 	

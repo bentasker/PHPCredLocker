@@ -47,7 +47,7 @@ $notifications->setBreadcrumb($path);
 
 <label for="frmPassConf">Password Confirm</label><input type="password" name="frmPassConf" id="frmPassConf" autocomplete='off'>
 
-
+<input type="hidden" id="minpassStrength" disabled="true" value="<?php echo BTMain::getConf()->minpassStrength;?>">
 <input type="hidden" id="passScore" disabled="true">
 
 

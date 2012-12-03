@@ -39,7 +39,7 @@ $conf->showDBErrors = 1;
 $conf->loggingenabled = true;
 
 
-
+$conf->minpassStrength = '34-45';
 
 
 ?>
