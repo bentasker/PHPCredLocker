@@ -668,7 +668,9 @@ function positionResults(SearchBox,ResBox){
  
  
  res.style.left = search.offsetLeft +'px';
- res.style.top = eval( search.offsetTop + search.offsetHeight + 3 )+'px';
+ 
+ // Set the position, but account for bootstrap's border and padding
+ res.style.top = eval( search.offsetTop + search.offsetHeight + 6 )+'px';
  
  res.style.width = search.offsetWidth +'px';
 }
@@ -715,12 +717,16 @@ if(keynum === 40) { // down
   var table = document.getElementById(tbl);
   var res;
   var num = 0;
-
-  
+  var id;
   var ele;
+  
+  
+  
+  
 	for (var r = 0; r < table.rows.length; r++){
 		ele = table.rows[r].cells[cellNr].innerHTML.replace(/<[^>]+>/g,"");
-		if (ele.toLowerCase().indexOf(suche)>=0 ){
+		
+		if ((ele.toLowerCase().indexOf(suche)>=0 ) || ((suche.indexOf(":") >= 0) && (table.rows[r].cells[1].innerHTML.toLowerCase().indexOf(suche)>=0))){
 		  
 		num=num+1;  
 		  // Work out how to display
@@ -731,8 +737,19 @@ if(keynum === 40) { // down
 		   res.setAttribute('link',table.rows[r].cells[5].innerHTML);
 		   res.setAttribute('entID',table.rows[r].cells[2].innerHTML);
 		   
+		   if (table.rows[r].cells[4].innerHTML != null && table.rows[r].cells[4].innerHTML != ''){
+		      id = table.rows[r].cells[4].innerHTML;
+		     
+		   }else{
+		     id = 'id';
+		     
+		   }
+		   
+		   
+		   res.setAttribute('onclick',"window.location.href = 'index.php?option="+table.rows[r].cells[5].innerHTML + "&"+id+"="+table.rows[r].cells[2].innerHTML+"';");
+		   
 		    
-		    res.innerHTML = "<a href='index.php?option=" + table.rows[r].cells[5].innerHTML + "&id="+table.rows[r].cells[2].innerHTML+"'>"+ table.rows[r].cells[cellNr].innerHTML + "</a>";
+		    res.innerHTML = table.rows[r].cells[1].innerHTML + table.rows[r].cells[cellNr].innerHTML;
 		    
 		    
 		  disp.appendChild(res);
@@ -790,8 +807,22 @@ function selectResult(dir){
 
 function hideSearchDiv(dispdiv){
   var div = document.getElementById(dispdiv);
+  
+  
+  
+  for (opacity = 10; opacity > 0; opacity--){
+    
+    
+  div.style.opacity = '0.'+opacity;
+    
+  }
+ 
+  
   div.style.display = 'none';
+  div.style.opacity = '1';
 }
+
+
 
 
 
