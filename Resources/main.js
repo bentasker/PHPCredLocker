@@ -1,3 +1,16 @@
+/* ************************************************************
+Author:  Ben Tasker - BenTasker.co.uk
+Description: Main Javascript functions for PHPCredLocker. Most 
+  functions currently quick and dirty, will improve in future releases!
+
+License: GNU GPL V2 -  See http://www.gnu.org/licenses/gpl-2.0.html
+
+Repo: https://github.com/bentasker/PHPCredLocker/
+---------------------------------------------------------------
+Copyright (c) 2012 Ben Tasker
+
+*/
+
 var counter=false;
 var cancel='';
 	
