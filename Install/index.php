@@ -795,13 +795,12 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 ?> 
 <html>
 <head>
-<title>Install</title>
+<title>Install PHPCredLocker</title>
 
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap.css" />
-
+<link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/EstDeus.css" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
 <script type="text/javascript" src="../templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
 
 
@@ -809,10 +808,48 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 <Style type="text/css">
 .testPass {color: green;}
 .testFail {color: red; font-weight: bold;}
+li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
+#BreadCrumbs {width: 90% !important; text-align: center;}
 </style>
 </head>
 <body>
+<!-- Main PageWrap begins -->
+<div id='all' class='PageWrap pgbackground'>
 
+<!-- Navbar Begins -->
+<div id='Nav' class='navbar'>
+    <div class='navbar-inner'>
+	<a class="brand" href="index.php">PHPCredLocker</a>
+	  <ul class="nav">
+	    <li class="divider-vertical"></li>
+	    <li class="nav"><a id="Inst" href="#">Install</a></li>
+	  </ul>
+    </div>
+</div>
+<div id='FFContainer'>
+<div class='contentArea pgbackground' id='contentArea'>
+
+<div class='BreadCrumbs' id='BreadCrumbs'>
+
+  <ul class="breadcrumb">
+
+    <li class="stage">Introduction</li>
+    <li class="stage2"><span class="divider">/</span>Configuration</li>
+    <li class="stage3"><span class="divider">/</span>CryptoGraphic Settings</li>
+    <li class="stage5"><span class="divider">/</span>Authentication Key</li>
+    <li class="stage7"><span class="divider">/</span>Credential Type Key</li>
+    <li class="stage9"><span class="divider">/</span>Customer Key</li>
+    <li class="stage11"><span class="divider">/</span>Group Key</li>
+    <li class="stage13"><span class="divider">/</span>Administrator Account</li>
+    <li class="stage15"><span class="divider">/</span>Remove Install Directory</li>
+    <li class="stage17"><span class="divider">/</span>Complete!</li>
+
+  </ul>
+
+</div>
+
+
+<div class='content' id='ContentWrap'>
 <?php
 
 
@@ -847,5 +884,13 @@ $fn();
 
 
 ?>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
 </body>
 </html>

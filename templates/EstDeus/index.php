@@ -14,7 +14,7 @@
 </head>
 <body>
 <!-- Main PageWrap begins -->
-<div id='all' class='PageWrap'>
+<div id='all' class='PageWrap pgbackground'>
 
 <!-- Navbar Begins -->
 <div id='Nav' class='navbar'>
@@ -26,7 +26,7 @@
 <!-- Navbar Ends -->
 
 <div id='FFContainer'>
-<div class='contentArea' id='contentArea'>
+<div class='contentArea pgbackground' id='contentArea'>
 <div class='BreadCrumbs' id='BreadCrumbs'>
 <?php echo $this->BreadCrumbs(); ?>
 </div>

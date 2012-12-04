@@ -11,10 +11,16 @@ ob_start();
 define('_CREDLOCK',1);
 
 // Prevent Caching
-header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
-');
+header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 header('Pragma: no-cache');
 header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+
+
+// Force use of the installer if it's present
+if (is_dir (dirname(__FILE__)."/Install")){
+header("Location: Install/");
+die;
+}
 
 
 //error_reporting(E_ALL);
