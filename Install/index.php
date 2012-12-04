@@ -800,7 +800,7 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/EstDeus.css" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="../templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
 
 
