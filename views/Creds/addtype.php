@@ -11,6 +11,8 @@ BTMain::checkSuperAdmin();
 
 global $notifications;
 
+$notifications->setPageTitle("Add " . Lang::_('Credential Type'));
+
 if (BTMain::getVar('AddCredType')){
 $db = new CredDB;
 $crypt = new Crypto;

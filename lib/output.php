@@ -15,11 +15,13 @@ class genOutput{
 
 
 function genDefaultPage(){
+global $notifications;
+$notifications->setPageTitle("Home");
 
 $str = "<span class='basic-content default-page'>";
 if (BTMain::getUser()->name){
 
-$str .= 'Welcome to the cred handling system. Please use the menu&apos;s to proceed';
+$str .= 'Welcome to the cred handling system. Please use the menus to proceed';
 
 }else{
 
@@ -207,7 +209,7 @@ return implode("\n",$str);
 */
 function headContents(){
 ?>
-<title><?php echo BTMain::getConf()->ProgName;?> - Work in Progress</title>
+<title><?php echo BTMain::getConf()->ProgName;?> - <?php echo $this->getPageTitle();?></title>
 
 <?php
     foreach ($GLOBALS['RequireCSS'] as $css){
@@ -263,7 +265,14 @@ $template = BTMain::getConf()->template;
 }
 
 
+/** Check the pagetitle global and return the contents
+*
+*/
+function getPageTitle(){
 
+return htmlentities($GLOBALS['PageTitle']);
+
+}
 
 }
 
@@ -277,6 +286,10 @@ $template = BTMain::getConf()->template;
 
 class notifications{
 
+
+function setPageTitle($title){
+$GLOBALS['PageTitle'] = $title;
+}
 
 function setNotification($notification){
 
