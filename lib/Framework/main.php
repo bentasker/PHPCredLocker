@@ -16,7 +16,11 @@ require_once 'lib/Framework/db_common.php';
 
 class BTMain{
 
+function getConnTypeSSL(){
+return $_SERVER['HTTPS'];
 
+
+}
 
 
 /** Load in the system config and return as an object

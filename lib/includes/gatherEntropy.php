@@ -22,7 +22,7 @@ $entropy = BTMain::getVar('gEntropy');
 
 $entropyseed = mt_rand(1000,999000);
 
-$x = 500;
+$x = 900;
 $arrlength = count($arr) - 1;
 
 
