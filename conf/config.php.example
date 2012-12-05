@@ -1,5 +1,5 @@
 <?php
-/** System Configuration
+/** Example System Configuration
 *
 * Copyright (C) 2012 B Tasker
 * Released under GNU GPL V2
@@ -38,8 +38,11 @@ $conf->showDBErrors = 1;
 // Set this to false to disabled the internal logging (logging plugins will still run if they are active)
 $conf->loggingenabled = true;
 
-
+// The minimum password strength range
 $conf->minpassStrength = '34-45';
+
+
+// Required password for cronjobs
 $conf->cronPass = 'P455w0rd';
 
 ?>
