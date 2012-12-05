@@ -40,6 +40,6 @@ $conf->loggingenabled = true;
 
 
 $conf->minpassStrength = '34-45';
-
+$conf->cronPass = 'P455w0rd';
 
 ?>
