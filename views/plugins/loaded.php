@@ -50,6 +50,31 @@ if (isset($plugins->Auth)){
 }
 
 
+if (isset($plugins->Cron)){
+
+?>
+<h2>Cron Plugins</h2>
+<table class="table table-hover">
+<tr><th>Plugin</th><th>Status</th><th></th></tr>
+<?php
+
+    foreach($plugins->Cron as $plugin=>$status){
+
+    ?>
+    <tr>
+	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td>
+	<td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Auth">Plugin Info</a></td>
+    </tr>
+    <?php
+    }
+
+
+
+}
+
+
+
+
 if (isset($plugins->Logging)){
 
 ?>

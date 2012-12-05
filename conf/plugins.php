@@ -12,7 +12,7 @@ $plugins->Auth = array();
 $plugins->Logging = array('AffinityLive');
 $plugins->Customers = array();
 $plugins->Creds = array();
-
+$plugins->Cron = array();
 
 
 ?>

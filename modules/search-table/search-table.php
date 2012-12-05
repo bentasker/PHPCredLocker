@@ -236,6 +236,28 @@ $plugins = $plug->listloadedPlugins();
       endif;
 
 
+
+
+    if (isset($plugins->Cron)):
+	  foreach($plugins->Auth as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (Cron)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Cron</td>
+  </tr>
+
+	<?php
+	  }
+
+      endif;
+
+
       if (isset($plugins->Logging)):
 	  foreach($plugins->Logging as $plugin=>$status){
 	  ?>

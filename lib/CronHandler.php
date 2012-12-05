@@ -25,10 +25,15 @@ require_once 'lib/db/cron.php';
 
 $crondb = new CronDB;
 
+// Clear any sessions
 echo "Clearing old sessions\n";
 $crondb->clearOldSessions();
 
 
+// Pass off to any cron plugins
+require_once 'lib/plugins.php';
+$plgs = new Plugins;
+$plgs->loadPlugins("Cron","");
 
 
 
