@@ -30,9 +30,7 @@
 <div class='BreadCrumbs' id='BreadCrumbs'>
 <?php echo $this->BreadCrumbs(); ?>
 </div>
-<div class='NotificationArea' id='NotificationArea'>
-<?php echo $this->Notifications(); ?>
-</div>
+
 
 
 <!-- Modules go here -->
@@ -43,6 +41,12 @@
 
 <!-- Content Section -->
 <div class='content' id='ContentWrap'>
+
+
+    <div class='NotificationArea' id='NotificationArea'>
+	<?php echo $this->Notifications(); ?>
+    </div>
+
 
 <?php echo $this->content;?>
 
