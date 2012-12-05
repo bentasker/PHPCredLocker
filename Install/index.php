@@ -601,6 +601,11 @@ unset($req[$len -1]);
 $str .= implode("/",$req);
 echo $str;
 ?>"></td>
+
+<tr>
+<td>Cron Password:</td><td><input type="text" name="cronPass" value="<?php echo base_convert(rand(10e16, 10e20),10,36).mt_rand(0,500);?>"></td>
+</tr>
+
 </tr>
 
 <tr>
