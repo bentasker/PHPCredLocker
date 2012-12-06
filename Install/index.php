@@ -361,7 +361,7 @@ echo "<option value='MCrypt'>MCrypt</option>\n";
 	  </tr>
 	<?php endif; ?>
 
-	<?php if ($ssl):?>
+	<?php if ($mcrypt):?>
 	  <tr>
 		<td>&nbsp;</td><td>&nbsp;</td>
 	  </tr>

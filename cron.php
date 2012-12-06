@@ -7,7 +7,7 @@
 *
 */
 session_start();
-
+ob_start();
 // Cronjobs are called from the CLI which will ignore the header. Redirect anyone in a browser
 header("Location: index.php");
 
@@ -15,7 +15,7 @@ define('_CREDLOCK',1);
 
 
 
-//error_reporting(E_ALL);
+error_reporting(0);
 
 // Load the framework
 require_once 'lib/Framework/main.php';

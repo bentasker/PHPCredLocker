@@ -221,7 +221,7 @@ $plugins = $plug->listloadedPlugins();
 	  ?>
 
   <tr>
-    <td><?php echo $plugin; ?> (Authentication)</td>
+    <td><?php echo $plugin; ?> (Authentication Plugin)</td>
     <td>Plugin:</td>
     <td><?php echo $plugin; ?></td>
     <td></td>
@@ -243,7 +243,7 @@ $plugins = $plug->listloadedPlugins();
 	  ?>
 
   <tr>
-    <td><?php echo $plugin; ?> (Cron)</td>
+    <td><?php echo $plugin; ?> (Cron Plugin)</td>
     <td>Plugin:</td>
     <td><?php echo $plugin; ?></td>
     <td></td>
@@ -263,7 +263,7 @@ $plugins = $plug->listloadedPlugins();
 	  ?>
 
   <tr>
-    <td><?php echo $plugin; ?> (Logging)</td>
+    <td><?php echo $plugin; ?> (Logging Plugin)</td>
     <td>Plugin:</td>
     <td><?php echo $plugin; ?></td>
     <td></td>
@@ -282,7 +282,7 @@ $plugins = $plug->listloadedPlugins();
 	  ?>
 
   <tr>
-    <td><?php echo $plugin; ?> (<?php echo Lang::_('Customers');?>)</td>
+    <td><?php echo $plugin; ?> (<?php echo Lang::_('Customers');?> Plugin)</td>
     <td>Plugin:</td>
     <td><?php echo $plugin; ?></td>
     <td></td>
@@ -301,7 +301,7 @@ $plugins = $plug->listloadedPlugins();
 	  ?>
 
   <tr>
-    <td><?php echo $plugin; ?> (<?php echo Lang::_('Credentials');?>)</td>
+    <td><?php echo $plugin; ?> (<?php echo Lang::_('Credentials');?> Plugin)</td>
     <td>Plugin:</td>
     <td><?php echo $plugin; ?></td>
     <td></td>
