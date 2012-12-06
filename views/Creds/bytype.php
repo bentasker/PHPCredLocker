@@ -20,6 +20,9 @@ $id = BTMain::getVar('id');
 $credtype = $db->getCredType($id);
 $credtypes = $db->getCredsbyType($id);
 
+
+$notifications->setPageTitle("View By " .Lang::_('Credential Type'));
+
 if (!$id || !$credtypes){
 $notifications->setNotification("NoSuchCustomer");
 return;

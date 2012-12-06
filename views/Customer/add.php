@@ -8,6 +8,10 @@
 */
 defined('_CREDLOCK') or die;
 global $notifications;
+
+
+$notifications->setPageTitle("Add ".Lang::_('Customer'));
+
 if (BTMain::getVar('AddCustSubmitted')){
 
 $db = new CustDB;

@@ -12,7 +12,7 @@ defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 global $notifications;
 
-
+$notifications->setPageTitle("List Users");
 
 
 $auth = new AuthDB;

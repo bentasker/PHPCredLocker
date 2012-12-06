@@ -11,6 +11,9 @@ global $notifications;
 $id = BTMain::getVar('id');
 $db = new CustDB;
 
+
+$notifications->setPageTitle("Edit ".Lang::_('Customer'));
+
 if (BTMain::getVar('EditCustSubmitted')){
 
 

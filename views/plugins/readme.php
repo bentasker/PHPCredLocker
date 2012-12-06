@@ -14,6 +14,9 @@ $plg = str_replace("/","",str_replace(".","",BTMain::getVar('plg')));
 $plgtype = str_replace("/","",str_replace(".","",BTMain::getVar('type')));
 global $notifications;
 
+
+$notifications->setPageTitle("Plugin Info");
+
 $path = array(array('name'=>'Plugins','url'=>'index.php?option=pluginInfo'),array('name'=>$plg,'url'=>"index.php?option=plgInfo&plg=$plg"));
 
 $notifications->setBreadcrumb($path);

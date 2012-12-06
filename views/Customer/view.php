@@ -16,7 +16,7 @@ $custom->connreuse = 1;
 // Get the customer details
 $custdetails = $custom->getCustomerDetail(BTMain::getVar('id'));
 
-
+$notifications->setPageTitle("View ".Lang::_('Customer'));
   if (!$custdetails){
   // Invalid customer
   $notifications->setNotification("NoSuchCustomer");

@@ -19,7 +19,7 @@ $path = array(array('name'=>'Plugins','url'=>'index.php?option=pluginInfo'));
 $notifications->setBreadcrumb($path)
 
 
-
+$notifications->setPageTitle("View Plugins");
 
 
 ?>

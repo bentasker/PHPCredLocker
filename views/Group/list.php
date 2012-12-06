@@ -20,7 +20,7 @@ $crypt->safemode = 0;
 $auth = new AuthDB;
 
 
-
+$notifications->setPageTitle("List ".Lang::_('User Groups'));
 
 
 $grps = $auth->retrieveGroupNames();

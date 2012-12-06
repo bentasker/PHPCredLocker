@@ -12,7 +12,7 @@ defined('_CREDLOCK') or die;
 
 $creds = new CredDB;
 global $notifications;
-$notifications->setPageTitle("Add Credential");
+$notifications->setPageTitle("Add ". Lang::_('Credential'));
 
 if (BTMain::getVar('addCredSubmitted')){
 

@@ -14,6 +14,8 @@ global $notifications;
 $id = BTMain::getVar('id');
 $auth = new AuthDB;
 $crypt = new Crypto;
+$notifications->setPageTitle("Edit ".Lang::_('UserGroup'));
+
 
 if (BTMain::getVar('GrpEditSubmitted')){
 

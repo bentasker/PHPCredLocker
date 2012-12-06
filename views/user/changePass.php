@@ -12,6 +12,8 @@ global $notifications;
 $notifications->RequireScript('passwordmeter');
 
 
+$notifications->setPageTitle("Change Password");
+
 
     if (BTMain::getVar('ChangePassSubmitted')):
       $user = BTMain::getUser();

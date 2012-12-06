@@ -20,6 +20,8 @@ $crypt->safety = 0;
 
 global $notifications;
 
+$notifications->setPageTitle("List ".Lang::_('Customers'));
+
 $path = array(array('name'=>'Customers','url'=>'index.php?option=viewCustomers'));
 
 $notifications->setBreadcrumb($path);

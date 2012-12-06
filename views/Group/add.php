@@ -10,6 +10,8 @@ defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 
 global $notifications;
+$notifications->setPageTitle("Add ".Lang::_('UserGroup'));
+
 if (BTMain::getVar('GrpAddSubmitted')){
 
 $auth = new AuthDB;

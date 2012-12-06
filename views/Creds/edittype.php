@@ -14,6 +14,7 @@ global $notifications;
 $crypt = new Crypto;
 $id = BTMain::getVar('id');
 $db = new CredDB;
+$notifications->setPageTitle("Edit " .Lang::_('Credential Type'));
 
 if (BTMain::getVar('editCredType')){
 

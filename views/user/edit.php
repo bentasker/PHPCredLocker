@@ -14,6 +14,8 @@ global $notifications;
 
 $notifications->RequireScript('passwordmeter');
 
+$notifications->setPageTitle("Edit User");
+
 $username = BTMain::getVar('frmUsername');
 
 if (BTMain::getVar('editUserSubmitted')){

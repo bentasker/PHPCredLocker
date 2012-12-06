@@ -16,6 +16,7 @@ $db = new CredDB;
 $crypt = new Crypto;
 $crypt->safemode = 0;
 
+$notifications->setPageTitle("List " .Lang::_('Cred Types'));
 
 $credtypes = $db->getCredTypes();
 

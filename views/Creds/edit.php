@@ -16,7 +16,7 @@ $id = BTMain::getVar('id');
 
 
 
-
+$notifications->setPageTitle("Edit " .Lang::_('Credential'));
 
 
 if (BTMain::getVar('editCredSubmitted')){

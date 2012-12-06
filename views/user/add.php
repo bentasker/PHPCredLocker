@@ -13,6 +13,8 @@ BTMain::checkSuperAdmin();
 global $notifications;
 $notifications->RequireScript('passwordmeter');
 
+$notifications->setPageTitle("Add User");
+
 if (BTMain::getVar('addUserSubmitted')){
 
 $username = BTMain::getVar('frmUsername');
