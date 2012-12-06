@@ -220,6 +220,51 @@ xmlhttp.send('option=retCred&id='+id);
 }
 
 
+function checkSession(){
+
+  var xmlhttp;
+var resp;
+
+
+
+  if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+xmlhttp=new XMLHttpRequest();
+  }
+else
+ {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    resp = xmlhttp.responseText.split('|..|');
+    if (resp[0] == 0){
+     // Session Invalid
+     
+     window.location.href = "index.php?InvalidSession=Y";
+      return false;
+    }
+    
+      
+      }
+      
+      
+      
+      
+
+    }
+  
+  
+  
+xmlhttp.open("POST","api.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send('option=checkSess');
+ 
+}
+
+
 
 
 function DelCust(id){

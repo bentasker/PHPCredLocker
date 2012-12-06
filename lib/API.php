@@ -22,8 +22,9 @@ require_once 'lib/crypto.php';
 
 
    if (empty(BTMain::getUser()->name)){
-    echo "0|..|";
+    
     ob_end_flush();
+    echo "0|..|";
     die;
     }
    
@@ -56,6 +57,11 @@ $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
 echo "$pass|..|<a href='$address' target=_blank>$address</a>|..|" . $crypt->decrypt($cred->UName,$key) . "|..|\n";
 
 
+break;
+
+
+case 'checkSess':
+echo "OK";
 break;
 
 

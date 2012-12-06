@@ -230,13 +230,14 @@ function headContents(){
   if (is_array($GLOBALS['CUSTOMJS'])):
     ?>
       <script type="text/javascript">
-
       <?php echo implode("\n",$GLOBALS['CUSTOMJS']);?>
-
       </script>
-
 <?php
 endif;
+?>
+<script type="text/javascript">var sesscheck; jQuery(document).ready(function() { sesscheck = setInterval("checkSession()",120000);});</script>
+<?php
+
 
 }
 

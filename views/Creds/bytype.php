@@ -61,7 +61,7 @@ ksort($creds);
 <br />
 
 
-<table class="table table-hover">
+<table class="table table-hover" id="CredsByTypetbl">
 <tr><th><?php echo Lang::_("Customer");?></th><th></th><th><?php echo Lang::_("Address");?></th>
 <th><?php echo Lang::_("User");?></th><th><?php echo Lang::_("Password");?></th><th></th><th></th></tr>
 
