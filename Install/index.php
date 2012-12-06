@@ -497,6 +497,7 @@ $sqls = array(
   `User` varchar(150) NOT NULL,
   `Expires` datetime NOT NULL,
   `ClientIP` varchar(100) NOT NULL,
+  `SessKey` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
   PRIMARY KEY (`SessionID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
 

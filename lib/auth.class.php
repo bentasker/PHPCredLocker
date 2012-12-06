@@ -151,8 +151,25 @@ BTMain::setUser($username);
 BTMain::setUserDetails('groups',explode(",","0,".$user->membergroup));
 BTMain::setUserDetails('RealName',$user->Name);
 
+// Create the expiry time
+$expires = strtotime("+".BTMain::getConf()->sessionexpiry.' Minutes');
+$expiry = date('Y-m-d H:i:s',$expires);
+
+// Create a secret key
+$str = '';
+while ($X < 400){
+
+$key = mt_rand(32,254);
+$str .= chr($key);
+
+$X++;
+}
+
+$sesskey = sha1($key);
+
+
 // Create the database session
-$db->EstablishSession($sessID);
+$db->EstablishSession($sessID,$expiry,$sesskey);
 
 // Update the audit log
 $log = new Logging;
@@ -161,11 +178,51 @@ $log = new Logging;
 // Set the session variable
 BTMain::setSessVar('Session',$sessID);
 
+
+// Set the auth cookie
+
+
+
+// Generate a key
+
+$X=0;
+$str = '';
+while ($X < 100){
+
+$key = mt_rand(32,254);
+$str .= chr($key);
+
+$X++;
+}
+
+// Create a string for the cookie
+$cookieVal = md5($str . mt_rand(10,80000) . mt_rand(11,500) . mt_rand(0,90000) );
+
+// Set the cookie
+setcookie("PHPCredLocker", $cookieVal, $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
+
+// Write to the sessions directory
+$filename = "$expires-$cookieVal";
+$fh = fopen(dirname(__FILE__)."/../sessions/sessions-$filename.session.php",'w');
+
+$str = "<?php\n defined('_CREDLOCK') or die;\n \$sessKey='$sesskey';\n?>";
+
+fwrite($fh,$str);
+fclose($fh);
+
+
 return true;
 }
 
 
-
+/** Invalid Login
+*
+*/
+function LoginInvalid(){
+  session_destroy();
+  header('Location: index.php?InvalidSession=1');
+  die;
+}
 
 /** Use the provided session ID to set the relevant globals
 *
@@ -175,14 +232,36 @@ return true;
 */
 function SetUserDets($sessID){
 
+if (!isset($_COOKIE['PHPCredLocker'])){
+$this->LoginInvalid();
+}
+
+
 $db = new AuthDB;
 $user = $db->getUserSession($sessID);
 
   if (!$user){
-  session_destroy();
-  header('Location: index.php?InvalidSession=1');
-  die;
+ $this->LoginInvalid();
   }
+
+$expiry = strtotime($user->Expires);
+
+// Check for a session file
+if(file_exists(dirname(__FILE__)."/../sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php")){
+
+require "sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php";
+
+	if ($sessKey != $user->SessKey){
+	$this->LoginInvalid();
+	}
+
+}else{
+// Session file doesn't exist, so can't be valid
+$this->LoginInvalid();
+}
+
+
+
 
 // Users session is valid
 BTMain::setUser($user->username);

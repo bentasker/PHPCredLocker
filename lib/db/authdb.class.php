@@ -230,21 +230,25 @@ $this->setQuery($sql);
 /** Establish a database session for the current user
 *
 * @arg SessionID - string
+* @arg expires - datetime
+* @arg sesskey - string
 *
 * @return boolean
 */
-function EstablishSession($sessionID){
+function EstablishSession($sessionID,$expires,$sesskey){
 $sessionID = $this->StringEscape($sessionID);
+$expires = $this->StringEscape($expires);
+$sesskey = $this->StringEscape($sesskey);
 
 $user = BTMain::getUser()->name;
 $created = date('Y-m-d H:i:s');
-$expires = date('Y-m-d H:i:s',strtotime('+15 Minutes'));
+
 
 // IP is provided by the client, so we're not going to just trust it!
 $ip = $this->StringEscape(BTMain::getip());
 
-$sql = "INSERT INTO Sessions (`SessionID`,`Created`,`User`,`Expires`,`ClientIP`) ".
-"VALUES ('$sessionID','$created','$user','$expires','$ip')";
+$sql = "INSERT INTO Sessions (`SessionID`,`Created`,`User`,`Expires`,`ClientIP`,`SessKey`) ".
+"VALUES ('$sessionID','$created','$user','$expires','$ip','$sesskey')";
 
 $this->setQuery($sql);
 return $this->runQuery();
@@ -266,7 +270,7 @@ $sess = $this->StringEscape($sess);
 $date = date('Y-m-d H:i:s');
 $ip = BTMain::getip();
 
-$sql = "SELECT a.ClientIP, b.* FROM Sessions as a LEFT JOIN Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
+$sql = "SELECT a.ClientIP, a.SessKey, a.`Expires`, b.* FROM Sessions as a LEFT JOIN Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
 $this->setQuery($sql);
 
 return $this->loadResult();
