@@ -12,6 +12,7 @@ defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 global $notifications;
 $notifications->RequireScript('passwordmeter');
+$notifications->RequireScript('admin');
 
 $notifications->setPageTitle("Add User");
 

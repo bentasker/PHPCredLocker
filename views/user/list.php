@@ -13,7 +13,7 @@ BTMain::checkSuperAdmin();
 global $notifications;
 
 $notifications->setPageTitle("List Users");
-
+$notifications->RequireScript('admin');
 
 $auth = new AuthDB;
 

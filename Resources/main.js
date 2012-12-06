@@ -14,7 +14,7 @@ Copyright (c) 2012 Ben Tasker
 var counter=false;
 var cancel='';
 	
-	function comparePwds(){
+function comparePwds(){
 	  
 	  
 	  var pass = document.getElementById('frmPass');
@@ -80,78 +80,6 @@ var cancel='';
 	 }
 	 nomatch.style.display = 'none';
 	  return true;  
-	  
-	}
-	
-	
-	function validateUserAdd(){
-	  var username = document.getElementById('frmUsername');
-	  var RealName = document.getElementById('frmRName');
-	  var error = 0;
-	  
-	 if (username.value == null || username.value == ''){
-	  username.className = 'frmEntryMissed'; 
-	  error = 1;
-	 }
-	 
-	 
-	   if (RealName.value == null || RealName.value == ''){
-	  RealName.className = 'frmEntryMissed'; 
-	  error = 1;
-	 }
-	  
-	  if (!comparePwds()){
-	    
-	   error = 1; 
-	  }
-	  
-	  if (error == 1){
-	    
-	   alert("Please correct input errors and re-submit");
-	   return false;
-	  }
-	  
-	  return true;
-	}
-	
-	
-	
-	function validateUserEdit(){
-	  
-	  var username = document.getElementById('frmUsername');
-	  var RealName = document.getElementById('frmRName');
-	  var pass = document.getElementById('frmPass');
-	  var error = 0;
-	  
-	  
-	  if (username.value == null || username.value == ''){
-	  username.className = 'frmEntryMissed'; 
-	  error = 1;
-	 }
-	 
-	 
-	   if (RealName.value == null || RealName.value == ''){
-	  RealName.className = 'frmEntryMissed'; 
-	  error = 1;
-	 }
-	  
-	  
-	  if (pass.value != null && pass.value != ''){
-	  if (!comparePwds()){
-	    
-	   error = 1; 
-	  }
-	  }
-	  
-	  
-	  if (error == 1){
-	    
-	   alert("Please correct input errors and re-submit");
-	   return false;
-	  }
-	  
-	  return true;
-	  
 	  
 	}
 	
@@ -265,8 +193,6 @@ xmlhttp.send('option=checkSess');
 }
 
 
-
-
 function DelCust(id){
 
   var xmlhttp;
@@ -332,196 +258,6 @@ xmlhttp.send('option=delCust&id='+id);
 }
 
 
-
-
-function delGroup(id){
-
-  var xmlhttp;
-var resp;
-var jsonObj;
-
-
-if (!confirm("Are you sure you want to delete this group (any credentials recorded against the group will be deleted)?")){
- return false; 
-}
-
-
-var credrow = document.getElementById('GroupDisp'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
-
-
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-xmlhttp=new XMLHttpRequest();
-  }
-else
- {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
-     // Request failed, authentication issue maybe? 
-       notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
-      return false;
-    }
-      credrow.parentNode.removeChild(credrow);
-      notify.innerHTML += '<div class="alert alert-success">Group Deleted</div>';
-    
-     
-      
-      }
-      
-      
-      
-      
-
-    }
-  
-  
-  
-xmlhttp.open("POST","api.php",true);
-xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delGroup&id='+id);
- 
-}
-
-
-
-
-
-
-
-function delUser(id){
-
-  var xmlhttp;
-var resp;
-var jsonObj;
-
-
-if (!confirm("Are you sure you want to delete this user?")){
- return false; 
-}
-
-
-var credrow = document.getElementById('User'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
-
-
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-xmlhttp=new XMLHttpRequest();
-  }
-else
- {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
-     // Request failed, authentication issue maybe? 
-       notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
-      return false;
-    }
-      credrow.parentNode.removeChild(credrow);
-      notify.innerHTML += '<div class="alert alert-success">User Deleted</div>';
-    
-     
-      
-      }
-      
-      
-      
-      
-
-    }
-  
-  
-  
-xmlhttp.open("POST","api.php",true);
-xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delUser&id='+id);
- 
-}
-
-
-
-
-
-
-function delCredType(id){
-
-  var xmlhttp;
-var resp;
-var jsonObj;
-
-
-if (!confirm("Are you sure you want to delete this Credential Type (any associated credentials will be deleted)?")){
- return false; 
-}
-
-
-var credrow = document.getElementById('CredType'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
-
-
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-xmlhttp=new XMLHttpRequest();
-  }
-else
- {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
-     // Request failed, authentication issue maybe? 
-       notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
-      return false;
-    }
-      credrow.parentNode.removeChild(credrow);
-      notify.innerHTML += '<div class="alert alert-success">Credential Type Deleted</div>';
-    
-     
-      
-      }
-      
-      
-      
-      
-
-    }
-  
-  
-  
-xmlhttp.open("POST","api.php",true);
-xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delCredType&id='+id);
- 
-}
-
-
-
-
 function DelCred(id){
 
   var xmlhttp;
@@ -581,9 +317,6 @@ xmlhttp.send('option=delCred&id='+id);
 }
 
 
-
-
-
 function Credtimer(id)
 {
   var cnt = document.getElementById('PassCount'+id);
@@ -606,10 +339,6 @@ function Credtimer(id)
 
   field.innerHTML = 'Displaying Password for ' +count+ ' seconds';
 }
-
-
-
-
 
 
 function checkNewCred(){
@@ -701,8 +430,6 @@ function noCredTypes(){
 }
 
 
-
-
 function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
   
   var menu = document.getElementById(menu);
@@ -742,11 +469,6 @@ function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
 }
 
 
-
-
-
-
-
 /****                  SEARCH FUNCTIONS                 *******/
 
 
@@ -754,9 +476,6 @@ function positionResults(SearchBox,ResBox){
   
  var search = document.getElementById(SearchBox);
  var res = document.getElementById(ResBox);
- 
- 
- 
  
  res.style.left = search.offsetLeft +'px';
  
@@ -766,11 +485,10 @@ function positionResults(SearchBox,ResBox){
  res.style.width = search.offsetWidth +'px';
 }
 
+
 function SearchTable(val,tbl,dispdiv,cellNr,e){
   
   // Many thanks to http://www.vonloesch.de/node/23 for the headstart on this function!
-
-
 
 var keynum = 0;
 
@@ -862,7 +580,6 @@ if(keynum === 40) { // down
 }
 
 
-
 function selectResult(dir){
  var ind;
  var SelIndex = document.getElementById('SelectedValue');
@@ -899,11 +616,6 @@ function selectResult(dir){
 }
 
 
-
-
-
-
-
 function hideSearchDiv(dispdiv){
   var div = document.getElementById(dispdiv);
   
@@ -922,9 +634,6 @@ function hideSearchDiv(dispdiv){
 }
 
 
-
-
-
 function checkExistingSearch(val,div){
       if (val.length > 3){
 	  document.getElementById(div).style.display = 'block';
@@ -932,17 +641,7 @@ function checkExistingSearch(val,div){
 }
 
 
-
-
-
-
-
-
-
 function setUpMenus(){
-
-
-
 
 jQuery(document).ready(function() {
 

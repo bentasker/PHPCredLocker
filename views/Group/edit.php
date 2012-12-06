@@ -10,7 +10,7 @@ defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 
 global $notifications;
-
+$notifications->RequireScript('admin');
 $id = BTMain::getVar('id');
 $auth = new AuthDB;
 $crypt = new Crypto;

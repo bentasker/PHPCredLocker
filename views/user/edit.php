@@ -13,7 +13,7 @@ BTMain::checkSuperAdmin();
 global $notifications;
 
 $notifications->RequireScript('passwordmeter');
-
+$notifications->RequireScript('admin');
 $notifications->setPageTitle("Edit User");
 
 $username = BTMain::getVar('frmUsername');
