@@ -30,13 +30,36 @@ echo "Clearing old sessions\n";
 $crondb->clearOldSessions();
 
 
+
+
+echo "Checking Sessions files";
+$time = time();
+// Tidy up the sessions files
+$dir = new DirectoryIterator(dirname(__FILE__)."/../sessions/");
+foreach ($dir as $fileinfo) {
+    if (!$fileinfo->isDot()) {
+        
+
+    $fn = $fileinfo->getFilename();
+
+      echo "checking $fn\n";
+    if ($fn == "index.html"){ continue; }
+
+    $fname = explode("-",$fn);
+    
+    if ($fname[1] < $time){
+    unlink(dirname(__FILE__)."/../sessions/$fn");
+    }
+
+
+    }
+}
+
+
 // Pass off to any cron plugins
 require_once 'lib/plugins.php';
 $plgs = new Plugins;
 $plgs->loadPlugins("Cron","");
 
 
-
-
-
-?> 
+?>

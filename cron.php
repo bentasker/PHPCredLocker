@@ -16,7 +16,6 @@ define('_CREDLOCK',1);
 
 
 //error_reporting(E_ALL);
-error_reporting(^E_NOTICE);
 
 // Load the framework
 require_once 'lib/Framework/main.php';
