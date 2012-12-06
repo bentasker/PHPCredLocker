@@ -290,6 +290,10 @@ function KillSession($sessID){
 
 $sessID = $this->StringEscape($sessID);
 
+$sql = "SELECT `Expires` FROM Sessions WHERE `SessionID`='$sessID'";
+$this->setQuery($sql);
+$exp = $this->loadResult();
+
 $sql = "DELETE FROM Sessions WHERE `SessionID`='$sessID'";
 $this->setQuery($sql);
 $res = $this->runQuery();
@@ -298,7 +302,7 @@ $res = $this->runQuery();
 $log = new Logging;
 $log->logEntry('',12);
 
-return $res;
+return $exp->Expires;
 }
 
 

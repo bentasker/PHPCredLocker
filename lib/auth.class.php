@@ -284,10 +284,18 @@ function killSession(){
 $sessID = BTMain::getSessVar('Session');
 session_destroy();
 $db = new AuthDB;
-$db->KillSession($sessID);
+$exp = strtotime($db->KillSession($sessID));
 
 
 // Remove the session file
+$filename = "sessions-$exp-{$_COOKIE['PHPCredLocker']}.session.php";
+
+
+unlink(dirname(__FILE__)."/../sessions/$filename");
+
+
+// unset the auth cookie
+setcookie("PHPCredLocker","",0);
 
 
 header('Location: index.php?LoggedOut=1');
