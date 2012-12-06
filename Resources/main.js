@@ -515,7 +515,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       return false;
     }
       credrow.parentNode.removeChild(credrow);
-      notify.innerHTML += '<div class="alert alert-success">Customer and all associated credentials Deleted</div>';
+      notify.innerHTML += '<div class="alert alert-success">Credential Deleted</div>';
     
      
       

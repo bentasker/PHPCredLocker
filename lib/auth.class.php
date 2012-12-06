@@ -285,6 +285,11 @@ $sessID = BTMain::getSessVar('Session');
 session_destroy();
 $db = new AuthDB;
 $db->KillSession($sessID);
+
+
+// Remove the session file
+
+
 header('Location: index.php?LoggedOut=1');
 }
 

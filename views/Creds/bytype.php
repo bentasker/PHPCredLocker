@@ -73,7 +73,7 @@ $key = $k[0];
 ?>
 
 
-<tr id='CredType<?php echo $value;?>'>
+<tr id='CredDisp<?php echo $value;?>'>
   <td><?php echo $key;?></td>
   <td class="passViewNotif" onclick="getCreds('<?php echo $value;?>');">
     <input type="hidden" id="PassCount<?php echo $value;?>" value="<?php echo BTMain::getConf()->CredDisplay;?>">
@@ -89,7 +89,7 @@ $key = $k[0];
   <td>
     <span id='Password<?php echo $value;?>' class='CredPassword'></span>
   </td>
-  <td class='editicon' onclick="window.location.href = 'index.php?option=option=editCred&id=<?php echo $value;?>';"><i class='icon-pencil'></i></td>
+  <td class='editicon' onclick="window.location.href = 'index.php?option=editCred&id=<?php echo $value;?>';"><i class='icon-pencil'></i></td>
   <td class='delicon' onclick="DelCred('<?php echo $value;?>');"><i class='icon-remove'></i></td>
 </tr>
 
