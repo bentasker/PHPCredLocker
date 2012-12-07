@@ -16,7 +16,7 @@ global $notifications;
 
 $path = array(array('name'=>'Plugins','url'=>'index.php?option=pluginInfo'));
 
-$notifications->setBreadcrumb($path)
+$notifications->setBreadcrumb($path);
 
 
 $notifications->setPageTitle("View Plugins");
@@ -63,7 +63,7 @@ if (isset($plugins->Cron)){
     ?>
     <tr>
 	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td>
-	<td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Auth">Plugin Info</a></td>
+	<td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Cron">Plugin Info</a></td>
     </tr>
     <?php
     }
