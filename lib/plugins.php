@@ -17,6 +17,9 @@ function loadConfig(){
 
 include 'conf/plugins.php';
 $this->plugins = $plugins;
+
+// Set the default
+defined("CREDLOCK_PLUGIN__PATH") or define('CREDLOCK_PLUGIN__PATH','plugins/Blargle');
 }
 
 
@@ -26,7 +29,7 @@ function getPluginInfo($plugin,$plug){
   if (empty($plugin) || empty($plug)){ return; }
 
 
-  include_once "plugins/$plugin/$plugin.php";
+  include_once "plugins/".$this->plugins->path."/$plugin/$plugin.php";
 
   $cls = "plugin_".$plugin."_$plug";
   
@@ -59,7 +62,7 @@ $plug = $plugintype;
   if (empty($plugin)){ continue; }
 
 
-  include_once "plugins/$plugin/$plugin.php";
+  include_once "plugins/".$this->plugins->path."/$plugin/$plugin.php";
 
   $cls = "plugin_".$plugin."_$plug";
   
@@ -97,7 +100,7 @@ foreach ($this->plugins->$type as $value){
 if (empty($value)){ continue; }
 
 
-include_once "plugins/$value/$value.php";
+include_once "plugins/".$this->plugins->path."/$value/$value.php";
 
 $cls = "plugin_".$value."_$type";
 $fn = "PlgCall";

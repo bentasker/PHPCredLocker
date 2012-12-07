@@ -417,6 +417,30 @@ $str = "<?php\n/** System Configuration\n*\n* Copyright (C) 2012 B Tasker\n* Rel
 
 fwrite($fh,$str);
 
+
+
+// Create the plugins obfuscation string and write to the config file
+if (!$fh = fopen(dirname(__FILE__)."/../conf/plugins.php",'a')){
+
+$obfus = sha1(mt_rand(0,90000) . date('s') . mt_rand(500,9999999) . mt_rand(1000,50000));
+
+if (rename(dirname(__FILE__)."/../plugins/Blargle", dirname(__FILE__)."/../plugins/$obfus")){
+
+$str = "\n\n defined(\"CREDLOCK_PLUGIN__PATH\") or define('CREDLOCK_PLUGIN__PATH','plugins/$obfus');\n";
+fwrite($fh,$str);
+fclose($fh);
+}
+
+
+
+}else{
+echo "<div class='alert alert-error'>Could not Obfuscate Plugin path, you will need to do this manually</div>";
+
+
+}
+
+
+
 foreach ($_POST as $key=>$value){
 
 $str = "\$conf->$key = '$value';\n";

@@ -17,4 +17,4 @@ $plugins->Customers = array();
 $plugins->Creds = array();
 $plugins->Cron = array();
 
-
+defined("CREDLOCK_PLUGIN__PATH") or define('CREDLOCK_PLUGIN__PATH','plugins/ACDK89345u3Bcd');
