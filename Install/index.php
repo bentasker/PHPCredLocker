@@ -534,7 +534,29 @@ $sqls = array(
   `membergroup` longtext,
   `Usergroup` int(11) NOT NULL DEFAULT \'0\',
   PRIMARY KEY (`username`,`Usergroup`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
+
+'DROP TABLE IF EXISTS `bannedIPs`;',
+
+'CREATE TABLE `bannedIPs` (
+  `IP` varchar(255) NOT NULL,
+  `Expiry` datetime NOT NULL,
+  PRIMARY KEY (`IP`),
+  KEY `idx_ban_expiry` (`Expiry`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
+
+'DROP TABLE IF EXISTS `FailedLogins`;',
+
+'CREATE TABLE `FailedLogins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(150) NOT NULL,
+  `FailedAttempts` int(11) NOT NULL,
+  `LastAttempt` datetime NOT NULL,
+  `FailedIP` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_failed_user_ip` (`username`,`FailedIP`),
+  KEY `idx_failedips` (`FailedIP`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;'
 
 );
 

@@ -10,6 +10,53 @@ defined('_CREDLOCK') or die;
 
 class AuthDB extends BTDB{
 
+/** If an IP has crossed the ban threshold, ban them
+*
+* @arg threshold - How many attempts are they allowed?
+* @arg thresholddate - Whens the earliest date that should be considered?
+* @arg ip - The IP to check (and possibly ban)
+*
+*/
+function implementBan($threshold,$thresholddate,$bantime,$ip){
+$ip = $this->StringEscape($ip);
+
+$sql = "SELECT SUM(FailedAttempts) as failcount FROM FailedLogins WHERE FailedIP='$ip' AND LastAttempt > '$thresholddate'";
+$this->setQuery($sql);
+
+$tries =$this->loadResults();
+
+    if ($tries->failcount > $threshold){
+     $sql = "INSERT INTO bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";
+      $this->setQuery($sql);
+    $this->runQuery();
+
+    }
+
+
+}
+
+/** Log Failed Attempt
+*
+* @arg username string
+* @arg username ip
+*
+*/
+function LogFailedAttempt($username,$ip){
+
+$username = $this->StringEscape($username);
+$ip = $this->StringEscape($ip);
+$date = date("Y-m-d H:i:s");
+
+$sql = "INSERT INTO FailedLogins (`username`,`FailedAttempts`,`LastAttempt`,`FailedIP`) ".
+"VALUES('$username','1','$date','$ip') ON DUPLICATE KEY UPDATE `FailedAttempts`=`FailedAttempts`+1, `LastAttempt`='$date'";
+$this->setQuery($sql);
+
+$this->runQuery();
+
+
+
+}
+
 
 
 /** Delete the specified User

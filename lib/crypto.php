@@ -119,6 +119,7 @@ return openssl_encrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 }
 
 
+function encrypt_doubleROT13($string,$type){ return "If you've enabled this, you really shouldn't be in charge of Crypto Settings!"; }
 
 
 /** Encrypt the string using MCrypt

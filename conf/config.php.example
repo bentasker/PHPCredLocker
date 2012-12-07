@@ -45,4 +45,14 @@ $conf->minpassStrength = '34-45';
 // Required password for cronjobs
 $conf->cronPass = 'P455w0rd';
 
+
+
+// Number of permitted attempts before user is banned
+$conf->banThresh = 4;
+
+// Number of hours to be examined when deciding whether to ban an IP
+$conf->banProximity = 24;
+
+// Time in hours to block the IP for
+$conf->banLength = 24;
 ?>
