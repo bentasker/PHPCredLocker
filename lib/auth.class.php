@@ -101,6 +101,8 @@ return $db->addUser($user);
 }
 
 
+
+
 /** Log a failed attempt to login as a valid user
 *
 *.@arg username -string
@@ -108,6 +110,7 @@ return $db->addUser($user);
 *
 */
 function logFailedAttempt($username,$db){
+
 $db->LogFailedAttempt($username,BTMain::getip());
 
 $threshdate = date("Y-m-d H:i:s",strtotime("-" . BTMain::getConf()->banProximity . " hours"));
@@ -149,7 +152,7 @@ unset($crypt);
 unset($user->pass);
 
 if( md5($password.$pass[1]) != $pass[0]){
-return $this->logFailedAttempt($username);
+return $this->logFailedAttempt($username,$db);
 }
 
 // Create a Session ID
