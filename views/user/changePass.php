@@ -14,8 +14,19 @@ $notifications->RequireScript('passwordmeter');
 
 $notifications->setPageTitle("Change Password");
 
+// Check the form token
+$sessvar = BTMain::getSessVar('FormToken');
+$process = true;
+BTMain::unsetSessVar('FormToken');
 
-    if (BTMain::getVar('ChangePassSubmitted')):
+
+  if ($sessvar != BTMain::getVar('FormToken')){
+  echo "<div class='alert alert-error'>Invalid Form Token</div>";
+  $process = false;
+  }
+
+
+    if (BTMain::getVar('ChangePassSubmitted') && $process):
       $user = BTMain::getUser();
 
       $auth = new ProgAuth;
@@ -34,6 +45,7 @@ $notifications->setPageTitle("Change Password");
 $path = array(array('name'=>'Users','url'=>'index.php?option=viewUsers'),array('name'=>'Change Password','url'=>'index.php?option=changePassword'));
 
 $notifications->setBreadcrumb($path);
+$frmToken = ProgAuth::generateFormToken();
 
 ?>
 <h1>Change Password</h1>
@@ -41,6 +53,7 @@ $notifications->setBreadcrumb($path);
 <form method="POST" onsubmit="return comparePwds();">
 <input type="hidden" name="Option" value="ChangePass">
 <input type="hidden" name="ChangePassSubmitted" value="1">
+<input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 
 
 <label for="frmPass">Password</label><input type="password" name="frmPass" onkeyup="testPassword(this.value);" id="frmPass" autocomplete='off'>

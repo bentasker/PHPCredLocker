@@ -23,9 +23,7 @@ defined('_CREDLOCK') or die;
 </div>
 
 <?php else:
-$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
-BTMain::setSessVar("FormToken",$frmToken);
-
+$frmToken = ProgAuth::generateFormToken();
 ?>
 
 

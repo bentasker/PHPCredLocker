@@ -31,7 +31,19 @@ return md5($salt.date('y-m-dHis'));
 }
 
 
+/** Generate a unique value and add to the session
+*
+* Moved here to allow easy improvement on randomness at a later date
+*
+* @return string
+*/
+function generateFormToken(){
 
+$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
+BTMain::setSessVar("FormToken",$frmToken);
+return $frmToken;
+
+}
 
 
 
@@ -131,19 +143,16 @@ return false;
 */
 function ProcessLogIn($username,$password){
 
-// Check the form token
-$sessvar = BTMain::getSessVar('FormToken');
+    // Check the form token
+    $sessvar = BTMain::getSessVar('FormToken');
 
-BTMain::unsetSessVar('FormToken');
-if ($sessvar != BTMain::getVar('FormToken')){
-return false;
-}
-
+    BTMain::unsetSessVar('FormToken');
+    if ($sessvar != BTMain::getVar('FormToken')){
+    return false;
+     }
 
 
 $db = new AuthDB;
-
-
 
  if ($db->checkForBan(BTMain::getip())){
   BTMain::setSessVar('Banned',"1");

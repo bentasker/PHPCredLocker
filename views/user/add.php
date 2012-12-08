@@ -16,7 +16,23 @@ $notifications->RequireScript('admin');
 
 $notifications->setPageTitle("Add User");
 
-if (BTMain::getVar('addUserSubmitted')){
+
+// Check the form token
+$sessvar = BTMain::getSessVar('FormToken');
+$process = true;
+BTMain::unsetSessVar('FormToken');
+
+
+  if ($sessvar != BTMain::getVar('FormToken')){
+  echo "<div class='alert alert-error'>Invalid Form Token</div>";
+  $process = false;
+  }
+
+
+
+if (BTMain::getVar('addUserSubmitted') && $process){
+
+
 
 $username = BTMain::getVar('frmUsername');
 $pass = BTMain::getVar('frmPass');
@@ -46,12 +62,14 @@ $notifications->setNotification('UserStoreFail');
 $path = array(array('name'=>'Users','url'=>'index.php?option=viewUsers'),array('name'=>'Add','url'=>'index.php?option=addUser'));
 
 $notifications->setBreadcrumb($path);
+$frmToken = ProgAuth::generateFormToken();
 
 ?>
 <h1>Add User</h1>
 <form method="POST" id="AddUserView" onsubmit="return validateUserAdd();">
 <input type="hidden" name="option" value="addUser">
 <input type="hidden" name="addUserSubmitted" value="1">
+<input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 
 <label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" autocomplete="off" title="This is the username the user will need to use to log in">
 

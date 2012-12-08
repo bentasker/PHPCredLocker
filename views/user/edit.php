@@ -18,7 +18,20 @@ $notifications->setPageTitle("Edit User");
 
 $username = BTMain::getVar('frmUsername');
 
-if (BTMain::getVar('editUserSubmitted')){
+// Check the form token
+$sessvar = BTMain::getSessVar('FormToken');
+$process = true;
+BTMain::unsetSessVar('FormToken');
+
+
+  if ($sessvar != BTMain::getVar('FormToken')){
+  echo "<div class='alert alert-error'>Invalid Form Token</div>";
+  $process = false;
+  }
+
+
+
+if (BTMain::getVar('editUserSubmitted') && $process){
 
 
 $pass = BTMain::getVar('frmPass');
@@ -59,12 +72,13 @@ $Ugroups = explode(",",$user->membergroup);
 $path = array(array('name'=>'Users','url'=>'index.php?option=viewUsers'),array('name'=>'Edit','url'=>'index.php?option=editUser?frmUsername='.$username));
 
 $notifications->setBreadcrumb($path);
-
+$frmToken = ProgAuth::generateFormToken();
 ?>
 <h1>Edit User</h1>
 <form method="POST" id="frmEditUser" onsubmit="return validateUserEdit();">
 <input type="hidden" name="option" value="editUser">
 <input type="hidden" name="editUserSubmitted" value="1">
+<input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 
 <label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" value="<?php echo $username;?>" readonly="true">
 
