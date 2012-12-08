@@ -29,10 +29,10 @@ defined('_CREDLOCK') or die;
 <?php else: ?>
 
 
-      <form method='POST' class="navbar-form pull-right">
+      <form method='POST' class="navbar-form navbar-search pull-right">
       <input type="hidden" name="option" value="LogIn">
-    <input type='text' name='FrmUsername' id='FrmUsername' placeholder="Username">
-    <input type='password' name='FrmPass' id='FrmPass' placeholder="Password">
+    <input type='text' name='FrmUsername' class="search-query" id='FrmUsername' placeholder="Username">
+    <input type='password' name='FrmPass' class="search-query" id='FrmPass' placeholder="Password">
       
 
       <input type="submit" class="btn btn-inverse" value="Login">
