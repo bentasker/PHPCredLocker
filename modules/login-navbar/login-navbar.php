@@ -8,13 +8,13 @@
 */
 defined('_CREDLOCK') or die;
 ?>
-<ul class="nav">
+<ul class="nav pull-right">
 
 
 <li class="nav dropdown">
 
     <?php if (!empty(BTMain::getUser()->name)): ?>
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
     <?php echo BTMain::getUser()->name; ?>
 
     </a>
