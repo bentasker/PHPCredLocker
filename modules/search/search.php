@@ -18,7 +18,7 @@ if (!BTMain::getUser()->name){ return; }
 
 ?>
 
-<form class="navbar-search" id='SearchForm' name='SearchForm'>
+<form class="navbar-search hidden-phone" id='SearchForm' name='SearchForm'>
 <input type="hidden" name="option" value="" id="SrchOpt">
 <input type="hidden" name="id" value="" id="SrchID">
 

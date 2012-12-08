@@ -57,7 +57,7 @@
 <!-- Content Section Ends -->
 
 <!-- Modules go here -->
-<div id='Sidebar' class='span2'>
+<div id='Sidebar hidden-phone hidden-tablet' class='span2'>
 <?php $this->loadModule("login");?>
 </div>
 <!-- Modules end -->

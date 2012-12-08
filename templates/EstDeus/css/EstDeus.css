@@ -4,9 +4,9 @@
 .pluginDetails {font-size: smaller;}
 #FFContainer {height: 100%;}
 #contentArea {min-height: 100%; position: relative; padding: 0px; padding-bottom: 50px;}
-#ContentWrap {width: 50%; margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; margin-left: 10%; display: inline-block; margin-bottom: 20px; }
+#ContentWrap {margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; margin-left: 10%; display: inline-block; margin-bottom: 20px; }
 .navbar {margin-bottom: 0px !important;}
-.BreadCrumbs {width: 50%; margin: auto; margin-left: 12%;}
+.BreadCrumbs {margin: auto; margin-left: 12%;}
 .NotificationArea {width: 50%; margin: auto;}
 .login-module {background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; margin-left: 20px; width: 70%;}
 #mod_login input[type="text"], input[type="password"] {width: 100px;}
