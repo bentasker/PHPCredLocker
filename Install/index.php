@@ -713,7 +713,7 @@ Welcome to the PHPCredLocker Installation script. In a few simple steps we'll cr
 <h2>System Tests</h2>
 <table class="table table-hover">
 <tr>
-<th>Crypto Functions</th><td class="test<?php
+<th title="Cryptographic libraries are required so that stored credentials can be encrypted. Storing in cleartext is a <b>really</b> bad idea and is entirely unsupported">Crypto Functions</th><td class="test<?php
 
 if (function_exists("openssl_encrypt")){
 echo 'Pass">Pass - You have OpenSSL';
@@ -731,7 +731,7 @@ $fail = 1;
 
 
 <tr>
-<th>Configuration Writable</th>
+<th title='PHPCredLocker needs to be able to write to your configuration files, especially for the install!'>Configuration Writable</th>
 <td class='test<?php
 
 
@@ -763,7 +763,7 @@ $rm = file_exists($path);
 </tr>
 
 <tr>
-<th>Configuration Protection</th>
+<th title='Your configuration directory should only be readable by Owner and group - Other users should be denied access (e.g. 660 or 650 permissions)'>Configuration Protection</th>
 <td class='test<?php
 
 $perms = sprintf('%o', fileperms(dirname(__FILE__)."/../conf/"));
@@ -786,7 +786,7 @@ echo "Pass'>Pass";
 </tr>
 
 <tr>
-<th>Database Libraries</th>
+<th title="To interact with the database, you'll need the relevant PHP libraries installed">Database Libraries</th>
 <td class='test<?php
 
 if (function_exists('mysql_query')){
@@ -852,7 +852,9 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/EstDeus.css" />
+<link rel="stylesheet" type="text/css" href="../Resources/jquery.tooltip.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="../Resources/jquery.tooltip.min.js"></script>
 <script type="text/javascript" src="../templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
 
 
@@ -943,6 +945,8 @@ $fn();
 
 
 </div>
-
+<script type="text/javascript">
+$('#ContentWrap *').tooltip();
+</script>
 </body>
 </html>

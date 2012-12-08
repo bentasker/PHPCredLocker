@@ -210,21 +210,22 @@ return implode("\n",$str);
 function headContents(){
 ?>
 <title><?php echo BTMain::getConf()->ProgName;?> - <?php echo $this->getPageTitle();?></title>
-
+    <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
 <?php
     foreach ($GLOBALS['RequireCSS'] as $css){
 	    ?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/><?php
 	}
 ?>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="Resources/main.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
+    <script src="Resources/main.js" type="text/javascript"></script>
 
 
 <?php
-  foreach ($GLOBALS['RequireScript'] as $script){
-      ?><script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script><?php
-    }
+  foreach ($GLOBALS['RequireScript'] as $script){?>
+    <script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script>
+<?php    }
 
 
   if (is_array($GLOBALS['CUSTOMJS'])):
