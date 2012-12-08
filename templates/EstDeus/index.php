@@ -27,20 +27,22 @@
 
 <div id='FFContainer'>
 <div class='contentArea pgbackground' id='contentArea'>
-<div class='BreadCrumbs' id='BreadCrumbs'>
+
+<div class="row hidden-phone">
+<div class="blankCol span2">&nbsp;</div>
+
+<div class='BreadCrumbs span4' id='BreadCrumbs'>
 <?php echo $this->BreadCrumbs(); ?>
 </div>
 
+<div class="blankCol span2">&nbsp;</div>
 
+</div><!-- Row Ends -->
 
-<!-- Modules go here -->
-<div id='Sidebar'>
-<?php $this->loadModule("login");?>
-</div>
-<!-- Modules end -->
-
+<div class="row">
+<div class="blankCol span2">&nbsp;</div>
 <!-- Content Section -->
-<div class='content' id='ContentWrap'>
+<div class='content span8' id='ContentWrap'>
 
 
     <div class='NotificationArea' id='NotificationArea'>
@@ -54,6 +56,14 @@
 </div>
 <!-- Content Section Ends -->
 
+<!-- Modules go here -->
+<div id='Sidebar' class='span2'>
+<?php $this->loadModule("login");?>
+</div>
+<!-- Modules end -->
+
+
+</div> <!-- Row end -->
 </div>
 
 
