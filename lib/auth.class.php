@@ -130,6 +130,17 @@ return false;
 * @return boolean
 */
 function ProcessLogIn($username,$password){
+
+// Check the form token
+$sessvar = BTMain::getSessVar('FormToken');
+
+BTMain::unsetSessVar('FormToken');
+if ($sessvar != BTMain::getVar('FormToken')){
+return false;
+}
+
+
+
 $db = new AuthDB;
 
 

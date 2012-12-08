@@ -26,11 +26,16 @@ defined('_CREDLOCK') or die;
 	</ul>
 
 
-<?php else: ?>
+<?php else: 
+$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
+BTMain::setSessVar("FormToken",$frmToken);
+?>
 
 
       <form method='POST' class="navbar-form navbar-search pull-right">
       <input type="hidden" name="option" value="LogIn">
+      <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
+
     <input type='text' name='FrmUsername' class="search-query" id='FrmUsername' placeholder="Username">
     <input type='password' name='FrmPass' class="search-query" id='FrmPass' placeholder="Password">
       

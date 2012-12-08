@@ -17,7 +17,7 @@ class AuthDB extends BTDB{
 *
 * @return boolean - true if ip banned
 */
-function $db->checkForBan($ip){
+function checkForBan($ip){
 $expire = date('Y-m-d H:i:s');
 $ip = $this->StringEscape($ip);
 $sql = "SELECT * FROM bannedIPs WHERE `IP`='$ip' AND `Expiry` > '$expire'";
