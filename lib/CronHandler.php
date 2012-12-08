@@ -10,34 +10,33 @@ defined('_CREDLOCK') or die;
 error_reporting(0);
 
 // Check the password has been specified
-if ($_SERVER['CRON_PASS'] != BTMain::getConf()->cronPass){
+if (($_SERVER['CRON_PASS'] != BTMain::getConf()->cronPass) || (isset($_SERVER['REMOTE_ADDR']))){
 echo "Access Denied\n\n";
 ob_end_flush();
 die;
 }
 
 if (empty(BTMain::getConf()->cronPass)){
-
 echo "Error: Cron Pass not set in config. Aborting for security reasons\n\n";
 ob_end_flush();
 die;
 }
 
 
+// Load the database library
 require_once 'lib/db/cron.php';
-
-
 $crondb = new CronDB;
+
+
 
 // Clear any sessions
 echo "Clearing old sessions\n";
 $crondb->clearOldSessions();
 
 
-
-
 echo "Checking Session files\n";
-$time = time();
+$time = date('U');
+
 // Tidy up the sessions files
 $dir = new DirectoryIterator(dirname(__FILE__)."/../sessions/");
 foreach ($dir as $fileinfo) {
@@ -73,7 +72,7 @@ $plgs = new Plugins;
 $output->plgOutput = ob_get_clean();
 
 // Pass to the plugin handler
-$output = $plgs->loadPlugins("Cron",$output->plgOutput);
+$output = $plgs->loadPlugins("Cron",$output);
 
 // Output to the CLI for the benefit of the cron logs
 echo $output->plgOutput;

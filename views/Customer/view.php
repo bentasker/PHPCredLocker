@@ -40,7 +40,6 @@ array('name'=>"$customer",'url'=>'index.php?option=viewCust&id='.BTMain::getVar(
 );
 
 $notifications->setBreadcrumb($path);
-
 ?>
 
 <h1>Credentials for <?php echo $customer; ?></h1>
