@@ -49,11 +49,11 @@ $notifications->setBreadcrumb($path);
 
 ?>
 <h1>Add User</h1>
-<form method="POST" onsubmit="return validateUserAdd();">
+<form method="POST" id="AddUserView" onsubmit="return validateUserAdd();">
 <input type="hidden" name="option" value="addUser">
 <input type="hidden" name="addUserSubmitted" value="1">
 
-<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" autocomplete="off">
+<label for="frmUsername">Username</label><input type="text" name="frmUsername" id="frmUsername" autocomplete="off" title="This is the username the user will need to use to log in">
 
 
 
@@ -63,9 +63,9 @@ $notifications->setBreadcrumb($path);
 
 <label for="frmPassConf">Password Confirm</label><input type="password" name="frmPassConf" id="frmPassConf">
 
-<label for="frmRName">Real Name</label><input type="text" name="frmRName" id="frmRName">
+<label for="frmRName">Real Name</label><input type="text" name="frmRName" id="frmRName" title="This is the user's name as you wish it to display in the audit logs and on their user menu">
 
-<label for="frmSuperAdmin">SuperAdmin</label><input type="checkbox" value="1" name="frmSuperAdmin" id="frmSuperAdmin">
+<label for="frmSuperAdmin">SuperAdmin</label><input type="checkbox" value="1" name="frmSuperAdmin" id="frmSuperAdmin" title="Tick this to make the user a super-admin">
 <input type="hidden" id="minpassStrength" disabled="true" value="<?php echo BTMain::getConf()->minpassStrength;?>">
 <input type="hidden" id="passScore" disabled="true">
 <?php 
@@ -77,3 +77,5 @@ include('lib/includes/groupSelection.php');
 <br />
 <input type="submit" class="btn btn-primary" value="Add User">
 </form>
+
+<script type="text/javascript">$('#AddUserView *').tooltip({track: true, fade: 250});</script>

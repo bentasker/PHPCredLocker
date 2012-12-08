@@ -62,7 +62,7 @@ $notifications->setBreadcrumb($path);
 
 ?>
 <h1>Edit User</h1>
-<form method="POST" onsubmit="return validateUserEdit();">
+<form method="POST" id="frmEditUser" onsubmit="return validateUserEdit();">
 <input type="hidden" name="option" value="editUser">
 <input type="hidden" name="editUserSubmitted" value="1">
 
@@ -70,7 +70,7 @@ $notifications->setBreadcrumb($path);
 
 
 
-<label for="frmPass">Password</label><input type="password" name="frmPass" onkeyup="testPassword(this.value);" id="frmPass" autocomplete='off'>
+<label for="frmPass">Password</label><input type="password" title="Leave Blank if you don't wish to change the user's password" name="frmPass" onkeyup="testPassword(this.value);" id="frmPass" autocomplete='off'>
 <span id="passStrength"></span>
 <div id="PassNoMatch" style="display: none;" class="alert alert-error"></div>
 
@@ -93,3 +93,4 @@ include('lib/includes/groupSelection.php');
 <br />
 <input type="submit" class="btn btn-primary" value="Edit User">
 </form>
+<script type="text/javascript">$('#frmEditUser *').tooltip({track: true, fade: 250});</script>
