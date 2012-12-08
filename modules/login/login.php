@@ -22,27 +22,14 @@ defined('_CREDLOCK') or die;
   </ul>
 </div>
 
-<?php else: 
-	      // Attempt to log user in if they've already submitted
-      if (BTMain::getVar('SubmittedLoginFrm')){
-      $auth = new ProgAuth;
-	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),BTMain::getVar('FrmPass'))){
-	    // Login successful
-	    header('Location: index.php?LoginSuccess=1');
-	    }else{
-	    header('Location: index.php?LoginFailed=1');
-	    }
-	    die;
-      }
-
-?>
+<?php else:?>
 
 
 
 
 
 <form method='POST'>
-
+<input type="hidden" name="option" value="LogIn">
 <label for='FrmUsername'>Username:</label><input type='text' name='FrmUsername' id='FrmUsername'>
 <label for='FrmPass'>Password:</label><input type='password' name='FrmPass' id='FrmPass'>
 <input type="hidden" name="SubmittedLoginFrm" value="1">

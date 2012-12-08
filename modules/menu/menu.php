@@ -19,11 +19,8 @@ global $notifications;
 <li class="divider-vertical"></li>
 
 <?php
-if (!BTMain::getUser()->name){
+if (BTMain::getUser()->name):
 
-echo "</ul>\n";
-return;
-}
 $this->loadModule('search-table');
 ?>
 
@@ -58,13 +55,18 @@ $this->loadModule('search-table');
 
 
 </ul>
-
-<!-- Admin and search -->
+<?php endif; ?>
+</ul>
 <div class="pull-right" style="position: relative">
+ 
 
+<?php if (BTMain::getUser()->name):?>
   <!-- Search Box -->
   <?php $this->loadModule('search'); ?>
   <!-- Search Box ends -->
+
+<?php endif; ?>
+
 
 
 
@@ -86,6 +88,7 @@ $this->loadModule('search-table');
 
 <?php endif;?>
 
+<?php $this->loadModule('login-navbar'); ?>
 
 </div>
 

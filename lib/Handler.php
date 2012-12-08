@@ -17,15 +17,29 @@ require_once 'lib/crypto.php';
 
 
 $html = new genOutput;
+$option = BTMain::getVar('option');
+$auth = new ProgAuth;
 
     // See if the user has an active session
     if (BTMain::getsessVar('Session')){
-    $auth = new ProgAuth;
+    
     $auth->SetUserDets(BTMain::getsessVar('Session'));
     }
 
 
    if (empty(BTMain::getUser()->name)){
+
+    if ($option == "LogIn"){
+	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),BTMain::getVar('FrmPass'))){
+	    // Login successful
+	    header('Location: index.php?LoginSuccess=1');
+	  }else{
+	    header('Location: index.php?LoginFailed=1');
+	  }
+      die;
+  }
+
+
    $html->content = $html->genDefaultPage();
    $html->callTemplate();
    ob_end_flush();
@@ -44,7 +58,7 @@ $notifications->setNotification("NoCredTypes");
 unset($cred);
 
 
-$option = BTMain::getVar('option');
+
 
 
 
@@ -54,6 +68,7 @@ switch ($option){
 case 'logout':
 $auth->killSession();
 break;
+
 
 
 case 'addCustomer':

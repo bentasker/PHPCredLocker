@@ -18,7 +18,7 @@ td.delicon {width:2%;}
 .blankCol {display: inline-block;}
 
 #groupsMultiSelect input[type="checkbox"] {float: none; margin-left: 20px;}
-
+#FrmUsername {width: 100px;}
 
 .frmEntryMissed {border: 1px red solid !important;}
 
