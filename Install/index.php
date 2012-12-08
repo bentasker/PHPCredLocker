@@ -653,6 +653,25 @@ echo $str;
 <td >Cron Password:</td><td title="A password used simply to prevent unauthorised users from running the cronjobs. Default is randomly generated, but you can change if you want"><input type="text" name="cronPass" value="<?php echo base_convert(rand(10e16, 10e20),10,36).mt_rand(0,500);?>"></td>
 </tr>
 
+
+<tr>
+<td>IP Ban Threshold</td>
+<td title="Number of permitted authentication failures before an IP is banned"><input type="text" name="banThresh" value="4"></td>
+</tr>
+
+<tr>
+<td>IP Ban Check</td>
+<td title="Time period (hours) to examine when considering whether to ban an IP"><input type="text" name="banProximity" value="24"></td>
+</tr>
+
+
+<tr>
+<td>IP Ban Period</td>
+<td title="Time period (hours) for which the IP will be banned"><input type="text" name="banLength" value="24"></td>
+</tr>
+
+
+
 </tr>
 
 <tr>
