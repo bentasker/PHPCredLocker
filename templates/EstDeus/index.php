@@ -17,7 +17,7 @@
 <div id='all' class='PageWrap pgbackground'>
 
 <!-- Navbar Begins -->
-<div id='Nav' class='navbar'>
+<div id='Nav' class='navbar row'>
 <div class='navbar-inner'>
 <?php $this->loadModule('menu'); ?>
 

@@ -13,7 +13,7 @@ global $notifications;
 
 
 ?>
-
+<div class="span12" style="width: 100%;">
 <a class="brand" href="index.php"><?php echo BTMain::getConf()->ProgName;?></a>
 <ul class="nav">
 <li class="divider-vertical"></li>
@@ -98,3 +98,4 @@ $this->loadModule('search-table');
     setUpMenus();
     </script>
 
+</div>
