@@ -28,6 +28,14 @@ die;
 // Load the framework
 require_once 'lib/Framework/main.php';
 
+    if (  BTMain::getSessVar('Banned') ){
+	echo "Excessive authentication attempts";
+    die;
+    }
+
+
+
+
 // Force SSL if configured to do so
 if (BTMain::getConf()->forceSSL && !BTMain::getConnTypeSSL()){
 header("Location: " . BTMain::getConf()->SSLURL);
@@ -36,26 +44,6 @@ die;
 
 // pass off to the handler
 include_once 'lib/Handler.php';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

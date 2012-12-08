@@ -21,6 +21,11 @@ header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
 require_once 'lib/Framework/main.php';
 
 
+ if (  BTMain::getSessVar('Banned') ){
+	echo "Excessive authentication attempts";
+    die;
+    }
+
 require_once 'lib/API.php';
 
 

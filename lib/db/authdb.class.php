@@ -10,6 +10,23 @@ defined('_CREDLOCK') or die;
 
 class AuthDB extends BTDB{
 
+
+/** Check whether the current IP has been banned
+*
+* @arg ip
+*
+* @return boolean - true if ip banned
+*/
+function $db->checkForBan($ip){
+$expire = date('Y-m-d H:i:s');
+$ip = $this->StringEscape($ip);
+$sql = "SELECT * FROM bannedIPs WHERE `IP`='$ip' AND `Expiry` > '$expire'";
+$this->setQuery($sql);
+return $this->loadResult();
+
+}
+
+
 /** If an IP has crossed the ban threshold, ban them
 *
 * @arg threshold - How many attempts are they allowed?
