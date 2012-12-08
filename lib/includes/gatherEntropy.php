@@ -75,19 +75,23 @@ $notifications->RequireCSS('Entropy');
 
 
 ?>
-<div>
+<div id="EntropyGeneration">
 
 <div class='EntropyDiv' id="ClickDiv" title="Move your around mouse randomly whilst clicking. Box will turn green when sufficient clicks have been registered"></div>
 
 
 <textarea id='content' style="display: none;" name="gEntropy"></textarea>
 <div style="display: none;"><input type="text" id="countsremaining" value="30" name="clicksremaining"> Clicks Remaining</div>
+</div>
 
 <script type="text/javascript">
 var count=15;
 document.getElementById('ClickDiv').onclick=function(e){document.getElementById('content').value += whereAt(e); count=count-1; document.getElementById('countsremaining').value = count; if(count == 0){document.getElementById('ClickDiv').className = 'EntropyDiv EntropyGenerated';}};
+
+$('#EntropyGeneration *').tooltip({track: true, fade: 250});
+
 </script>
-</div>
+
 <?php
 
 
