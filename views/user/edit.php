@@ -24,7 +24,7 @@ $process = true;
 BTMain::unsetSessVar('FormToken');
 
 
-  if ($sessvar != BTMain::getVar('FormToken')){
+  if ((BTMain::getVar('editUserSubmitted'))&&($sessvar != BTMain::getVar('FormToken'))){
   echo "<div class='alert alert-error'>Invalid Form Token</div>";
   $process = false;
   }
