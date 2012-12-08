@@ -44,15 +44,15 @@ ksort($groups);
 <br >
 <button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addGrp';">Add Group</button><br /><br />
 
-<table class="table table-hover">
+<table id="GroupsTbl" class="table table-hover">
 <tr><th>Group</th><th></th><th></th></tr>
 <?php
 foreach ($groups as $key=>$value){
 ?>
 <tr id='GroupDisp<?php echo $value;?>'>
   <td><?php echo $key;?></td>
-  <td class='editicon' onclick="window.location.href='index.php?option=editGrp&id=<?php echo $value; ?>';"><i class="icon-pencil"></i></td>
-  <td class='delicon' onclick='delGroup(<?php echo $value;?>);'><i class='icon-remove'></i></td>
+  <td class='editicon' title="Edit this group" onclick="window.location.href='index.php?option=editGrp&id=<?php echo $value; ?>';"><i class="icon-pencil"></i></td>
+  <td class='delicon' title="Delete this group" onclick='delGroup(<?php echo $value;?>);'><i class='icon-remove'></i></td>
 </tr>
 <?php } ?>
 
@@ -61,3 +61,4 @@ foreach ($groups as $key=>$value){
 <button class="btn btn-primary" onclick="window.location.href = 'index.php?option=addGrp';">Add Group</button><br /><br />
 
 
+<script type="text/javascript">$('#GroupsTbl *').tooltip({track: true, fade: 250});</script>
