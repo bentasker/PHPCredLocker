@@ -107,20 +107,23 @@ $fn = "PlgCall";
 
 $plg = new $cls;
 
-$plg->$fn($data);
+$data->plgOutput .= $plg->$fn($data);
 
 
 
 }
 
-
-
-
+return $data;
 }
 
 
 
-
+/** Translate the plugin status code into human readable text
+*
+* @arg status string
+*
+* @return string
+*/
 function transStatus($status){
 
 if ($status){

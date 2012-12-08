@@ -7,6 +7,7 @@
 *
 */
 defined('_CREDLOCK') or die;
+error_reporting(0);
 
 // Check the password has been specified
 if ($_SERVER['CRON_PASS'] != BTMain::getConf()->cronPass){
@@ -35,7 +36,7 @@ $crondb->clearOldSessions();
 
 
 
-echo "Checking Sessions files";
+echo "Checking Session files\n";
 $time = time();
 // Tidy up the sessions files
 $dir = new DirectoryIterator(dirname(__FILE__)."/../sessions/");
@@ -60,10 +61,21 @@ foreach ($dir as $fileinfo) {
 }
 
 
+// Clear any expired IP Bans
+echo "Clearing any expired IP Bans\n";
+$crondb->clearOldBans();
+
 // Pass off to any cron plugins
 require_once 'lib/plugins.php';
 $plgs = new Plugins;
-$plgs->loadPlugins("Cron",ob_get_clean());
 
+// Put the output so far into an object
+$output->plgOutput = ob_get_clean();
+
+// Pass to the plugin handler
+$output = $plgs->loadPlugins("Cron",$output->plgOutput);
+
+// Output to the CLI for the benefit of the cron logs
+echo $output->plgOutput;
 
 ?>

@@ -23,15 +23,24 @@ $sql = "DELETE FROM Sessions WHERE `Expires` < '$exp'";
 $this->setQuery($sql);
 
 return $this->runQuery();
+}
 
 
 
 
+/** Clear any expired IP Bans
+*
+*/
+function clearOldBans(){
+$exp = date("Y-m-d H:i:s");
 
+$sql = "DELETE FROM bannedIPs WHERE `Expiry` < '$exp'";
+$this->setQuery($sql);
+
+return $this->runQuery();
 
 
 }
-
 
 
 
