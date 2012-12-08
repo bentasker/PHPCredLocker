@@ -42,7 +42,7 @@ header('Location: ../index.php');
 die;
 }else{
 
-echo "<div class='alert alert-error'>Unable to remove the Installation directory. Please remove <i>Install</i> manually</div>";
+echo "<div class='alert alert-error' title='The directory couldn't be removed - usually a permissions issue. Remove it manually to continue'>Unable to remove the Installation directory. Please remove <i>Install</i> manually</div>";
 
 }
 
@@ -59,7 +59,7 @@ function credlocker_install_stage_16(){
 
 PHPCredLocker is installed and configured, all that remains is to remove the installation directory! 
 
-To do this automatically, click the button below. Alternatively manually remove the directory <i>Install</i>. 
+To attempt to do this automatically, click the button below. Alternatively manually remove the directory <i>Install</i>. 
 
 Once removed, you'll be able to log into the system with the details you just provided. Before you can add Credentials to the system, you'll need to create at least one Credential Type from the administration menu.
 
@@ -111,10 +111,10 @@ Next we'll create the Administrator account for this install
 <input type="hidden" id="minpassStrength" disabled="true" value="<?php echo BTMain::getConf()->minpassStrength;?>">
 
 <table>
-<tr><th>Username</th><td><input type="text" name="UserName" id="frmUsername"></td><td></td></tr>
-<tr><th>Real Name</th><td><input type="text" name="RealName" id="frmRName"></td><td></td></tr>
-<tr><th>Password</th><td><input type="password" name="frmPass" id="frmPass" autocomplete="off" onkeyup="testPassword(this.value);"></td><td><span id="passStrength"></span><div id="PassNoMatch" style="display: none;" class="alert alert-error"></div></td></tr>
-<tr><th>Confirm Password</th><td><input type="password" name="frmPassConf" autocomplete="off" id="frmPassConf"></td><td></td></tr>
+<tr><th>Username</th><td title="Your desired username, try to avoid 'admin' as it's a little easy for an attacker to guess"><input type="text" name="UserName" id="frmUsername"></td><td></td></tr>
+<tr><th>Real Name</th><td title="Your real name (will be used in Logs)"><input type="text" name="RealName" id="frmRName"></td><td></td></tr>
+<tr><th>Password</th><td title="Enter a password, minimum strength is whatever you selected earlier"><input type="password" name="frmPass" id="frmPass" autocomplete="off" onkeyup="testPassword(this.value);"></td><td><span id="passStrength"></span><div id="PassNoMatch" style="display: none;" class="alert alert-error"></div></td></tr>
+<tr><th>Confirm Password</th><td title="Confirm your password"><input type="password" name="frmPassConf" autocomplete="off" id="frmPassConf"></td><td></td></tr>
 </table>
 <input type="submit" class="btn btn-primary" value="Create User">
 </form>
@@ -318,7 +318,7 @@ Before we generate keys, we need to set which engine and cipher will be used
 
 <tr>
 <td>Encryption Engine</td>
-<td>
+<td title="The Encryption engine to use, OpenSSL is generally recommended - if you have it (requires PHP 5.3)">
 <select name="Engine">
 <?php
 
@@ -339,7 +339,7 @@ echo "<option value='MCrypt'>MCrypt</option>\n";
 
 <tr>
 <td>Key Length</td>
-<td><input type="text" name="keyLength" value="2048"></td>
+<td title="The length of encryption key to use. Higher is generally more secure but may have a performance impact"><input type="text" name="keyLength" value="2048"></td>
 </tr>
 
 
@@ -353,7 +353,7 @@ echo "<option value='MCrypt'>MCrypt</option>\n";
 	  </tr>
 
 	  <tr>
-	    <td>Algorithm</td><td><select name="openssl[cipher]">
+	    <td>Algorithm</td><td title="The OpenSSL algorithm to use. PHPCredLocker has been most heavily tested with des-cbc"><select name="openssl[cipher]">
 		<?php foreach (openssl_get_cipher_methods() as $cipher) {?>
 		      <option value='<?php echo $cipher; ?>'><?php echo $cipher; ?></option>
 		<?php }?>
@@ -371,14 +371,14 @@ echo "<option value='MCrypt'>MCrypt</option>\n";
 	  </tr>
 
 	  <tr>
-	    <td>Algorithm</td><td><select name="MCrypt[Encryption]">
+	    <td>Algorithm</td><td title="The MCrypt Algorithm to use"><select name="MCrypt[Encryption]">
 		<?php foreach (mcrypt_list_algorithms() as $cipher) {?>
 		      <option value='<?php echo $cipher; ?>'><?php echo $cipher; ?></option>
 		<?php }?>
 	    </select></td>
 	  </tr>
 	  <tr>
-	    <td>Algorithm</td><td><select name="MCrypt[mode]">
+	    <td>Mode</td><td title="The Mcrypt Mode to use"><select name="MCrypt[mode]">
 		<?php foreach (mcrypt_list_modes() as $cipher) {?>
 		      <option value='<?php echo $cipher; ?>'><?php echo $cipher; ?></option>
 		<?php }?>
@@ -416,7 +416,17 @@ return;
 $str = "<?php\n/** System Configuration\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU GPL V2\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
 
 fwrite($fh,$str);
+foreach ($_POST as $key=>$value){
 
+$str = "\$conf->$key = '$value';\n";
+fwrite($fh,$str);
+
+}
+
+fwrite($fh,"\n\n?>");
+fclose($fh);
+
+echo "<div class='alert alert-success'>Config file created</div>";
 
 
 // Create the plugins obfuscation string and write to the config file
@@ -441,17 +451,9 @@ echo "<div class='alert alert-error'>Could not Obfuscate Plugin path, you will n
 
 
 
-foreach ($_POST as $key=>$value){
 
-$str = "\$conf->$key = '$value';\n";
-fwrite($fh,$str);
 
-}
 
-fwrite($fh,"\n\n?>");
-fclose($fh);
-
-echo "<div class='alert alert-success'>Config file created</div>";
 
 
 $sqls = array(
@@ -602,7 +604,7 @@ function credlocker_install_stage_2(){
 <td colspan="2"><h2>Application Configuration</h2></td>
 </tr>
 <tr>
-<td>Application Name</td><td><input type="text" name="ProgName" value="PHPCredLocker"></td>
+<td>Application Name</td><td title="The application name you want displayed in the Interface"><input type="text" name="ProgName" value="PHPCredLocker"></td>
 </tr>
 
 <tr>
@@ -614,10 +616,11 @@ function credlocker_install_stage_2(){
 <td colspan="2"><h2>Security Options</h2></td>
 </tr>
 <tr>
-<td>Display Credentials for</td><td><input type="text" name="CredDisplay" value="30" length="3"> seconds</td>
+<td >Display Credentials for</td><td title="How long should credentials be displayed for when a user requests them? Should really be set to a low value" ><input type="text" name="CredDisplay" value="30" length="3"> seconds</td>
 </tr>
 <tr>
-<td>Minimum Password Strength</td><td><select name="minpassStrength">
+<td >Minimum Password Strength</td>
+<td title="The weakest element of the system is usually going to be authentication. Any security measures taken in PHPCredLocker are wasted if you allow users to set obvious passwords!"><select name="minpassStrength">
 <option value="0-16">Very Weak</option>
 <option value="15-25">Weak</option>
 <option value="24-35">Mediocre</option>
@@ -626,16 +629,16 @@ function credlocker_install_stage_2(){
 </td>
 </tr>
 <tr>
-<td>Expire Sessions after</td><td><input type="text" name="sessionexpiry" value="15"> minutes</td>
+<td >Expire Sessions after</td><td title="Regardless of activity, sessions will expire after this interval. A lowish setting is recommended"><input type="text" name="sessionexpiry" value="15"> minutes</td>
 </tr>
 <tr>
-<td>Internal Audit Logging Enabled</td><td><input type="checkbox" checked="checked" name="loggingenabled" value="true"></td>
+<td >Internal Audit Logging Enabled</td><td title="All actions are usually logged. If you don't want this to happen, turn this off"><input type="checkbox" checked="checked" name="loggingenabled" value="true"></td>
 </tr>
 <tr>
-<td>Force SSL</td><td><input type="checkbox" name="forceSSL" checked="checked" value="true"></td>
+<td >Force SSL</td><td title="Redirect http connections to https ones, generally a good idea to have switched on - do you really want to store your passwords securely and then send over the Internet in cleartext?"><input type="checkbox" name="forceSSL" checked="checked" value="true"></td>
 </tr>
 <tr>
-<td>SSL URL</td><td><input type="text" name="SSLURL" value="<?php
+<td >SSL URL</td><td title="The URL to use for https connections. Would normally be https://yourdomain but may be different if you're on shared hosting"><input type="text" name="SSLURL" value="<?php
 
 $str = "https://".$_SERVER['SERVER_NAME'];
 
@@ -650,7 +653,7 @@ echo $str;
 ?>"></td>
 
 <tr>
-<td>Cron Password:</td><td><input type="text" name="cronPass" value="<?php echo base_convert(rand(10e16, 10e20),10,36).mt_rand(0,500);?>"></td>
+<td >Cron Password:</td><td title="A password used simply to prevent unauthorised users from running the cronjobs. Default is randomly generated, but you can change if you want"><input type="text" name="cronPass" value="<?php echo base_convert(rand(10e16, 10e20),10,36).mt_rand(0,500);?>"></td>
 </tr>
 
 </tr>
@@ -665,23 +668,23 @@ echo $str;
 </tr>
 
 <tr>
-<td>Database Host</td><td><input type="text" name="dbhost" value="localhost"></td>
+<td >Database Host</td><td title="The host name or IP address of the server hosting your MySQL Database"><input type="text" name="dbhost" value="localhost"></td>
 </tr>
 
 <tr>
-<td>Database Name</td><td><input type="text" name="dbname" value="PHPCredLocker_<?php echo mt_rand(0,90000); ?>"></td>
+<td >Database Name</td><td title="The name of the database that PHPCredLocker will be using. Must already exist"><input type="text" name="dbname" value="PHPCredLocker_<?php echo mt_rand(0,90000); ?>"></td>
 </tr>
 
 <tr>
-<td>Database User</td><td><input type="text" name="dbuser" value=""></td>
+<td >Database User</td><td title="The database username. Good practice dictates one user per database"><input type="text" name="dbuser" value=""></td>
 </tr>
 
 <tr>
-<td>Database Password</td><td><input type="text" name="dbpass" value=""></td>
+<td >Database Password</td><td title="The database password"><input type="text" name="dbpass" value=""></td>
 </tr>
 
 <tr>
-<td>Display SQL Errors</td><td><input type="checkbox" name="showDBErrors" value="true"></td>
+<td >Display SQL Errors</td><td title="Display any SQL errors that are encountered. Should usually be off!"><input type="checkbox" name="showDBErrors" value="true"></td>
 </tr>
 
 </table>
@@ -713,7 +716,8 @@ Welcome to the PHPCredLocker Installation script. In a few simple steps we'll cr
 <h2>System Tests</h2>
 <table class="table table-hover">
 <tr>
-<th title="Cryptographic libraries are required so that stored credentials can be encrypted. Storing in cleartext is a <b>really</b> bad idea and is entirely unsupported">Crypto Functions</th><td class="test<?php
+<th >Crypto Functions</th>
+<td title="Cryptographic libraries are required so that stored credentials can be encrypted. Storing in cleartext is a <b>really</b> bad idea and is entirely unsupported" class="test<?php
 
 if (function_exists("openssl_encrypt")){
 echo 'Pass">Pass - You have OpenSSL';
@@ -731,8 +735,8 @@ $fail = 1;
 
 
 <tr>
-<th title='PHPCredLocker needs to be able to write to your configuration files, especially for the install!'>Configuration Writable</th>
-<td class='test<?php
+<th >Configuration Writable</th>
+<td title='PHPCredLocker needs to be able to write to your configuration files, especially for the install!' class='test<?php
 
 
 // is_writable doesn't seem to want to play nice here, writing a file instead
@@ -763,8 +767,8 @@ $rm = file_exists($path);
 </tr>
 
 <tr>
-<th title='Your configuration directory should only be readable by Owner and group - Other users should be denied access (e.g. 660 or 650 permissions)'>Configuration Protection</th>
-<td class='test<?php
+<th>Configuration Protection</th>
+<td title='Your configuration directory should only be readable by Owner and group - Other users should be denied access (e.g. 660 or 650 permissions)' class='test<?php
 
 $perms = sprintf('%o', fileperms(dirname(__FILE__)."/../conf/"));
 
@@ -786,8 +790,8 @@ echo "Pass'>Pass";
 </tr>
 
 <tr>
-<th title="To interact with the database, you'll need the relevant PHP libraries installed">Database Libraries</th>
-<td class='test<?php
+<th>Database Libraries</th>
+<td title="To interact with the database, you'll need the relevant PHP libraries installed" class='test<?php
 
 if (function_exists('mysql_query')){
 
@@ -946,7 +950,7 @@ $fn();
 
 </div>
 <script type="text/javascript">
-$('#ContentWrap *').tooltip();
+$('#ContentWrap *').tooltip({track: true, fade: 250});
 </script>
 </body>
 </html>

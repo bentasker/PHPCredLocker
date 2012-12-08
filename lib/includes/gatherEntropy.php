@@ -76,8 +76,8 @@ $notifications->RequireCSS('Entropy');
 
 ?>
 <div>
-Move the mouse and click Randomly in the box below to create entropy for Key Generation (continue until the box turns green).
-<div class='EntropyDiv' id="ClickDiv"></div>
+
+<div class='EntropyDiv' id="ClickDiv" title="Move your around mouse randomly whilst clicking. Box will turn green when sufficient clicks have been registered"></div>
 
 
 <textarea id='content' style="display: none;" name="gEntropy"></textarea>
