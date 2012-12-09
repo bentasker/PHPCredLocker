@@ -20,7 +20,7 @@ class AuthDB extends BTDB{
 function checkForBan($ip){
 $expire = date('Y-m-d H:i:s');
 $ip = $this->StringEscape($ip);
-$sql = "SELECT * FROM bannedIPs WHERE `IP`='$ip' AND `Expiry` > '$expire'";
+$sql = "SELECT * FROM #__bannedIPs WHERE `IP`='$ip' AND `Expiry` > '$expire'";
 $this->setQuery($sql);
 return $this->loadResult();
 
@@ -37,13 +37,13 @@ return $this->loadResult();
 function implementBan($threshold,$thresholddate,$bantime,$ip){
 $ip = $this->StringEscape($ip);
 
-$sql = "SELECT SUM(FailedAttempts) as failcount FROM FailedLogins WHERE FailedIP='$ip' AND LastAttempt > '$thresholddate'";
+$sql = "SELECT SUM(FailedAttempts) as failcount FROM #__FailedLogins WHERE FailedIP='$ip' AND LastAttempt > '$thresholddate'";
 $this->setQuery($sql);
 
 $tries =$this->loadResults();
 
     if ($tries->failcount > $threshold){
-     $sql = "INSERT INTO bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";
+     $sql = "INSERT INTO #__bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";
       $this->setQuery($sql);
     $this->runQuery();
 
@@ -64,7 +64,7 @@ $username = $this->StringEscape($username);
 $ip = $this->StringEscape($ip);
 $date = date("Y-m-d H:i:s");
 
-$sql = "INSERT INTO FailedLogins (`username`,`FailedAttempts`,`LastAttempt`,`FailedIP`) ".
+$sql = "INSERT INTO #__FailedLogins (`username`,`FailedAttempts`,`LastAttempt`,`FailedIP`) ".
 "VALUES('$username','1','$date','$ip') ON DUPLICATE KEY UPDATE `FailedAttempts`=`FailedAttempts`+1, `LastAttempt`='$date'";
 $this->setQuery($sql);
 
@@ -85,7 +85,7 @@ $this->runQuery();
 function DelUser($username){
 
 $username = $this->StringEscape($username);
-$sql = "DELETE FROM Users WHERE `username`='$username'";
+$sql = "DELETE FROM #__Users WHERE `username`='$username'";
 $this->setQuery($sql);
 
 return $this->runQuery();
@@ -110,7 +110,7 @@ $user->groups = $this->StringEscape(implode(",",$user->groups));
 $user->pass = $this->StringEscape($crypt->encrypt($user->pass.":".$user->salt,'auth'));
 $user->RealName = $this->StringEscape($user->RealName);
 
-$sql = "INSERT INTO Users (`username`,`Name`,`pass`,`membergroup`) ".
+$sql = "INSERT INTO #__Users (`username`,`Name`,`pass`,`membergroup`) ".
 "VALUES('{$user->username}','{$user->RealName}','{$user->pass}','{$user->groups}')";
 
 $this->setQuery($sql);
@@ -149,7 +149,7 @@ $user->groups = $this->StringEscape(implode(",",$user->groups));
 $user->RealName = $this->StringEscape($user->RealName);
 
 
-$sql = "Update Users SET `username`='{$user->username}',`Name`='{$user->RealName}',`membergroup`='{$user->groups}'";
+$sql = "Update Users #__SET `username`='{$user->username}',`Name`='{$user->RealName}',`membergroup`='{$user->groups}'";
 
 
 if ($user->pass){
@@ -202,7 +202,7 @@ function retrieveUserCreds($username){
 
 $username = $this->StringEscape($username);
 
-$sql = "SELECT pass,membergroup,Name FROM Users WHERE username='$username'";
+$sql = "SELECT pass,membergroup,Name FROM #__Users WHERE username='$username'";
 $this->setQuery($sql);
 
 if ($res = $this->runQuery()){
@@ -227,7 +227,7 @@ return false;
 function getUserDets($username){
 
 $username = $this->StringEscape($username);
-$sql = "SELECT Name, membergroup FROM Users WHERE username='$username'";
+$sql = "SELECT Name, membergroup FROM #__Users WHERE username='$username'";
 $this->setQuery($sql);
 
 return $this->loadResult();
@@ -248,7 +248,7 @@ $crypt = new Crypto;
 $name = $crypt->encrypt($name,'Groups');
 
 $name = $this->StringEscape($name);
-$sql = "INSERT INTO Groups (`Name`) VALUES('$name')";
+$sql = "INSERT INTO #__Groups (`Name`) VALUES('$name')";
 $this->setQuery($sql);
 
 $id = $this->insertID();
@@ -275,7 +275,7 @@ $crypt = new Crypto;
 $name = $crypt->encrypt($name,'Groups');
 $id = $this->StringEscape($id);
 $name = $this->StringEscape($name);
-$sql = "UPDATE Groups SET `Name`='$name' WHERE `id`='$id'";
+$sql = "UPDATE #__Groups SET `Name`='$name' WHERE `id`='$id'";
 $this->setQuery($sql);
 
 
@@ -311,7 +311,7 @@ $created = date('Y-m-d H:i:s');
 // IP is provided by the client, so we're not going to just trust it!
 $ip = $this->StringEscape(BTMain::getip());
 
-$sql = "INSERT INTO Sessions (`SessionID`,`Created`,`User`,`Expires`,`ClientIP`,`SessKey`) ".
+$sql = "INSERT INTO #__Sessions (`SessionID`,`Created`,`User`,`Expires`,`ClientIP`,`SessKey`) ".
 "VALUES ('$sessionID','$created','$user','$expires','$ip','$sesskey')";
 
 $this->setQuery($sql);
@@ -334,7 +334,7 @@ $sess = $this->StringEscape($sess);
 $date = date('Y-m-d H:i:s');
 $ip = BTMain::getip();
 
-$sql = "SELECT a.ClientIP, a.SessKey, a.`Expires`, b.* FROM Sessions as a LEFT JOIN Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
+$sql = "SELECT a.ClientIP, a.SessKey, a.`Expires`, b.* FROM #__Sessions as a LEFT JOIN #__Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
 $this->setQuery($sql);
 
 return $this->loadResult();
@@ -354,11 +354,11 @@ function KillSession($sessID){
 
 $sessID = $this->StringEscape($sessID);
 
-$sql = "SELECT `Expires` FROM Sessions WHERE `SessionID`='$sessID'";
+$sql = "SELECT `Expires` FROM #__Sessions WHERE `SessionID`='$sessID'";
 $this->setQuery($sql);
 $exp = $this->loadResult();
 
-$sql = "DELETE FROM Sessions WHERE `SessionID`='$sessID'";
+$sql = "DELETE FROM #__Sessions WHERE `SessionID`='$sessID'";
 $this->setQuery($sql);
 $res = $this->runQuery();
 
@@ -376,7 +376,7 @@ return $exp->Expires;
 function retrieveGroupNames(){
 
 
-$sql = "SELECT * FROM Groups";
+$sql = "SELECT * FROM #__Groups";
 $this->setQuery($sql);
 return $this->loadResults();
 
@@ -393,7 +393,7 @@ return $this->loadResults();
 function retrieveGrpById($id){
 
 $id = $this->StringEscape($id);
-$sql = "SELECT Name FROM Groups WHERE id='$id'";
+$sql = "SELECT Name FROM #__Groups WHERE id='$id'";
 $this->setQuery($sql);
 return $this->loadResult();
 
@@ -413,11 +413,11 @@ return $this->loadResult();
 function delGroup($id){
 
 $id = $this->StringEscape($id);
-$sql = "DELETE FROM Cred WHERE `Group`='$id'";
+$sql = "DELETE FROM #__Cred WHERE `Group`='$id'";
 $this->setQuery($sql);
 $this->runQuery();
 
-$sql = "DELETE FROM Groups WHERE `id`='$id'";
+$sql = "DELETE FROM #__Groups WHERE `id`='$id'";
 $this->setQuery($sql);
 
 if($this->runQuery()){
@@ -441,7 +441,7 @@ return false;
 */
 function listUsers(){
 
-$sql = "SELECT username, Name FROM Users ORDER BY username ASC";
+$sql = "SELECT username, Name FROM #__Users ORDER BY username ASC";
 $this->setQuery($sql);
 
 return $this->loadResults();
@@ -455,14 +455,5 @@ return $this->loadResults();
 
 
 }
-
-
-
-
-
-
-
-
-
 
 ?>

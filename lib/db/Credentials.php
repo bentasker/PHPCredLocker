@@ -18,7 +18,7 @@ class CredDB extends BTDB{
 */
 function checkCredTypesDefined(){
 
-$sql = "SELECT * FROM CredTypes";
+$sql = "SELECT * FROM #__CredTypes";
 $this->setQuery($sql);
 return $this->loadResult();
 }
@@ -37,7 +37,7 @@ $log = new Logging;
 $log->logEntry($id,10);
 $ACL = BTMain::buildACLQuery();
 $id = $this->StringEscape($id);
-$sql = "DELETE FROM Cred WHERE id='$id' AND ($ACL)";
+$sql = "DELETE FROM #__Cred WHERE id='$id' AND ($ACL)";
 $this->setQuery($sql);
 return $this->runQuery();
 
@@ -60,7 +60,7 @@ $ACL = BTMain::buildACLQuery();
 
 $id = $this->StringEscape($id);
 
-$sql = "SELECT Hash, Clicky, Address, UName, CredType, `Group` FROM Cred WHERE id='$id' AND ($ACL)";
+$sql = "SELECT Hash, Clicky, Address, UName, CredType, `Group` FROM #__Cred WHERE id='$id' AND ($ACL)";
 $this->setQuery($sql);
 
 
@@ -79,7 +79,7 @@ $id = $this->StringEscape($id);
 $ACL = BTMain::buildACLQuery('a');
 $CustACL = BTMain::buildACLQuery('b');
 
-$sql = "SELECT a.id, b.Name FROM Cred as a LEFT JOIN Cust as b on a.cust=b.id WHERE CredType='$id' AND ($ACL) AND ($CustACL)";
+$sql = "SELECT a.id, b.Name FROM #__Cred as a LEFT JOIN #__Cust as b on a.cust=b.id WHERE CredType='$id' AND ($ACL) AND ($CustACL)";
 $this->setQuery($sql);
 
 return $this->loadResults();
@@ -103,7 +103,7 @@ $name = $crypt->encrypt($name,'CredType');
 
 $name = $this->StringEscape($name);
 
-$sql = "INSERT INTO CredTypes (`Name`) VALUES ('$name')";
+$sql = "INSERT INTO #__CredTypes (`Name`) VALUES ('$name')";
 $this->setQuery($sql);
 
 $id = $this->insertID();
@@ -124,7 +124,7 @@ return false;
 */
 function getCredTypes(){
 
-$sql = "SELECT * FROM CredTypes";
+$sql = "SELECT * FROM #__CredTypes";
 $this->setQuery($sql);
 return $this->loadResults();
 }
@@ -138,7 +138,7 @@ return $this->loadResults();
 */
 function getCredType($id){
 $id = $this->StringEscape($id);
-$sql = "SELECT * FROM CredTypes WHERE id='$id'";
+$sql = "SELECT * FROM #__CredTypes WHERE id='$id'";
 $this->setQuery($sql);
 return $this->loadResult();
 }
@@ -159,7 +159,7 @@ $id = $this->StringEscape($id);
 $name = $crypt->encrypt($name,'CredType');
 $name = $this->StringEscape($name);
 
-$sql = "UPDATE CredTypes SET `Name`='$name' WHERE id='$id'";
+$sql = "UPDATE #__CredTypes SET `Name`='$name' WHERE id='$id'";
 $this->setQuery($sql);
 
 return $this->runQuery();
@@ -177,11 +177,11 @@ return $this->runQuery();
 function DelCredentialType($id){
 $id = $this->StringEscape($id);
 
-$sql = "DELETE FROM Cred WHERE `CredType`='$id'";
+$sql = "DELETE FROM #__Cred WHERE `CredType`='$id'";
 $this->setQuery($sql);
 $this->runQuery();
 
-$sql = "DELETE FROM CredTypes WHERE id='$id'";
+$sql = "DELETE FROM #__CredTypes WHERE id='$id'";
 $this->setQuery($sql);
 if ($this->runQuery()){
 $log = new Logging;
@@ -241,7 +241,7 @@ $date = date('Y-m-d H:i:s');
 $group = $this->StringEscape($group);
 
 
-$sql = "INSERT INTO Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`) ".
+$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`) ".
 "VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname')";
 $this->setQuery($sql);
 
@@ -287,7 +287,7 @@ $group = $this->StringEscape($group);
 
 // build the SQL
 
-$sql = "UPDATE Cred SET `Added`='$date', `Group`='$group',";
+$sql = "UPDATE #__Cred SET `Added`='$date', `Group`='$group',";
 
 if ($cred){
 $cred = $crypt->encrypt($cred,'Cre'.$credtype);

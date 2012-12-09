@@ -111,9 +111,9 @@ $username = $db->StringEscape($data->user);
 
 // Build the query
 $sql = "SELECT a.cust, b.Name as Name, b.ContactName, b.ContactSurname, b.Email, c.Name as CredType ".
-"FROM Cred as a ".
-"LEFT JOIN Cust as b on a.cust = b.id ".
-"LEFT JOIN CredTypes as c on a.CredType = c.id ".
+"FROM #__Cred as a ".
+"LEFT JOIN #__Cust as b on a.cust = b.id ".
+"LEFT JOIN #__CredTypes as c on a.CredType = c.id ".
 "WHERE a.`id` = '$id'";
 
 $db->setQuery($sql);
@@ -121,7 +121,7 @@ $res = $db->loadResult();
 
 
 // Get the users real name
-$sql = "SELECT Name FROM Users WHERE username='$username'";
+$sql = "SELECT Name FROM #__Users WHERE username='$username'";
 $db->setQuery($sql);
 $user = $db->loadResult();
 

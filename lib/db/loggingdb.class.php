@@ -50,7 +50,7 @@ $timestamp = date('Y-m-d H:i:s');
 
   if ($loggingenabled){
 
-  $sql = "INSERT INTO Audit (`User`,`Cust`,`date`,`Action`) VALUES('$useres','$credes','$timestamp','$actiones')";
+  $sql = "INSERT INTO #__Audit (`User`,`Cust`,`date`,`Action`) VALUES('$useres','$credes','$timestamp','$actiones')";
   $this->setQuery($sql);
   $res = $this->runQuery();
 
@@ -72,4 +72,4 @@ return $res;
 
 }
 
-?> 
+?>

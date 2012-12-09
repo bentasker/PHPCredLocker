@@ -19,7 +19,7 @@ function clearOldSessions(){
 
 $exp = date("Y-m-d H:i:s");
 
-$sql = "DELETE FROM Sessions WHERE `Expires` < '$exp'";
+$sql = "DELETE FROM #__Sessions WHERE `Expires` < '$exp'";
 $this->setQuery($sql);
 
 return $this->runQuery();
@@ -34,7 +34,7 @@ return $this->runQuery();
 function clearOldBans(){
 $exp = date("Y-m-d H:i:s");
 
-$sql = "DELETE FROM bannedIPs WHERE `Expiry` < '$exp'";
+$sql = "DELETE FROM #__bannedIPs WHERE `Expiry` < '$exp'";
 $this->setQuery($sql);
 
 return $this->runQuery();

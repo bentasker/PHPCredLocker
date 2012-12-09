@@ -454,9 +454,9 @@ echo "<div class='alert alert-error'>Could not Obfuscate Plugin path, you will n
 
 
 $sqls = array(
-'DROP TABLE IF EXISTS `Audit`;',
+'DROP TABLE IF EXISTS `#__Audit`;',
 
-'CREATE TABLE `Audit` (
+'CREATE TABLE `#__Audit` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `User` varchar(150) DEFAULT NULL,
@@ -465,9 +465,9 @@ $sqls = array(
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `Cred`;',
+'DROP TABLE IF EXISTS `#__Cred`;',
 
-'CREATE TABLE `Cred` (
+'CREATE TABLE `#__Cred` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cust` int(11) NOT NULL,
   `Added` datetime NOT NULL,
@@ -482,17 +482,17 @@ $sqls = array(
   KEY `idx_cred_cust` (`cust`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `CredTypes`;',
+'DROP TABLE IF EXISTS `#__CredTypes`;',
 
-'CREATE TABLE `CredTypes` (
+'CREATE TABLE `#__CredTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` blob,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `Cust`;',
+'DROP TABLE IF EXISTS `#__Cust`;',
 
-'CREATE TABLE `Cust` (
+'CREATE TABLE `#__Cust` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` blob,
   `Group` int(11) NOT NULL,
@@ -504,17 +504,17 @@ $sqls = array(
   KEY `idx_Cust_Group` (`Group`)
 ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `Groups`;',
+'DROP TABLE IF EXISTS `#__Groups`;',
 
-'CREATE TABLE `Groups` (
+'CREATE TABLE `#__Groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` blob,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `Sessions`;',
+'DROP TABLE IF EXISTS `#__Sessions`;',
 
-'CREATE TABLE `Sessions` (
+'CREATE TABLE `#__Sessions` (
   `SessionID` varchar(150) NOT NULL,
   `Created` datetime NOT NULL,
   `User` varchar(150) NOT NULL,
@@ -524,9 +524,9 @@ $sqls = array(
   PRIMARY KEY (`SessionID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `Users`;',
+'DROP TABLE IF EXISTS `#__Users`;',
 
-'CREATE TABLE `Users` (
+'CREATE TABLE `#__Users` (
   `username` varchar(150) NOT NULL,
   `pass` blob NOT NULL,
   `Name` varchar(255) NOT NULL,
@@ -535,18 +535,18 @@ $sqls = array(
   PRIMARY KEY (`username`,`Usergroup`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `bannedIPs`;',
+'DROP TABLE IF EXISTS `#__bannedIPs`;',
 
-'CREATE TABLE `bannedIPs` (
+'CREATE TABLE `#__bannedIPs` (
   `IP` varchar(255) NOT NULL,
   `Expiry` datetime NOT NULL,
   PRIMARY KEY (`IP`),
   KEY `idx_ban_expiry` (`Expiry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;',
 
-'DROP TABLE IF EXISTS `FailedLogins`;',
+'DROP TABLE IF EXISTS `#__FailedLogins`;',
 
-'CREATE TABLE `FailedLogins` (
+'CREATE TABLE `#__FailedLogins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(150) NOT NULL,
   `FailedAttempts` int(11) NOT NULL,
@@ -698,6 +698,12 @@ echo $str;
 <tr>
 <td >Database Password</td><td title="The database password"><input type="text" name="dbpass" value=""></td>
 </tr>
+
+<tr>
+<td >Table Prefix</td><td title="Having a random table prefix helps reduce the effectiveness of SQLi attempts, though it's far from a panacea">
+<input type="text" name="tblprefix" value="<?php echo chr(mt_rand(97,124)) . chr(mt_rand(97,124)) . chr(mt_rand(97,124)) . chr(mt_rand(97,124));?>_"></td>
+</tr>
+
 
 <tr>
 <td >Display SQL Errors</td><td title="Display any SQL errors that are encountered. Should usually be off!"><input type="checkbox" name="showDBErrors" value="true"></td>

@@ -29,7 +29,7 @@ $this->dbname = $conf->dbname;
 $this->dbserver = $conf->dbserver;
 $this->dbuser = $conf->dbuser;
 $this->dbpass = $conf->dbpass;
-
+$this->tblprefix = $conf->dbprefix;
 // Session expiry time (minutes)
 $this->sessionexpiry = $conf->sessionexpiry;
 
@@ -46,6 +46,21 @@ $this->connreuse = 0;
 }
 
 
+/** Replace #__ with the configured tablename prefix
+*
+* @arg sql string
+*
+* @return string
+*
+*/
+function setPrefix($sql){
+
+if (!$this->dbname)
+$this->setconfig(); 
+
+return str_replace("#__",$this->tblprefix,$sql);
+}
+
 
 /**                              QUERY FUNCTIONS                                       **/
 
@@ -57,7 +72,7 @@ $this->connreuse = 0;
 *
 */
 function setQuery($sql){
-$this->query = $sql;
+$this->query = $this->setPrefix($sql);
 }
 
 
