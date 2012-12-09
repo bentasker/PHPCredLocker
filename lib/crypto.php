@@ -36,7 +36,7 @@ $this->cipher = $cipher;
 *
 * @return
 */
-function addKey($newkey,$newid){
+function addKey(&$newkey,$newid){
 
 
 $this->loadConfig();
@@ -73,7 +73,7 @@ return true;
 * @return string - Ciphertext
 *
 */
-function encrypt($string,$type,$key = null){
+function encrypt(&$string,$type,$key = null){
 $this->loadConfig();
 
 
@@ -114,7 +114,7 @@ return $ciphertext;
 *
 * @return ciphertext string
 */ 
-function encrypt_OpenSSL($string,$type){
+function encrypt_OpenSSL(&$string,$type){
 return openssl_encrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$type);
 }
 
@@ -129,7 +129,7 @@ function encrypt_doubleROT13($string,$type){ return "If you've enabled this, you
 *
 * @return ciphertext string
 */ 
-function encrypt_Mcrypt($string,$type){
+function encrypt_Mcrypt(&$string,$type){
 
 return mcrypt_encrypt($this->cipher->MCrypt->Encryption,$this->keys->$type,$string, $this->cipher->MCrypt->mode);
 }
