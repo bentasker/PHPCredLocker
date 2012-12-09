@@ -156,7 +156,7 @@ $this->loadConfig();
 
 
 $fn = "decrypt_{$this->cipher->Engine}";
-$plaintext = $this->$fn($ciphertext,$type);
+$plaintext =& $this->$fn($ciphertext,$type);
 
 
   if ($this->safety == 1){
@@ -176,8 +176,8 @@ return $plaintext;
 *
 * @return plaintext string
 */
-function decrypt_OpenSSL($string,$type){
-return openssl_decrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$type);
+function &decrypt_OpenSSL($ciphertext,$type){
+return openssl_decrypt($ciphertext, $this->cipher->OpenSSL->Cipher, $this->keys->$type);
 }
 
 
@@ -189,7 +189,7 @@ return openssl_decrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 *
 * @return plaintext string
 */
-function decrypt_Mcrypt($ciphertext,$type){
+function &decrypt_Mcrypt($ciphertext,$type){
 return mcrypt_decrypt($this->cipher->MCrypt->Encryption,$this->keys->$type,$ciphertext, $this->cipher->MCrypt->mode);
 }
 
