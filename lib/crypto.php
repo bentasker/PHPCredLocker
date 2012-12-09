@@ -73,7 +73,7 @@ return true;
 * @return string - Ciphertext
 *
 */
-function encrypt(&$string,$type,$key = null){
+function encrypt($string,$type,$key = null){
 $this->loadConfig();
 
 

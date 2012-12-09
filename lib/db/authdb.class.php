@@ -40,7 +40,7 @@ $ip = $this->StringEscape($ip);
 $sql = "SELECT SUM(FailedAttempts) as failcount FROM #__FailedLogins WHERE FailedIP='$ip' AND LastAttempt > '$thresholddate'";
 $this->setQuery($sql);
 
-$tries =$this->loadResults();
+$tries =$this->loadResult();
 
     if ($tries->failcount > $threshold){
      $sql = "INSERT INTO #__bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";

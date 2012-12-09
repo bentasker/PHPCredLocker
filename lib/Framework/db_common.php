@@ -29,7 +29,7 @@ $this->dbname = $conf->dbname;
 $this->dbserver = $conf->dbserver;
 $this->dbuser = $conf->dbuser;
 $this->dbpass = $conf->dbpass;
-$this->tblprefix = $conf->dbprefix;
+$this->tblprefix = $conf->tblprefix;
 // Session expiry time (minutes)
 $this->sessionexpiry = $conf->sessionexpiry;
 

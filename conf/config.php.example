@@ -25,6 +25,7 @@ $conf->dbname = "VirCreds";
 $conf->dbserver = "localhost";
 $conf->dbuser = "root";
 $conf->dbpass = "Password12";
+$conf->tblprefix = 'balrg_';
 
 // Session expiry time (minutes)
 $conf->sessionexpiry = 15;
