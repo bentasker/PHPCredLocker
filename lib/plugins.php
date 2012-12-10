@@ -29,7 +29,7 @@ function getPluginInfo($plugin,$plug){
   if (empty($plugin) || empty($plug)){ return; }
 
 
-  include_once "plugins/".$this->plugins->path."/$plugin/$plugin.php";
+  include_once CREDLOCK_PLUGIN__PATH."/$plugin/$plugin.php";
 
   $cls = "plugin_".$plugin."_$plug";
   
@@ -62,7 +62,7 @@ $plug = $plugintype;
   if (empty($plugin)){ continue; }
 
 
-  include_once "plugins/".$this->plugins->path."/$plugin/$plugin.php";
+  include_once CREDLOCK_PLUGIN__PATH."/$plugin/$plugin.php";
 
   $cls = "plugin_".$plugin."_$plug";
   
@@ -100,7 +100,7 @@ foreach ($this->plugins->$type as $value){
 if (empty($value)){ continue; }
 
 
-include_once "plugins/".$this->plugins->path."/$value/$value.php";
+include_once CREDLOCK_PLUGIN__PATH."/$value/$value.php";
 
 $cls = "plugin_".$value."_$type";
 $fn = "PlgCall";
