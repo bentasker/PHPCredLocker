@@ -44,8 +44,18 @@ return $this->runQuery();
 
 
 
+/** Clear any failed logins that occurred outside the proximity setting
+*
+* @arg date
+*
+*/
+function clearFailedLogins($date){
 
+$sql = "DELETE FROM #__FailedLogins WHERE `LastAttempt` < '$date'";
+$this->setQuery($sql);
+return $this->runQuery();
 
+}
 
 
 

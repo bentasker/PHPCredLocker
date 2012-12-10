@@ -64,6 +64,12 @@ foreach ($dir as $fileinfo) {
 echo "Clearing any expired IP Bans\n";
 $crondb->clearOldBans();
 
+
+
+echo "Clearing old failed logins\n";
+$date = date("Y-m-d H:i:s",strtotime("-" . BTMain::getConf()->banProximity . " hours"));
+$crondb->clearFailedLogins($date);
+
 // Pass off to any cron plugins
 require_once 'lib/plugins.php';
 $plgs = new Plugins;
