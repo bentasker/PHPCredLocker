@@ -889,7 +889,7 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 .testPass {color: green;}
 .testFail {color: red; font-weight: bold;}
 li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
-#BreadCrumbs {width: 90% !important; text-align: center;}
+#BreadCrumbs {width: 80% !important; margin: auto;}
 </style>
 </head>
 <body>
@@ -897,19 +897,22 @@ li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
 <div id='all' class='PageWrap pgbackground'>
 
 <!-- Navbar Begins -->
-<div id='Nav' class='navbar'>
+<div id='Nav' class='navbar row'>
     <div class='navbar-inner'>
+    <div class="span12" style="width: 100%;">
 	<a class="brand" href="index.php">PHPCredLocker</a>
 	  <ul class="nav">
 	    <li class="divider-vertical"></li>
 	    <li class="nav"><a id="Inst" href="#">Install</a></li>
 	  </ul>
     </div>
+    </div>
 </div>
 <div id='FFContainer'>
 <div class='contentArea pgbackground' id='contentArea'>
-
-<div class='BreadCrumbs' id='BreadCrumbs'>
+<div class="row hidden-phone">
+<div class="blankCol span2">&nbsp;</div>
+<div class='BreadCrumbs span4' id='BreadCrumbs'>
 
   <ul class="breadcrumb">
 
@@ -928,8 +931,12 @@ li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
 
 </div>
 
+<div class="blankCol span2">&nbsp;</div>
 
-<div class='content' id='ContentWrap'>
+</div>
+<div class="row">
+<div class="blankCol span2"></div>
+<div class='content span8' id='ContentWrap'>
 <?php
 
 
@@ -965,6 +972,10 @@ $fn();
 
 ?>
 </div>
+
+<div class="blankCol span2">&nbsp;</div>
+</div>
+
 </div>
 
 </div>
