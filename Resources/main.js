@@ -11,6 +11,23 @@ Copyright (c) 2012 Ben Tasker
 
 */
 
+
+
+
+function resizebkgrnd(){
+var width = document.documentElement.clientHeight;
+var height = width;
+//var height = eval( width +16);
+var img = document.getElementById('ContentWrap');
+//img.style.width = height + 'px';
+img.style.minHeight = eval(height * 0.8)+'px';
+
+
+
+}
+
+
+
 var counter=false;
 var cancel='';
 	

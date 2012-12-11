@@ -14,12 +14,6 @@
 
 <script type="text/javascript" src="templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
 
-<script type="text/javascript">
-window.onresize = resizebkgrnd;
-
-jQuery(document).ready(function() { resizebkgrnd(); });
-</script>
-
 </head>
 <body>
 <!-- Main PageWrap begins -->
@@ -27,10 +21,9 @@ jQuery(document).ready(function() { resizebkgrnd(); });
 
 <!-- Navbar Begins -->
 <div id='Nav' class='navbar row'>
-<div id="NavContent">
 <div class='navbar-inner'>
 <?php $this->loadModule('menu'); ?>
-</div>
+
 </div>
 </div>
 <!-- Navbar Ends -->
@@ -38,37 +31,42 @@ jQuery(document).ready(function() { resizebkgrnd(); });
 <div id='FFContainer'>
 <div class='contentArea pgbackground' id='contentArea'>
 
+<div class="row hidden-phone">
+<div class="blankCol span2">&nbsp;</div>
 
+<div class='BreadCrumbs span4' id='BreadCrumbs'>
+<?php echo $this->BreadCrumbs(); ?>
+</div>
 
+<div class="blankCol span2">&nbsp;</div>
 
+</div><!-- Row Ends -->
 
-
-
-
-<div class='content' id='ContentWrap'>
-
-      <div class='BreadCrumbs' id='BreadCrumbs'>
-	  <?php echo $this->BreadCrumbs(); ?>
-      </div>
+<div class="row">
+<div class="blankCol span2">&nbsp;</div>
+<!-- Content Section -->
+<div class='content span8' id='ContentWrap'>
 
 
     <div class='NotificationArea' id='NotificationArea'>
 	<?php echo $this->Notifications(); ?>
     </div>
 
-	<div class="content">
 
-	    <?php echo $this->content;?>
+<?php echo $this->content;?>
 
-	</div>
+
 </div>
 <!-- Content Section Ends -->
 
+<!-- Modules go here -->
+<div id='Sidebar hidden-phone hidden-tablet' class='span2'>
+<?php //$this->loadModule("login");?>
+</div>
+<!-- Modules end -->
 
 
-
-
-
+</div> <!-- Row end -->
 </div>
 
 

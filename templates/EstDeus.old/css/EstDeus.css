@@ -1,29 +1,14 @@
-
-
-
-
-
-
-
-
-.content {width: 80%; margin: auto; margin-bottom: 20px; margin-top: 20px;}
-
-
-
-
-body { background-color: #339;}
-.pgbackground { height: 100%}
+.pgbackground {background-color: #339; height: 100%}
 #Sidebar {float: right; padding-right: 80px;} 
 .settings-menu {float: right;}
 .pluginDetails {font-size: smaller;}
 #FFContainer {height: 100%;}
 #contentArea {min-height: 100%; position: relative; padding: 0px; padding-bottom: 50px;}
-#ContentWrap {width: 80%; margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; display: block; margin-bottom: 20px; }
-.navbar {margin-bottom: 0px !important; width: 100%; margin-left: 0px;}
-.navbar-inner {margin-right:0px;}
-#NavContent {width: 80%; margin: auto;}
-.BreadCrumbs {display: block; margin: auto; margin-left: 12%; font-size: smaller;}
-.NotificationArea {width: 60%; margin: auto;}
+#ContentWrap {margin: auto; background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; min-height: 70%; display: inline-block; margin-bottom: 20px; }
+.navbar {margin-bottom: 0px !important; width: 100%;}
+.navbar-inner {margin-right:-20px;}
+.BreadCrumbs {margin: auto; margin-left: 12%; font-size: smaller;}
+.NotificationArea {width: 50%; margin: auto;}
 .login-module {background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; margin-left: 20px; width: 70%;}
 #mod_login input[type="text"], input[type="password"] {width: 100px;}
 #Sidebar {width: 18%; display: inline-block;}
