@@ -477,6 +477,7 @@ $sqls = array(
   `Clicky` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
   `Address` blob,
   `UName` blob,
+  `Custom` blob,
   PRIMARY KEY (`id`),
   KEY `idx_Cred_Group` (`Group`),
   KEY `idx_cred_cust` (`cust`)

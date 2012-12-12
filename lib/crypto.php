@@ -76,6 +76,8 @@ return true;
 function encrypt($string,$type,$key = null){
 $this->loadConfig();
 
+// Fix for issue 16
+if (empty($string)){ $string = ' '; }
 
     if ($this->cipher->Engine == 'auto'){
 
