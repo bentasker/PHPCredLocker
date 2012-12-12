@@ -537,6 +537,9 @@ if(keynum === 40) { // down
     return;     
     }
   
+  
+  document.getElementById('SelectedValue').value=0;
+  
   positionResults("SearchBox",dispdiv);
   
   var suche = val.toLowerCase();
@@ -600,6 +603,8 @@ if(keynum === 40) { // down
 function selectResult(dir){
  var ind;
  var SelIndex = document.getElementById('SelectedValue');
+ var SearchLength = document.getElementById('SearchResBox').childNodes.length;
+ 
  var SearchResult ;
  
  
@@ -608,7 +613,11 @@ function selectResult(dir){
    if (SelIndex.value != 0){
    document.getElementById("SearchResult" + parseInt(SelIndex.value)).className = 'SearchResult';
    }
-   
+ 
+ if (SearchLength == SelIndex.value){
+  SelIndex.value=0; 
+ }
+ 
  ind = eval(parseInt(SelIndex.value) + 1);
  
 
@@ -616,8 +625,14 @@ function selectResult(dir){
    
   }else{
     document.getElementById("SearchResult" + parseInt(SelIndex.value)).className = 'SearchResult';
- ind = eval(parseInt(SelIndex.value) - 1);  
-   if (ind == 0){ return; }
+    
+    if (SelIndex.value == 1){
+ ind = SearchLength;     
+    }else{
+ ind = eval(parseInt(SelIndex.value) - 1); 
+    }
+    
+    
    
    
  }

@@ -22,8 +22,8 @@ body { background-color: #339;}
 .navbar {margin-bottom: 0px !important; width: 100%; margin-left: 0px;}
 .navbar-inner {margin-right:0px;}
 #NavContent {width: 80%; margin: auto;}
-.BreadCrumbs {display: block; margin: auto; margin-left: 12%; font-size: smaller;}
-.NotificationArea {width: 60%; margin: auto;}
+.BreadCrumbs {display: block; margin: auto; font-size: smaller; width: 50%;}
+.NotificationArea {width: 60%; margin: auto; padding-bottom: 20px;}
 .login-module {background-color: white; border-radius: 5px; padding: 20px; box-shadow: 3px 3px #ccc; margin-left: 20px; width: 70%;}
 #mod_login input[type="text"], input[type="password"] {width: 100px;}
 #Sidebar {width: 18%; display: inline-block;}
