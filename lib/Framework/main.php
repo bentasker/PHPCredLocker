@@ -12,15 +12,70 @@
 
 defined('_CREDLOCK') or die;
 
+define('_BTFrameWork',1);
+
 require_once 'lib/Framework/db_common.php';
 
 class BTMain{
 
+/** Identify whether the connection is over HTTPS
+*
+*/
 function getConnTypeSSL(){
 return $_SERVER['HTTPS'];
+}
+
+
+/** Return the Framework Version
+*
+*/
+function getFrameWorkVers(){
+include_once(dirname(__FILE__)."/.version.php");
+$vers = $versionmaj;
+
+if (!empty($versionmin)){
+
+$vers .= ".$versionmin";
+}
+
+
+if (!empty($status)){
+$vers .= ".$status";
+}
+
+return $vers;
 
 
 }
+
+
+
+
+/** Get version identifier for the software
+*
+* To work, the version identification must be stored in lib/.version.php
+*
+*/
+function getSoftVersion(){
+include_once 'lib/.version.php';
+
+$vers = $versionmaj;
+
+if (!empty($versionmin)){
+
+$vers .= ".$versionmin";
+}
+
+
+if (!empty($status)){
+$vers .= ".$status";
+}
+
+return $vers;
+
+}
+
+
 
 
 /** Load in the system config and return as an object
