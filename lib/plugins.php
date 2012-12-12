@@ -27,7 +27,7 @@ defined("CREDLOCK_PLUGIN__PATH") or define('CREDLOCK_PLUGIN__PATH','plugins/Blar
 function getPluginInfo($plugin,$plug){
   
   if (empty($plugin) || empty($plug)){ return; }
-
+  $this->loadConfig();
 
   include_once CREDLOCK_PLUGIN__PATH."/$plugin/$plugin.php";
 
