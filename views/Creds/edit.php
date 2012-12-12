@@ -102,7 +102,7 @@ $crypt->safety = 0;
 
 
 
-<label for='FrmCredType'><?php echo Lang::_("Credential Type");?></label><select id="FrmCredType" name="FrmCredType" disabled='disabled'>
+<label for='FrmCredType'><?php echo Lang::_("Credential Type");?></label><select id="FrmCredType" name="FrmCredType" readonly='readonly'>
 <?php 
 foreach ($credtypes as $cred){
 
