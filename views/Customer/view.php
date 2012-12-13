@@ -54,13 +54,13 @@ $notifications->setBreadcrumb($path);
 
 
 foreach ($customers as $customer){
-
-
+ob_start();
+$cname = $crypt->decrypt($customer->CredName,'CredType');
 ?>
 
 <tr id='CredDisp<?php echo $customer->id;?>'>
   <td>
-    <?php echo $crypt->decrypt($customer->CredName,'CredType');?>
+    <?php echo $cname;?>
   </td>
   
   <td class="passViewNotif" onclick="getCreds('<?php echo $customer->id;?>');">
@@ -92,8 +92,10 @@ foreach ($customers as $customer){
 
 <?php
 
-
+$custs[$cname] = ob_get_clean();
 }
+ksort($custs);
+echo implode("\n",$custs);
 
 ?>
 
