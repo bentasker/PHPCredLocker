@@ -54,7 +54,7 @@ $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
 }
 
 
-echo "$pass|..|<a href='$address' target=_blank>$address</a>|..|" . $crypt->decrypt($cred->UName,$key) . "|..|\n";
+echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|\n";
 break;
 
 
