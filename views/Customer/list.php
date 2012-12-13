@@ -42,12 +42,13 @@ $notifications->setBreadcrumb($path);
 
 foreach ($customers as $customer){
 
-
+ob_start();
+$cname = $crypt->decrypt($customer->Name,'Customer');
 ?>
 
 <tr id='CustDisp<?php echo $customer->id;?>'>
   <td>
-    <a href='index.php?option=viewCust&id=<?php echo $customer->id;?>' title="View Credentials"><?php echo $crypt->decrypt($customer->Name,'Customer');?></a>
+    <a href='index.php?option=viewCust&id=<?php echo $customer->id;?>' title="View Credentials"><?php echo $cname;?></a>
   </td>
   
 <td>
@@ -80,9 +81,12 @@ foreach ($customers as $customer){
 
 <?php
 
+$custs[$cname] = ob_get_clean();
 
 }
 
+ksort($custs);
+echo implode("\n",$custs);
 ?>
 
 </table>
