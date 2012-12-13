@@ -15,7 +15,7 @@ $this->active = false;
 $this->testmode = true;
 
 // URL to post logging data to
-$this->loggingurl = "https://yourdomain.affinitylive.com/forms/public/issue";
+$this->url = "https://yourdomain.affinitylive.com/forms/public/issue";
 
 // Issue status
 $this->loggingstatus = 4;
