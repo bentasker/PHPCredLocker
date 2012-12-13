@@ -8,8 +8,8 @@
 
 .content {width: 80%; margin: auto; margin-bottom: 20px; margin-top: 20px;}
 
-
-
+.testPass {color: green;}
+.testFail {color: red; font-weight: bold;}
 
 body { background-color: #339;}
 .pgbackground { height: 100%}

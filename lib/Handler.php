@@ -69,7 +69,9 @@ case 'logout':
 $auth->killSession();
 break;
 
-
+case 'About':
+$html->content = $html->loadView('about.about');
+break;
 
 case 'addCustomer':
 $html->content = $html->loadView('Customer.add');

@@ -887,8 +887,7 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 
 
 <Style type="text/css">
-.testPass {color: green;}
-.testFail {color: red; font-weight: bold;}
+
 li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
 #BreadCrumbs {width: 80% !important; margin: auto;}
 </style>
