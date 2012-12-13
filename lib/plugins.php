@@ -33,11 +33,13 @@ function getPluginInfo($plugin,$plug){
 
   $cls = "plugin_".$plugin."_$plug";
   
-
+if (class_exists($cls)){
   $plg = new $cls;
   $status->status = $plg->getPlgStatus();
   $status->info = $plg->getPlgDetails();
   return $status;
+}
+return '';
 
 }
 
@@ -66,11 +68,11 @@ $plug = $plugintype;
 
   $cls = "plugin_".$plugin."_$plug";
   
-
+if (class_exists($cls)){
   $plg = new $cls;
 
   $loaded->$plug->$plugin = $plg->getPlgStatus();
-
+}
   unset($plg);
   }
 
@@ -105,10 +107,11 @@ include_once CREDLOCK_PLUGIN__PATH."/$value/$value.php";
 $cls = "plugin_".$value."_$type";
 $fn = "PlgCall";
 
+
+if (class_exists($cls)){
 $plg = new $cls;
-
 $data->plgOutput .= $plg->$fn($data);
-
+}
 
 
 }
