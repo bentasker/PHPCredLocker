@@ -191,7 +191,7 @@ rtrim($fields_string,'&');
 
 
     if ($this->testmode){
-      echo "DEBUG: AL Plugin Would send $fields_string<br/><Br/>\n\n";
+      echo "DEBUG: AL Plugin Would send $fields_string to {$this->url}<br/><Br/>\n\n";
       return;
     }
 
