@@ -39,7 +39,7 @@ $details = $plugin->getPluginInfo($plg,$plgtype);
 <div id='PluginReadme'>
 <h2>Plugin Readme</h2>
 
-<?php include "plugins/$plg/README.html"; ?>
+<?php include CREDLOCK_PLUGIN__PATH."/$plg/README.html"; ?>
 
 </div>
 
