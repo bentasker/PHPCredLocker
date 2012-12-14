@@ -7,7 +7,6 @@
 *
 */ 
 defined('_CREDLOCK') or die;
-BTMain::checkSuperAdmin();
 
 global $notifications;
 
