@@ -75,6 +75,7 @@ $key = $k[0];
 <tr id='CredDisp<?php echo $value;?>'>
   <td><?php echo $key;?></td>
   <td class="passViewNotif" onclick="getCreds('<?php echo $value;?>');">
+  <input type="hidden" id="clickCount<?php echo $value;?>" value="0" disabled="disabled">
     <input type="hidden" id="PassCount<?php echo $value;?>" value="<?php echo BTMain::getConf()->CredDisplay;?>">
     <span class='retrievePassword' id='retrievePassword<?php echo $value;?>'>Display Password</span></td>
   <td>
