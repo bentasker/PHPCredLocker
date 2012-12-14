@@ -10,6 +10,7 @@ defined('_CREDLOCK') or die;
 BTMain::checkSuperAdmin();
 
 global $notifications;
+$plugins = new Plugins;
 
 $notifications->setPageTitle("Add " . Lang::_('Credential Type'));
 
@@ -21,11 +22,18 @@ $crypt = new Crypto;
   if ($newid = $db->AddCredType(BTMain::getVar('frmName'))){
     $notifications->setNotification("addCredTypeSuccess");
     ?><script type="text/javascript">if (document.getElementById('CredTypeNeedsAdding')){ document.getElementById('CredTypeNeedsAdding').style.display = 'none';}</script><?php
+   
+   
     }else{
     $notifications->setNotification("addCredTypeFail");
 
 
   }
+
+
+
+
+
 $submitted = 1;
 include('lib/includes/gatherEntropy.php');
 unset($submitted);
@@ -35,6 +43,11 @@ if(!$crypt->addKey($newkey,$newid)){
 
 $notifications->setNotification("KeyGenerationFailed");
 }
+
+    $data->action = 'added';
+    $data->newid = $newid;
+    echo $plugins->loadPlugins("CredTypes",$data)->plgOutput;
+
 
 }
 
@@ -57,6 +70,15 @@ $notifications->setBreadcrumb($path);
 
 <?php
 include('lib/includes/gatherEntropy.php');
+
+
+
+
+$data->action = 'add';
+echo $plugins->loadPlugins("CredTypes",$data)->plgOutput;
+
+
+
 ?>
 
 

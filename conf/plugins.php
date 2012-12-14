@@ -15,6 +15,7 @@ $plugins->Auth = array();
 $plugins->Logging = array('AffinityLive');
 $plugins->Customers = array();
 $plugins->Creds = array();
+$plugins->CredTypes = array();
 $plugins->Cron = array();
 
 

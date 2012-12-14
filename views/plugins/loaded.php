@@ -140,3 +140,27 @@ if (isset($plugins->Creds)){
 
 
 }
+
+
+
+
+if (isset($plugins->CredTypes)){
+
+?>
+<h2>Credential Type Plugins</h2>
+<table class="table table-hover">
+<tr><th>Plugin</th><th>Status</th><th></th></tr>
+<?php
+
+    foreach($plugins->CredTypes as $plugin=>$status){
+
+    ?>
+    <tr>
+	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td><td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Creds">View ReadMe</a></td>
+    </tr>
+    <?php
+    }
+?><table><br /><br /><?php
+
+
+}
