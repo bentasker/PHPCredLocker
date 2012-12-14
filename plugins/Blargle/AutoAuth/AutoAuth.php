@@ -8,7 +8,7 @@
 */
 defined('_CREDLOCK') or die;
 
-/** Class for logging plugin support
+/** Class for CredTypes
 *
 */
 class plugin_AutoAuth_CredTypes{
@@ -142,6 +142,7 @@ return;
 
 
 
+
 function display_addsettings(){
 
 ob_start();
@@ -154,6 +155,11 @@ ob_start();
 <div id="AAuthSettings" style="display: none;">
 
 <label for="frmAutoAuthURL">Additional address path</label><input type="text" title="Additional URL params to add, for example for CPanel you need /login/" id="frmAutoAuthURL" name="settings[frmAutoAuthURL]">
+
+<label for="frmAutoAuthUser">User Field</label><input type="text" title="The field name to submit usernames as" id="frmAutoAuthUser" name="settings[user]" value="user">
+
+<label for="frmAutoAuthPass">Password Field</label><input type="text" title="The field name to submit usernames as" id="frmAutoAuthPass" name="settings[pass]" value="pass">
+
 
 </div>
 
