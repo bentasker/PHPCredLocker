@@ -105,7 +105,13 @@ function store_addsettings($id){
 
     if (BTMain::getVar('frmAutoAuthEnable')){
       // More settings to be added later
-      $conf->URL = BTMain::getVar('frmAutoAuthURL');
+
+
+      foreach (BTMain::getVar('settings') as $key=>value){
+      $conf->$key = $value;
+
+      }
+      
       
       $settings = json_encode($conf);
 
@@ -147,7 +153,7 @@ ob_start();
 
 <div id="AAuthSettings" style="display: none;">
 
-<label for="frmAutoAuthURL">Additional address path</label><input type="text" title="Additional URL params to add, for example for CPanel you need /login/" id="frmAutoAuthURL" name="frmAutoAuthURL">
+<label for="frmAutoAuthURL">Additional address path</label><input type="text" title="Additional URL params to add, for example for CPanel you need /login/" id="frmAutoAuthURL" name="settings[frmAutoAuthURL]">
 
 </div>
 
