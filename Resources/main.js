@@ -30,7 +30,8 @@ img.style.minHeight = eval(height * 0.8)+'px';
 
 var counter=false;
 var cancel='';
-	
+var dispcred;
+
 function comparePwds(){
 	  
 	  
@@ -111,6 +112,17 @@ var Address = document.getElementById('Address'+id);
 var User = document.getElementById('UserName'+id);
 var Pass = document.getElementById('Password'+id);
 
+
+var clickcount = document.getElementById("clickCount"+id);
+
+    if (clickcount.value != 0){
+	return; 
+    }
+    
+    clickcount.value = 1;
+    clicky.innerHTML = 'Retrieving';
+
+
   if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
 xmlhttp=new XMLHttpRequest();
@@ -141,11 +153,12 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       
       if (counter){
 	cancel=1;
-	
+	document.getElementById("clickCount"+dispcred).value = 0;
+	dispcred=id;
 	setTimeout(function() {cancel=false; counter=setInterval("Credtimer('"+id+"')", 1000);},1000);
 	return;
       }
-      
+      dispcred=id;
       counter=setInterval("Credtimer('"+id+"')", 1000);
       
       }
@@ -351,6 +364,7 @@ function Credtimer(id)
      document.getElementById('Address'+id).innerHTML = '';
      document.getElementById('UserName'+id).innerHTML = '';
      document.getElementById('Password'+id).innerHTML = '';
+     document.getElementById("clickCount"+id).value = 0;
      return;
   }
 

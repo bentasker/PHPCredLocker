@@ -62,8 +62,10 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
   <td>
     <?php echo $cname;?>
   </td>
+
   
   <td class="passViewNotif" onclick="getCreds('<?php echo $customer->id;?>');">
+  <input type="hidden" id="clickCount<?php echo $customer->id;?>" value="0" disabled="disabled">
     <input type="hidden" id="PassCount<?php echo $customer->id;?>" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
     <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display Password</span>
   </td>
