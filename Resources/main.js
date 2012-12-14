@@ -120,7 +120,7 @@ var clickcount = document.getElementById("clickCount"+id);
     }
     
     clickcount.value = 1;
-    clicky.innerHTML = 'Retrieving';
+    clicky.innerHTML = '<i>Retrieving.....</i>';
 
 
   if (window.XMLHttpRequest)
