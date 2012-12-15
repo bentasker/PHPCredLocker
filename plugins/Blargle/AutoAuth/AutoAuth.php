@@ -233,16 +233,12 @@ return plugin_AutoAuth::getDetails();
 
 /** Return Plugin status (i.e. is it enabled)
 *
-* Return true, false or 'In Test Mode'
+* 
 *
-* @return boolean or string
+* @return boolean
 */
 function getPlgStatus(){
 $this->config();
-
-if ($this->testmode && $this->active){
-return "In Test Mode";
-}
 
 return $this->active;
 
