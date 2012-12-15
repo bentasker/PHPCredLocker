@@ -109,9 +109,7 @@ $this->config();
 if (!$this->active){ return; }
 
 
-$data->credtype = $cred->CredType;
-$data->cred = BTMain::getVar('id');
-$data->action = 'display';
+
 
 
 switch($data->action){
@@ -167,11 +165,32 @@ if (!$settings){ return; }
 	}
 
     ob_start();
-
+	// We load the page using img src so that the browser has any cookies that it might need
 	?>	
+	    <img src="<?php echo $address;?>" style="width: 1px; height: 1px; border: 0px">
 	    <form action="<?php echo $address; if (!empty($settings->frmAutoAuthURL)){ echo $settings->frmAutoAuthURL;} ?>" method="POST" <?php echo $onsubmit;?>>
 	    <input type="hidden" name="<?php echo $settings->user; ?>" value="<?php echo $user; ?>"><input type="hidden" name="<?php echo $settings->pass; ?>" value="<?php echo $pass; ?>">
-	    <input type="submit" class="btn btn-primary" value="Log-In"></form>
+	    <input type="submit" class="btn btn-primary" value="Log-In">
+
+	    <?php if (!empty($settings->additional)){
+
+
+	    $adds = explode(",",$settings->additional);
+
+		foreach ($adds as $fld){
+		    $dets = explode("=",$fld);
+
+		echo "<input type='hidden' name='{$dets[0]}' value='{$dets[1]}'>";
+
+
+		}
+
+
+
+
+	    }
+	  ?>
+	    </form>
 <?php
 
     unset($address);
@@ -418,12 +437,13 @@ $user = 'user';
 $pass = 'pass';
 $url = '';
 $checked = '';
+$additional = '';
 
     if (is_object($settings)){
 	$user = $settings->user;
 	$pass = $settings->pass;
 	$url = $settings->frmAutoAuthURL;
-
+	$additional = $settings->additional;
 	  if ($settings->Enabled == 1){
 	  $checked = ' checked';
 	  }
@@ -446,6 +466,7 @@ ob_start();
 
 <label for="frmAutoAuthPass">Password Field</label><input type="text" title="The field name to submit usernames as" id="frmAutoAuthPass" name="settings[pass]" value="<?php echo $pass;?>">
 
+<label for="frmAutoAuthAdditional">Additional Fields</label><textarea id="frmAutoAuthAdditional" title="Additional field names and values, comma seperated in the format key=value" name="settings[additional]"><?php echo $additional;?></textarea>
 
 </div>
 

@@ -1,5 +1,95 @@
-<h1>TODO</h1>
+<h2>Contents</h2>
+
+<ul>
+  <li><a href="#about">About AutoAuth</a></li>
+  <li><a href="#plgConfig">Plugin Configuration</a>
+  <li><a href="#CredType">CredType Configuration</a></li>
+      <ul><li><a href="#examples">Example Values</li></ul>
+  </li>
+  <li><a href="#unsupported">Known incompatible systems</a></li>
+
+</ul>
 
 
-AutoAuth Plugin - Thanks to <a href="http://www.joomlasuffolk.co.uk/" target=_blank>Joomla User Group Suffolk (JUGS)</a> for the feature suggestion!
+<h3><a name="about">About AutoAuth</a></h3>
+AutoAuth Plugin is a plugin allowing system admins to configure PHPCredLocker to
+display a 'Log In' button for specific credtypes. When enabled, the plugin
+simply generates a form containing the credentials so that users can log into
+linked systems with one click.
+<br />
+<br />
 
+Thanks to <a href="http://www.joomlasuffolk.co.uk/" target=_blank>Joomla User
+Group Suffolk (JUGS)</a> for the feature suggestion!
+<br />
+
+
+
+<h3><a name="plgConfig">Plugin Configuration</a></h3>
+
+The configuration file contains two options<br />
+
+<ul>
+  <li><b><i>active</i></b> - Is the plugin enabled?</li>
+  <li><b><i>warnredirect</i></b> - Should a Javascript confirm box be displayed before redirecting the user</li>
+</ul>
+
+
+
+<h3><a name="CredType">CredType Configuration</a></h3>
+
+When enabled, the plugin will display additional fields when adding or editing a Credential Type. 
+The settings specified in these will define how credentials are passed to the login script of the linked system, 
+getting them wrong will result in a failed login.<br />
+
+<ul>
+<li><b><i>Enable Auto Login button:</b></i> Should the plugin be enabled for this CredType?</li>
+<li><b><i>Additional address path: </b></i> Specifies any additional URL params that need to be specified to enable login</li>
+<li><b><i>User Field:</b></i> The field name used by the login form of the linked system</li>
+<li><b><i>Password Field:</b></i> The field name use by the login form of the linked system</li>
+<li><b><i>Additional Fields:</b></i> Some systems require additional hidden fields to be submitted. This field allows you to specify names and values in CSV format using key=value (i.e. <i>page=home,action=login</i>)
+</ul>
+<br />
+<h4><a name="examples">Example configurations</a></h4>
+
+<br /><i>Note: These examples assume you've stored the address of the server without a trailing slash (i.e. mysite:2082 rather than mysite:2082/)</i><br />
+
+
+<table class="table table-hover">
+<tr><th></th><th>CPanel</th><th>Webmin</th></tr>
+
+<tr class='confVal'><th>Additional Address Path</th><td>/login</td><td>/session_login.cgi</td></tr>
+
+<tr class='confVal'><th>User Field</th><td>user</td><td>user</td></tr>
+
+<tr class='confVal'><th>Password Field</th><td>pass</td><td>pass</td></tr>
+
+<tr class='confVal'><th>Additional Fields</th><td>none</td><td>page=/,</td></tr>
+</table>
+
+
+
+<h3><a name="unsupported">Known Incompatible</a></h3>
+
+Systems known not to be compatible with AutoAuth's one-click login are
+
+<ul>
+<li>Joomla! - Requires a unique form token to be submitted</li>
+<li>PHPCredLocker - Requires a unique form token to be submitted</li>
+</ul>
+
+Any system which requires a unique form token to be submitted (such as Joomla!) cannot be supported as the token changes with each session/request.
+Systems which simply require a specific cookie to be set (such as Webmin) are supported however, as are those which allow login details 
+to be submitted without further information (such as CPanel/WHM).
+
+
+
+<h3>Login button not displaying</h3>
+
+There are essentially three reasons why the login button may not display after a user has clicked 'Display Password'.<br>
+
+<ol>
+  <li>Plugin not enabled - Check plugins.conf and conf/plugins/AutoAuth/config.php</li>
+  <li>Required field not included - Credential must have URL, User and Password stored for the plugin to trigger</li>
+  <li>Internal plugin fault - Sorry! These have been well tested for, but it's possible something's been missed</li>
+</ol>
