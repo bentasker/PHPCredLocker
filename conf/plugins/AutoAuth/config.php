@@ -14,6 +14,6 @@ $this->active = false;
 // Set this to true to stop the plugin sending data to AL (Debug output will be generated instead
 $this->testmode = true;
 
-
+$this->warnredirect = true;
 
 ?>

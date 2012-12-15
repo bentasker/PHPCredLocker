@@ -12,6 +12,7 @@ BTMain::checkSuperAdmin();
 global $notifications;
 
 $crypt = new Crypto;
+$plugins = new Plugins;
 $id = BTMain::getVar('id');
 $db = new CredDB;
 $notifications->setPageTitle("Edit " .Lang::_('Credential Type'));
@@ -24,6 +25,12 @@ if (BTMain::getVar('editCredType')){
   if ($db->editCredType(BTMain::getVar('id'),BTMain::getVar('frmName'))){
     $notifications->setNotification("addCredTypeSuccess");
     ?><script type="text/javascript">if (document.getElementById('CredTypeNeedsAdding')){ document.getElementById('CredTypeNeedsAdding').style.display = 'none';}</script><?php
+    
+    $data->action = 'edited';
+    $data->id = BTMain::getVar('id');
+    echo $plugins->loadPlugins("CredTypes",$data)->plgOutput;
+
+
     }else{
     $notifications->setNotification("addCredTypeFail");
 
@@ -49,6 +56,16 @@ $cred = $db->getCredType($id);
 
 <label for="frmName"><?php echo Lang::_("Credential Type");?></label>
 <input type="text" id="frmName" name="frmName" value='<?php echo $crypt->decrypt($cred->Name,'CredType');?>'>
+
+
+<?php
+
+
+    $data->action = 'edit';
+    $data->id = $id;
+    echo $plugins->loadPlugins("CredTypes",$data)->plgOutput;
+
+?>
 
 <input type="submit" class="btn btn-primary" value="Edit <?php echo Lang::_("Credential Type");?>">
 </form>

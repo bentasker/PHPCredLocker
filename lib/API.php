@@ -13,7 +13,7 @@ require_once 'lib/auth.class.php';
 require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/crypto.php';
-
+$plg = new Plugins;
  // See if the user has an active session (must have to continue)
     if (BTMain::getsessVar('Session')){
     $auth = new ProgAuth;
@@ -31,6 +31,9 @@ require_once 'lib/crypto.php';
 
 
 echo "1|..|";
+
+
+
 
 switch(BTMain::getVar('option')){
 
@@ -54,7 +57,19 @@ $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
 }
 
 
-echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|\n";
+echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|";
+
+
+
+$data->cred = $cred;
+$data->cred->id = BTMain::getVar('id');
+$data->action = 'display';
+
+
+echo $plg->loadPlugins("Creds",$data)->plgOutput;
+
+
+
 break;
 
 
@@ -93,6 +108,14 @@ BTMain::checkSuperAdmin();
 require_once 'lib/db/Credentials.php';
 $db = new CredDB;
 if ( $db->DelCredentialType(BTMain::getVar('id'))) {
+
+$data->id = BTMain::getVar('id');
+$data->action = 'del';
+
+
+echo $plg->loadPlugins("CredTypes",$data)->plgOutput;
+
+
 echo "1|..|\n";
 }else{
 echo "0|..|\n";

@@ -111,7 +111,7 @@ var clicky = document.getElementById('retrievePassword'+id);
 var Address = document.getElementById('Address'+id);
 var User = document.getElementById('UserName'+id);
 var Pass = document.getElementById('Password'+id);
-
+var Pluginout = document.getElementById('CredPluginOutput'+id);
 
 var clickcount = document.getElementById("clickCount"+id);
 
@@ -149,6 +149,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       Address.innerHTML = resp[2];
       Pass.innerHTML = resp[1];
       User.innerHTML = resp[3];
+      Pluginout.innerHTML = resp[4];
       clicky.innerHTML = 'Displaying Password for ' +count+ ' seconds';
       
       if (counter){
@@ -364,6 +365,7 @@ function Credtimer(id)
      document.getElementById('Address'+id).innerHTML = '';
      document.getElementById('UserName'+id).innerHTML = '';
      document.getElementById('Password'+id).innerHTML = '';
+     document.getElementById('CredPluginOutput'+id).innerHTML = '';
      document.getElementById("clickCount"+id).value = 0;
      return;
   }

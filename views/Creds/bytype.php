@@ -91,6 +91,11 @@ $key = $k[0];
   </td>
   <td class='editicon' onclick="window.location.href = 'index.php?option=editCred&id=<?php echo $value;?>';"><i class='icon-pencil'></i></td>
   <td class='delicon' onclick="DelCred('<?php echo $value;?>');"><i class='icon-remove'></i></td>
+
+  <td id='CredPluginOutput<?php echo $value;?>'>
+
+  </td>
+
 </tr>
 
 

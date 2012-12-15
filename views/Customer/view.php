@@ -47,7 +47,7 @@ $notifications->setBreadcrumb($path);
 <br /><Br />
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
 <table class='credTbl table table-hover' id='CredsTbl'>
-<tr><th>Credential Type</th><th></th><th>Address</th><th>Username</th><th>Password</th><th></th><th></th></tr>
+<tr><th>Credential Type</th><th></th><th>Address</th><th>Username</th><th>Password</th><th></th><th></th><th></th></tr>
 
 <?php
 
@@ -90,6 +90,11 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
   <td class='delicon' onclick="DelCred('<?php echo $customer->id;?>');">
   <i class="icon-remove"></i>
   </td>
+
+  <td id='CredPluginOutput<?php echo $customer->id;?>'>
+
+  </td>
+
 </tr>
 
 <?php
