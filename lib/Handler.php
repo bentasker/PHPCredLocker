@@ -30,7 +30,12 @@ $auth = new ProgAuth;
    if (empty(BTMain::getUser()->name)){
 
     if ($option == "LogIn"){
-	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),BTMain::getVar('FrmPass'))){
+
+    $crypt = new Crypto;
+    $key = BTMain::getsessVar('tls');
+    $pass = $crypt->xordstring(BTMain::getVar('FrmPass'),$key);
+
+	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),$pass)){
 	    // Login successful
 	    header('Location: index.php?LoginSuccess=1');
 	  }else{

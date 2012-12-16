@@ -112,8 +112,6 @@ var Address = document.getElementById('Address'+id);
 var User = document.getElementById('UserName'+id);
 var Pass = document.getElementById('Password'+id);
 var Pluginout = document.getElementById('CredPluginOutput'+id);
-var key = document.getElementById('TLSkey').value;
-
 
 var clickcount = document.getElementById("clickCount"+id);
 
@@ -137,10 +135,7 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      
-      
-      resp = xordstr(xmlhttp.responseText,key).split('|..|');
-    //resp = xmlhttp.responseText.split('|..|');
+    resp = xmlhttp.responseText.split('|..|');
     if (resp[0] == 0){
      // Request failed, authentication issue maybe? 
       clicky.innerHTML = 'Failed to retrieve credentials. Click to try again';
@@ -723,20 +718,22 @@ menu.appendChild(ele);
  * Did try converting back to char, but things broke quite monumentally
  * 
  */
-function xorestr(str,key){
+function xorstr(str,key){
 
-var enc='';
+var enc;
+var dec;
+var keylength = key.length;
 var keypos = 0;
 
   for (var i=0; i<str.length;i++) {
 
 
         var a = str.charCodeAt(i);
-        var b = a ^ key.charCodeAt(keypos) ;    
+        var b = a ^ key.charCodeAt(keypos) ;    // bitwise XOR with any number, e.g. 123
         enc = enc+b.toString()+" ";
 
 	keypos++;
-	if (keypos >= key.length){ keypos = 0;}
+	if (keypos >= keylength){ keypos = 0;}
     }
 
 
@@ -745,40 +742,3 @@ var keypos = 0;
 
 return enc;
 }
-
-
-function xordstr(str,key){
-
-var enc='';
-var keypos = 0;
-var str = str.split(" ");
-
-  for (var i=0; i<str.length;i++) {
-
-
-        var a = str[i];
-        var b = a ^ key.charCodeAt(keypos) ;    
-        enc = enc+String.fromCharCode(b);
-
-	keypos++;
-	if (keypos >= key.length){ keypos = 0;}
-    }
-
-
-
-
-
-return enc;
-}
-
-
-
-function loginReqProcess(){
-  
- var pass = document.getElementById('FrmPass');
- 
- pass.value = xorestr(pass.value,document.getElementById('tls').value);
-  
-  return true;
-}
-

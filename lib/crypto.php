@@ -29,6 +29,86 @@ $this->cipher = $cipher;
 
 
 
+
+/** XOR functions Although the keys currently used are symmetric, 
+    the JS function doesn't seem to cope well with converting the 
+    codes back to char, so a character identifier (the space) was
+    implemented instead. 
+
+    End result is a symetric key which requires different functions 
+    to en/decrypt
+
+    Will obviously be revisited at some point!
+*/
+
+
+/** Xor the provided string to decrypt it
+*
+* @arg str - string
+* @arg key - string
+*
+* @return string
+*/
+function xordstring($str,$key){
+
+$keylength = strlen($key);
+$kpos = 0;
+$en = "";
+
+
+$str = explode(" ",$str);
+
+foreach ($str as $string){
+	if (empty($string)){ continue; }
+        $a = $string;
+        $b = $a ^ ord(substr($key,$kpos,1)) ;    // bitwise XOR with any number, e.g. 123
+
+	//echo uniord(substr($key,$kpos,1)) ." uniord(substr($key,$kpos,1))<br />";
+        $en .= chr($b);
+
+	$kpos++;
+	if ($kpos >= $keylength){ $kpos = 0;}
+    }
+    
+    return $en;
+
+}
+
+
+
+/** Xor the provided string to encrypt it
+*
+* @arg str - string
+* @arg key - string
+*
+* @return string
+*/
+function xorestring($str,$key){
+
+$keylength = strlen($key);
+$strlength = strlen($str);
+$kpos = 0;
+$en = "";
+
+$i = 0;
+
+while ($i <= $strlength){
+	
+        $a = ord(substr($str,$i,1));
+        $b = $a ^ ord(substr($key,$kpos,1)) ;    
+        $en .= $b." ";
+	$i++;
+	$kpos++;
+	if ($kpos >= $keylength){ $kpos = 0;}
+    }
+    
+    return $en;
+
+}
+
+
+
+
 /** Add a key to the config file
 *
 * @arg newkey string

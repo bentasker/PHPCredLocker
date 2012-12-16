@@ -27,11 +27,16 @@ defined('_CREDLOCK') or die;
 
 
 <?php else: 
+$tls = ProgAuth::generateFormToken();
 $frmToken = ProgAuth::generateFormToken();
+
+
+BTMain::setSessVar('tls',$tls);
 ?>
 
 
-      <form method='POST' class="navbar-form navbar-search pull-right">
+      <form method='POST' class="navbar-form navbar-search pull-right" onsubmit="return loginReqProcess();">
+      <input type="hidden" disabled="disabled" value="<?php echo $tls;?>" id="tls">
       <input type="hidden" name="option" value="LogIn">
       <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 

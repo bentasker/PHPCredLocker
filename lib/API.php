@@ -14,6 +14,11 @@ require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/crypto.php';
 $plg = new Plugins;
+
+
+
+
+
  // See if the user has an active session (must have to continue)
     if (BTMain::getsessVar('Session')){
     $auth = new ProgAuth;
@@ -68,7 +73,8 @@ $data->action = 'display';
 
 echo $plg->loadPlugins("Creds",$data)->plgOutput;
 
-
+$key = BTMain::getsessVar('tls');
+echo $crypt->xorestring(ob_get_clean(),$key);
 
 break;
 

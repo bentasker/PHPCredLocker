@@ -28,6 +28,8 @@ $notifications->setPageTitle("View ".Lang::_('Customer'));
 // Get credentials
 $customers = $custom->getCustomerViewData(BTMain::getVar('id'));
 
+
+
 // Set up the crypto
 $crypt = new Crypto;
 $crypt->safety = 0;
@@ -40,7 +42,17 @@ array('name'=>"$customer",'url'=>'index.php?option=viewCust&id='.BTMain::getVar(
 );
 
 $notifications->setBreadcrumb($path);
+
+
+$tls = ProgAuth::generateFormToken();
+
+BTMain::setSessVar('tls',$tls);
+
 ?>
+
+<input type="hidden" disabled="disabled" id="TLSkey" value="<?php echo $tls;?>">
+
+
 
 <h1>Credentials for <?php echo $customer; ?></h1>
 <button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred&cust=<?php echo BTMain::getVar('id'); ?>';" class='btn btn-primary'>Add Credential</button>
