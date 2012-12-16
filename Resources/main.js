@@ -755,7 +755,7 @@ var str = str.split(" ");
 
   for (var i=0; i<str.length;i++) {
 
-
+	if (str[i].length == 0){ continue; }
         var a = str[i];
         var b = a ^ key.charCodeAt(keypos) ;    
         enc = enc+String.fromCharCode(b);
