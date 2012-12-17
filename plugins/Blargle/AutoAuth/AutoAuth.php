@@ -350,9 +350,10 @@ $crypt = new Crypto;
 
       $settings = $crypt->encrypt($settings,'Cre'.$id);
       $settings = $db->stringEscape($settings);
-
-
-      $sql = "UPDATE #__AutoAuth SET `Settings`='$settings' WHERE `CredType`='".$db->stringEscape($id)."'";
+   
+      $type = $db->stringEscape($id);
+      $sql = "INSERT INTO #__AutoAuth (`CredType`,`Settings`) VALUES('$type','$settings') ON DUPLICATE KEY UPDATE `Settings`='$settings'";
+   
       $db->setQuery($sql);
       $db->runQuery();
       
@@ -416,7 +417,7 @@ $crypt = new Crypto;
 
 $settings = plugin_AutoAuth::getStoredSettings($data->id,$db,$crypt);
 
-if (!$settings){ return false; }
+if (!$settings){ $settings = false; }
 
 return $this->display_addsettings($settings);
 

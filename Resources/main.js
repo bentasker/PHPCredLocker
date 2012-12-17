@@ -711,6 +711,7 @@ ele.className='divider';
 menu.appendChild(ele);
 
 ele = document.createElement('li');
+ele.className = 'viewAll';
 ele.innerHTML = "<a href='index.php?option=viewCustomers'>View All</a></li>";
 menu.appendChild(ele);
 });

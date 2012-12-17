@@ -38,8 +38,8 @@ header("Pragma: cache");
 header("Cache-Control: max-age=$seconds_to_cache");
 }else{
 
-$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
-BTMain::setSessVar('tls',$frmToken);
+$tls = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
+BTMain::setSessVar('tls',$tls);
 BTMain::unsetSessVar('tls');
 }
 
