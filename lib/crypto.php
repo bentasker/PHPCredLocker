@@ -60,10 +60,13 @@ $kpos = 0;
 $en = "";
 
 
+
 $str = explode(" ",$str);
+$len = count($str);
+
 
 foreach ($str as $string){
-	if (empty($string) && ($string != 0)){ continue; }
+	 if (($z == $len) && (empty($string))){ continue; }
         $a = $string;
         $b = $a ^ ord(substr($key,$kpos,1)) ;    // bitwise XOR with any number, e.g. 123
 
