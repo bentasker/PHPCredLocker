@@ -16,8 +16,8 @@ chdir(dirname(__FILE__)."/../");
 // Load the framework
 require_once 'lib/Framework/main.php';
 
-
-if ((isset($_COOKIE['PHPCredLocker']))&&(BTMain::getSessVar("TokenSent") == 1)&&(!empty(BTMain::getSessVar('tls')){
+$tls = BTMain::getSessVar('tls');
+if ((isset($_COOKIE['PHPCredLocker']))&&(BTMain::getSessVar("TokenSent") == 1)&&(!empty($tls))){
 header("HTTP/1.1 304 Not Modified");
 die;
 }
