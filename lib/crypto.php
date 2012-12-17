@@ -66,7 +66,7 @@ $len = count($str);
 
 
 foreach ($str as $string){
-	 if (($z == $len) && (empty($string))){ continue; }
+	 if (strlen($string) == 0){ continue; }
         $a = $string;
         $b = $a ^ ord(substr($key,$kpos,1)) ;    // bitwise XOR with any number, e.g. 123
 

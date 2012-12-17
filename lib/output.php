@@ -237,7 +237,11 @@ function headContents(){
 <?php
 endif;
 ?>
-<script type="text/javascript">var sesscheck; jQuery(document).ready(function() { sesscheck = setInterval("checkSession()",120000);});</script>
+<script type="text/javascript">var sesscheck; jQuery(document).ready(function() { 
+
+checkKeyAvailable();
+sesscheck = setInterval("checkSession()",120000);
+});</script>
 <?php
 
 

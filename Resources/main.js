@@ -787,3 +787,45 @@ function loginReqProcess(){
   return true;
 }
 
+
+
+
+function checkKeyAvailable(){
+  
+ if(typeof getKey != 'function') {
+   
+   confirm("Key retrieval failed - Attempting to rectify, Click OK to continue");
+   
+   var cookies = document.cookie.split(";");
+   
+  for (var i = 0; i < cookies.length; i++){
+    KillCookie(cookies[i].split("=")[0]);
+    }
+   
+   window.location.href = window.location.href;
+   
+ }
+  
+  
+  
+  
+  
+}
+
+
+
+function KillCookie(name) {
+    createCookie(name,"",-1);
+}
+
+
+
+function createCookie(nme,val,expire) {
+    if (expire) {
+    	var date = new Date();
+    	date.setTime(date.getTime()+(expire*24*60*60*1000));
+    	var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = nme+"="+val+expires+"; path=/";
+}
