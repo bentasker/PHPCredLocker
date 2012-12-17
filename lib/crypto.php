@@ -63,7 +63,7 @@ $en = "";
 $str = explode(" ",$str);
 
 foreach ($str as $string){
-	if (empty($string)){ continue; }
+	if (empty($string) && ($string != 0)){ continue; }
         $a = $string;
         $b = $a ^ ord(substr($key,$kpos,1)) ;    // bitwise XOR with any number, e.g. 123
 
