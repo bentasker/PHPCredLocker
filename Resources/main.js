@@ -112,7 +112,7 @@ var Address = document.getElementById('Address'+id);
 var User = document.getElementById('UserName'+id);
 var Pass = document.getElementById('Password'+id);
 var Pluginout = document.getElementById('CredPluginOutput'+id);
-var key = document.getElementById('TLSkey').value;
+var key = getKey();
 
 
 var clickcount = document.getElementById("clickCount"+id);
@@ -477,6 +477,8 @@ function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
   
     var table = document.getElementById(tbl);
   
+    if (!table){ return false; }
+    
   var lim = 0;
   
   
@@ -698,6 +700,8 @@ function setUpMenus(){
 
 jQuery(document).ready(function() {
 
+  if (!document.getElementById('SearchListing')){ return; }
+  
 CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 100, 'TypeMenu');
 CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
 var menu = document.getElementById('CustDropDownMenu');
@@ -777,7 +781,7 @@ function loginReqProcess(){
   
  var pass = document.getElementById('FrmPass');
  
- pass.value = xorestr(pass.value,document.getElementById('tls').value);
+ pass.value = xorestr(pass.value,getKey());
   
   return true;
 }

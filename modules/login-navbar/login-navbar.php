@@ -27,11 +27,8 @@ defined('_CREDLOCK') or die;
 
 
 <?php else: 
-$tls = ProgAuth::generateFormToken();
+
 $frmToken = ProgAuth::generateFormToken();
-
-
-BTMain::setSessVar('tls',$tls);
 ?>
 
 

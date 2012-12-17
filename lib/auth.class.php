@@ -148,6 +148,8 @@ function ProcessLogIn($username,$password){
 
     BTMain::unsetSessVar('FormToken');
     if ($sessvar != BTMain::getVar('FormToken')){
+    echo "Form Token Invalid";
+    die;
     return false;
      }
 
@@ -222,7 +224,7 @@ $log = new Logging;
 
 // Set the session variable
 BTMain::setSessVar('Session',$sessID);
-
+BTMain::setSessVar('Expiry',$expires);
 
 // Set the auth cookie
 
@@ -327,7 +329,14 @@ return true;
 */
 function killSession(){
 $sessID = BTMain::getSessVar('Session');
+$tls = BTMain::getSessVar('tls');
 session_destroy();
+
+// The browser is probably still caching the crypto key, so add back into
+// the session (in case the user wants to log back in
+session_start();
+BTMain::setSessVar('tls',$tls);
+
 $db = new AuthDB;
 $exp = strtotime($db->KillSession($sessID));
 
@@ -340,7 +349,8 @@ unlink(dirname(__FILE__)."/../sessions/$filename");
 
 
 // unset the auth cookie
-setcookie("PHPCredLocker","",0);
+$expires = strtotime("-2 days");
+setcookie("PHPCredLocker", $_COOKIE['PHPCredLocker'], $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
 
 
 header('Location: index.php?LoggedOut=1');

@@ -149,7 +149,7 @@ $user->groups = $this->StringEscape(implode(",",$user->groups));
 $user->RealName = $this->StringEscape($user->RealName);
 
 
-$sql = "Update Users #__SET `username`='{$user->username}',`Name`='{$user->RealName}',`membergroup`='{$user->groups}'";
+$sql = "Update #__Users SET `username`='{$user->username}',`Name`='{$user->RealName}',`membergroup`='{$user->groups}'";
 
 
 if ($user->pass){

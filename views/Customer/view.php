@@ -44,13 +44,10 @@ array('name'=>"$customer",'url'=>'index.php?option=viewCust&id='.BTMain::getVar(
 $notifications->setBreadcrumb($path);
 
 
-$tls = ProgAuth::generateFormToken();
-
-BTMain::setSessVar('tls',$tls);
 
 ?>
 
-<input type="hidden" disabled="disabled" id="TLSkey" value="<?php echo $tls;?>">
+
 
 
 

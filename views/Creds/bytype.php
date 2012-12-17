@@ -50,11 +50,8 @@ $creds[$name."|".$cred->id] = $cred->id;
 
 ksort($creds);
 
-$tls = ProgAuth::generateFormToken();
-
-BTMain::setSessVar('tls',$tls);
 ?>
-<input type="hidden" disabled="disabled" id="TLSkey" value="<?php echo $tls;?>">
+
 
 
 <h1>View by <?php echo Lang::_("Credential Type");?> <i><?php echo $typename;?></i></h1>

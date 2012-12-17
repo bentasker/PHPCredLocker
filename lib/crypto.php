@@ -38,6 +38,10 @@ $this->cipher = $cipher;
     End result is a symetric key which requires different functions 
     to en/decrypt
 
+    Essentially in EBC mode at the moment, will change to CBC once 
+    the performance impact (especially for the JS Counterpart) has
+    been measured
+
     Will obviously be revisited at some point!
 */
 
