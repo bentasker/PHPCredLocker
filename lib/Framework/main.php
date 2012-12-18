@@ -382,6 +382,13 @@ return false;
 }
 
 
+/** Return the Request URI
+*
+*/
+function getEntryPoint(){
+
+return $_SERVER['REQUEST_URI'];
+}
 
 
 /** Remove characters that may cause issues in URLs

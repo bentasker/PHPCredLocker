@@ -595,7 +595,7 @@ function credlocker_install_stage_2(){
 <form method="POST">
 <input type="hidden" name="stage" value="3">
 <input type="hidden" name="template" value="EstDeus">
-
+<input type="hidden" name="JSMinName" value=".min">
 
 <table>
 <tr>
@@ -637,6 +637,7 @@ function credlocker_install_stage_2(){
 </tr>
 <tr>
 <td >SSL URL</td><td title="The URL to use for https connections. Would normally be https://yourdomain but may be different if you're on shared hosting"><input type="text" name="SSLURL" value="<?php
+
 
 $str = "https://".$_SERVER['SERVER_NAME'];
 

@@ -264,9 +264,19 @@ return true;
 *
 */
 function LoginInvalid(){
+
+// Don't redirect API requests, it breaks things!
+if (strpos(BTMain::getEntryPoint(),'api.php') !== false){
+return;
+}
+
   session_destroy();
   header('Location: index.php?notif=InvalidSession');
   die;
+
+
+
+
 }
 
 
