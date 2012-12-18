@@ -32,19 +32,3 @@ var whereAt= (function(){
     }
 })()
 
-
-
-/*
- * 
- * Usage: 
- * 
- * var count=100;
- * document.getElementById('ClickDiv').onclick=function(e){document.getElementById('content').innerHTML += whereAt(e); 
- * count=count-1; 
- * document.getElementById('countsremaining').innerHTML = count};
- * 
- * 
- * 
- * 
- * 
- */

@@ -264,6 +264,7 @@ return true;
 *
 */
 function LoginInvalid(){
+  session_destroy();
   header('Location: index.php?notif=InvalidSession');
   die;
 }
@@ -332,11 +333,6 @@ function killSession(){
 $sessID = BTMain::getSessVar('Session');
 $tls = BTMain::getSessVar('tls');
 session_destroy();
-
-// The browser is probably still caching the crypto key, so add back into
-// the session (in case the user wants to log back in
-session_start();
-BTMain::setSessVar('tls',$tls);
 
 $db = new AuthDB;
 $exp = strtotime($db->KillSession($sessID));

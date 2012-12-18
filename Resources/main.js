@@ -207,7 +207,17 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     if (resp[0] == 0){
      // Session Invalid
      
+    var cookies = document.cookie.split(";");
+   
+    for (var i = 0; i < cookies.length; i++){
+    KillCookie(cookies[i].split("=")[0]);
+    }
+     
      window.location.href = "index.php?notif=InvalidSession";
+     
+     
+     
+     
       return false;
     }
     
@@ -812,7 +822,7 @@ function checkKeyAvailable(){
     KillCookie(cookies[i].split("=")[0]);
     }
    
-   window.location.href = window.location.href;
+   window.location.href = location.reload();
    
  }
   

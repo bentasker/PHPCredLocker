@@ -17,13 +17,13 @@ defined('_CREDLOCK') or die;
 // Are we processing the generated or outputting the field
 if ($submitted):
 
-
-$entropy = BTMain::getVar('gEntropy');
+// Submitted details will be full of commas making part of the key predictable. Get rid of it
+$entropy = str_replace(",","",BTMain::getVar('gEntropy'));
 
 $entropyseed = mt_rand(1000,999000);
 
-$x = 900;
-$arrlength = count($arr) - 1;
+$x = 1100;
+
 
 
       while ($x > 0){
@@ -78,7 +78,7 @@ $notifications->RequireCSS('Entropy');
 <div id="EntropyGeneration">
 
 <div class='EntropyDiv' id="ClickDiv" title="Move your around mouse randomly whilst clicking. Box will turn green when sufficient clicks have been registered"></div>
-
+<input type="hidden" disabled="disabled" id="EntropylastClick">
 
 <textarea id='content' style="display: none;" name="gEntropy"></textarea>
 <div style="display: none;"><input type="text" id="countsremaining" value="30" name="clicksremaining"> Clicks Remaining</div>
@@ -86,7 +86,7 @@ $notifications->RequireCSS('Entropy');
 
 <script type="text/javascript">
 var count=15;
-document.getElementById('ClickDiv').onclick=function(e){document.getElementById('content').value += whereAt(e); count=count-1; document.getElementById('countsremaining').value = count; if(count == 0){document.getElementById('ClickDiv').className = 'EntropyDiv EntropyGenerated';}};
+document.getElementById('ClickDiv').onclick=function(e){ var c = whereAt(e), b=document.getElementById('EntropylastClick');if (c == b.value){ return; } b.value=c; document.getElementById('content').value += c; count=count-1; document.getElementById('countsremaining').value = count; if(count == 0){document.getElementById('ClickDiv').className = 'EntropyDiv EntropyGenerated';}};
 
 $('#EntropyGeneration *').tooltip({track: true, fade: 250});
 
