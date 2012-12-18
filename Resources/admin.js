@@ -13,9 +13,9 @@ Copyright (c) 2012 Ben Tasker
 
 
 	function validateUserAdd(){
-	  var username = document.getElementById('frmUsername');
-	  var RealName = document.getElementById('frmRName');
-	  var error = 0;
+	  var error = 0, username = document.getElementById('frmUsername'),
+	      RealName = document.getElementById('frmRName');
+	  
 	  
 	 if (username.value == null || username.value == ''){
 	  username.className = 'frmEntryMissed'; 
@@ -48,10 +48,10 @@ Copyright (c) 2012 Ben Tasker
 
 	function validateUserEdit(){
 	  
-	  var username = document.getElementById('frmUsername');
-	  var RealName = document.getElementById('frmRName');
-	  var pass = document.getElementById('frmPass');
-	  var error = 0;
+	  var username = document.getElementById('frmUsername'),
+	  RealName = document.getElementById('frmRName'),
+	  pass = document.getElementById('frmPass'),
+	  error = 0;
 	  
 	  
 	  if (username.value == null || username.value == ''){
@@ -88,9 +88,11 @@ Copyright (c) 2012 Ben Tasker
 
 function delGroup(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
+  var xmlhttp, resp,jsonObj, option, 
+  key = retCred(),
+  credrow = document.getElementById('GroupDisp'+id),
+  notify = document.getElementById('NotificationArea');
+  
 
 
 if (!confirm("Are you sure you want to delete this group (any credentials recorded against the group will be deleted)?")){
@@ -98,11 +100,10 @@ if (!confirm("Are you sure you want to delete this group (any credentials record
 }
 
 
-var credrow = document.getElementById('GroupDisp'+id);
 
 
 
-var notify = document.getElementById('NotificationArea');
+
 
 
   if (window.XMLHttpRequest)
@@ -137,30 +138,28 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     }
   
   
+  option = cryptReq('delGroup',key);
   
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delGroup&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
 }
 
+
+
+
 function delUser(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
+  var xmlhttp, resp, jsonObj, option, 
+  key=retCred(),
+  credrow = document.getElementById('User'+id),
+  notify = document.getElementById('NotificationArea');  
 
 
 if (!confirm("Are you sure you want to delete this user?")){
  return false; 
 }
-
-
-var credrow = document.getElementById('User'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
 
 
   if (window.XMLHttpRequest)
@@ -195,31 +194,25 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     }
   
   
+  option = cryptReq('delUser',key);
   
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delUser&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
 }
 
 function delCredType(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
+  var xmlhttp, resp, jsonObj, option, 
+  key=retCred(),
+  credrow = document.getElementById('CredType'+id),
+  notify = document.getElementById('NotificationArea');  
 
 
 if (!confirm("Are you sure you want to delete this Credential Type (any associated credentials will be deleted)?")){
  return false; 
 }
-
-
-var credrow = document.getElementById('CredType'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
-
 
   if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -254,10 +247,9 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
+  option = cryptReq('delCredType',key);
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delCredType&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
 }
-
-

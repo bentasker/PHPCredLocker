@@ -38,10 +38,15 @@ $plg = new Plugins;
 
 echo "1|..|";
 
+// Decrypt the request
 
+$option = base64_decode(BTMain::getVar('option'));
+$tlskey = BTMain::getsessVar('tls');
+$crypt = new Crypto;
 
+$option = explode("|..|",base64_decode($crypt->xordstring($option,$tlskey)));
 
-switch(BTMain::getVar('option')){
+switch($option[1]){
 
 
 case 'retCred':
@@ -50,7 +55,7 @@ case 'retCred':
     $db = new CredDB;
     $cred = $db->FetchCredential(BTMain::getVar('id'));
 
-    $crypt = new Crypto;
+    
     $crypt->safety = 0;
 
     $key = 'Cre'.$cred->CredType;
@@ -76,15 +81,13 @@ case 'retCred':
     
     echo $plg->loadPlugins("Creds",$data)->plgOutput;
 
-    $key = BTMain::getsessVar('tls');
-
     $padding = $crypt->genXorPadding();
     $endpadding = $crypt->genXorPadding();
 
     $op = base64_encode($padding."|..|".ob_get_clean()."|..|".$endpadding);
 
     // Encrypt the output and send back
-    echo base64_encode($crypt->xorestring($op,$key));
+    echo base64_encode($crypt->xorestring($op,$tlskey));
     return;
     break;
 

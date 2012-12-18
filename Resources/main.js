@@ -103,7 +103,7 @@ function comparePwds(){
 	
 function getCreds(id){
 
-var xmlhttp, resp, jsonObj, limit, cnt, count,
+var xmlhttp, resp, jsonObj, limit, cnt, count, option,
     clicky = document.getElementById('retrievePassword'+id),
     Address = document.getElementById('Address'+id),
     User = document.getElementById('UserName'+id),
@@ -172,16 +172,19 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
+  
+ 
+  option = cryptReq('retCred',key);
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=retCred&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
 }
 
 
 function checkSession(){
 
-  var xmlhttp, resp, cookies;
+  var xmlhttp, resp, cookies, option, key = retKey();
 
 
 
@@ -226,16 +229,18 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
+  option = cryptReq('checkSess',key);
+  // Add an id, it's completely pointless but sessioncheck requests are the only ones not specifying an id - bit easy to check
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=checkSess');
+xmlhttp.send('option='+option+'&id='+Math.floor((Math.random()*100)+1));
  
 }
 
 
 function DelCust(id){
 
-  var xmlhttp, resp, jsonObj, credrow, notify;
+  var xmlhttp, resp, jsonObj, credrow, notify, option, key = retKey();
 
 
 if (!confirm("Are you sure you want to delete this customer and all associated credentials?")){
@@ -289,16 +294,17 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
+  option = cryptReq('delCust',key);
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delCust&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
 }
 
 
 function DelCred(id){
 
-  var xmlhttp, resp, jsonObj, credrow, notify;
+  var xmlhttp, resp, jsonObj, credrow, notify, option, key = retKey();
 
 
 if (!confirm("Are you sure you want to delete this credential?")){
@@ -342,11 +348,17 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     }
   
   
-  
+  option = cryptReq('delCred',key);
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send('option=delCred&id='+id);
+xmlhttp.send('option='+option+'&id='+id);
  
+}
+
+
+
+function cryptReq(str,key){
+ return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + "|..|"+str+"|..|"+ genPadding()),key))); 
 }
 
 
@@ -763,6 +775,12 @@ var a, b,
 return enc;
 }
 
+
+
+function genPadding(){
+  
+ return Math.random().toString(36).substring(7); 
+}
 
 
 function retKey(){
