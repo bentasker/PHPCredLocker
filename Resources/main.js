@@ -12,14 +12,13 @@ Copyright (c) 2012 Ben Tasker
 */
 
 
+var counter=false, cancel='', dispcred;
 
 
 function resizebkgrnd(){
-var width = document.documentElement.clientHeight;
-var height = width;
-//var height = eval( width +16);
-var img = document.getElementById('ContentWrap');
-//img.style.width = height + 'px';
+  
+var width = document.documentElement.clientHeight, height = width, img;
+img = document.getElementById('ContentWrap');
 img.style.minHeight = eval(height * 0.8)+'px';
 
 
@@ -28,24 +27,22 @@ img.style.minHeight = eval(height * 0.8)+'px';
 
 
 
-var counter=false;
-var cancel='';
-var dispcred;
 
 function comparePwds(){
 	  
 	  
-	  var pass = document.getElementById('frmPass');
-	  var nomatch = document.getElementById('PassNoMatch');
-	  var passscore = document.getElementById('passScore');
-	  var minpass = document.getElementById('minpassStrength');
+	  var strength, test,testvars,
+	  pass = document.getElementById('frmPass'),
+	  nomatch = document.getElementById('PassNoMatch'),
+	  passscore = document.getElementById('passScore'),
+	  minpass = document.getElementById('minpassStrength');
 	  
 	  
 	  if (minpass){
 	  
 	    
-	    var strength = minpass.value;
-	    var test;
+	    strength = minpass.value;
+	    
 	    if (strength.indexOf("+") >= 0){
 		if (parseInt(passScore.value) > 45){
 		 test = true; 
@@ -55,7 +52,7 @@ function comparePwds(){
 	      
 	    }else{
 	      
-	      var testvars = strength.split("-");
+	      testvars = strength.split("-");
 	      
 	      if ((parseInt(passScore.value) > testvars[0])){
 		test = true;
@@ -99,23 +96,21 @@ function comparePwds(){
 	 nomatch.style.display = 'none';
 	  return true;  
 	  
-	}
+}
+	
+	
+	
 	
 function getCreds(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
-
-var clicky = document.getElementById('retrievePassword'+id);
-var Address = document.getElementById('Address'+id);
-var User = document.getElementById('UserName'+id);
-var Pass = document.getElementById('Password'+id);
-var Pluginout = document.getElementById('CredPluginOutput'+id);
-var key = getKey();
-
-
-var clickcount = document.getElementById("clickCount"+id);
+var xmlhttp, resp, jsonObj, limit, cnt, count,
+    clicky = document.getElementById('retrievePassword'+id),
+    Address = document.getElementById('Address'+id),
+    User = document.getElementById('UserName'+id),
+    Pass = document.getElementById('Password'+id),
+    Pluginout = document.getElementById('CredPluginOutput'+id),
+    key = getKey(),
+    clickcount = document.getElementById("clickCount"+id);
 
     if (clickcount.value != 0){
 	return; 
@@ -147,10 +142,10 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       return false;
     }
     
-    var limit = document.getElementById('defaultInterval').value;
-    var cnt = document.getElementById('PassCount'+id);
+    limit = document.getElementById('defaultInterval').value;
+    cnt = document.getElementById('PassCount'+id);
      cnt.value = limit;
-     var count = limit;
+    count = limit;
       Address.innerHTML = resp[2];
       Pass.innerHTML = resp[1];
       User.innerHTML = resp[3];
@@ -186,8 +181,7 @@ xmlhttp.send('option=retCred&id='+id);
 
 function checkSession(){
 
-  var xmlhttp;
-var resp;
+  var xmlhttp, resp, cookies;
 
 
 
@@ -207,7 +201,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     if (resp[0] == 0){
      // Session Invalid
      
-    var cookies = document.cookie.split(";");
+    cookies = document.cookie.split(";");
    
     for (var i = 0; i < cookies.length; i++){
     KillCookie(cookies[i].split("=")[0]);
@@ -241,9 +235,7 @@ xmlhttp.send('option=checkSess');
 
 function DelCust(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
+  var xmlhttp, resp, jsonObj, credrow, notify;
 
 
 if (!confirm("Are you sure you want to delete this customer and all associated credentials?")){
@@ -251,8 +243,8 @@ if (!confirm("Are you sure you want to delete this customer and all associated c
 }
 
 
-var credrow = document.getElementById('CustDisp'+id);
-var notify = document.getElementById('NotificationArea');
+    credrow = document.getElementById('CustDisp'+id);
+    notify = document.getElementById('NotificationArea');
    
 if (document.getElementById('Custmenu'+id)){
 	var menu = document.getElementById('Custmenu'+id);
@@ -306,9 +298,7 @@ xmlhttp.send('option=delCust&id='+id);
 
 function DelCred(id){
 
-  var xmlhttp;
-var resp;
-var jsonObj;
+  var xmlhttp, resp, jsonObj, credrow, notify;
 
 
 if (!confirm("Are you sure you want to delete this credential?")){
@@ -316,11 +306,8 @@ if (!confirm("Are you sure you want to delete this credential?")){
 }
 
 
-var credrow = document.getElementById('CredDisp'+id);
-
-
-
-var notify = document.getElementById('NotificationArea');
+  credrow = document.getElementById('CredDisp'+id);
+  notify = document.getElementById('NotificationArea');
 
 
   if (window.XMLHttpRequest)
@@ -365,13 +352,15 @@ xmlhttp.send('option=delCred&id='+id);
 
 function Credtimer(id)
 {
-  var cnt = document.getElementById('PassCount'+id);
-  var count=cnt.value-1;
+  var count,
+  cnt = document.getElementById('PassCount'+id),
+  field = document.getElementById('retrievePassword'+id);
+ 
+ 
+  count=cnt.value-1;
   cnt.value = count;
-  var field = document.getElementById('retrievePassword'+id);
   
-  
-  
+   
   if (count <= 0 || cancel == 1)
   {
      clearInterval(counter);
@@ -392,9 +381,9 @@ function Credtimer(id)
 function checkNewCred(){
 
   
-  var cred = document.getElementById('frmCredential');
-  var user = document.getElementById('frmUser');
-  var addr = document.getElementById('frmAddress');
+  var cred = document.getElementById('frmCredential'),
+      user = document.getElementById('frmUser'),
+      addr = document.getElementById('frmAddress');
   
 if (cred.value.indexOf("http") !== -1){
 
@@ -403,23 +392,18 @@ if (confirm("Click OK to make this credential a hyperlink in the database, click
 
 document.getElementById('frmClicky').value = 1;
 }
-
-
-
-
-
-
-
 }
 }
+
+
 
 
 function checkEditCred(){
 
   
-  var cred = document.getElementById('frmCredential');
-  var user = document.getElementById('frmUser');
-  var addr = document.getElementById('frmAddress');
+  var cred = document.getElementById('frmCredential'),
+      user = document.getElementById('frmUser'),
+      addr = document.getElementById('frmAddress');
   
 if (cred.value.indexOf("http") !== -1){
 
@@ -460,13 +444,15 @@ return true;
 function noCredTypes(){
   
   $(document).ready(function(){
+    var btntop;
+    
     if (document.getElementById('AddCredBtnTop')){
-     var btntop =  document.getElementById('AddCredBtnTop');
+     btntop =  document.getElementById('AddCredBtnTop');
      btntop.parentNode.removeChild(btntop);
     }
 
     if (document.getElementById('AddCredBtnBottom')){
-     var btntop =  document.getElementById('AddCredBtnBottom');
+     btntop =  document.getElementById('AddCredBtnBottom');
      btntop.parentNode.removeChild(btntop);
     }
   });
@@ -480,21 +466,14 @@ function noCredTypes(){
 
 function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
   
-  var menu = document.getElementById(menu);
-  
-  var menuentry;
-  
-  
-    var table = document.getElementById(tbl);
+  var  menuentry, ind, item, str,
+  lim = 0, 
+  menu = document.getElementById(menu),  
+  table = document.getElementById(tbl);
   
     if (!table){ return false; }
     
-  var lim = 0;
   
-  
-  var ind;
-  var item;
-  var str;
   
 	for (var r = 0; r < table.rows.length; r++){
 		if ( lim == limit) { break; }
@@ -524,8 +503,8 @@ function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
 
 function positionResults(SearchBox,ResBox){
   
- var search = document.getElementById(SearchBox);
- var res = document.getElementById(ResBox);
+ var search = document.getElementById(SearchBox),
+      res = document.getElementById(ResBox);
  
  res.style.left = search.offsetLeft +'px';
  
@@ -540,7 +519,8 @@ function SearchTable(val,tbl,dispdiv,cellNr,e){
   
   // Many thanks to http://www.vonloesch.de/node/23 for the headstart on this function!
 
-var keynum = 0;
+var disp, suche, table, res, num=0, id, ele, add, r,
+    keynum = 0;
 
 if(window.event) { keynum = window.event.keyCode; }  // IE (sucks)
 else if(e.which) { keynum = e.which; }    // Netscape/Firefox/Opera
@@ -561,7 +541,7 @@ if(keynum === 40) { // down
 
 
   // Reset the display div
-  var disp = document.getElementById(dispdiv);   
+  disp = document.getElementById(dispdiv);   
   disp.innerHTML = '';
   
 
@@ -575,18 +555,13 @@ if(keynum === 40) { // down
   
   positionResults("SearchBox",dispdiv);
   
-  var suche = val.toLowerCase();
-  var table = document.getElementById(tbl);
-  var res;
-  var num = 0;
-  var id;
-  var ele;
-  var add;
+  suche = val.toLowerCase();
+  table = document.getElementById(tbl);
+
   
   
   
-  
-	for (var r = 0; r < table.rows.length; r++){
+	for ( r = 0; r < table.rows.length; r++){
 		ele = table.rows[r].cells[cellNr].innerHTML.replace(/<[^>]+>/g,"");
 		
 		if ((ele.toLowerCase().indexOf(suche)>=0 ) || ((suche.indexOf(":") >= 0) && (table.rows[r].cells[1].innerHTML.toLowerCase().indexOf(suche)>=0))){
@@ -634,11 +609,11 @@ if(keynum === 40) { // down
 
 
 function selectResult(dir){
- var ind;
- var SelIndex = document.getElementById('SelectedValue');
- var SearchLength = document.getElementById('SearchResBox').childNodes.length;
+ var ind, SearchResult,
+     SelIndex = document.getElementById('SelectedValue'),
+     SearchLength = document.getElementById('SearchResBox').childNodes.length;
  
- var SearchResult ;
+
  
  
  if (dir == 'down'){
@@ -710,12 +685,15 @@ function setUpMenus(){
 
 jQuery(document).ready(function() {
 
-  if (!document.getElementById('SearchListing')){ return; }
+ 
   
+  if (!document.getElementById('SearchListing')){ return; }
+   var menu,ele;
+   
 CreateMenuContent('TypeDropDownMenu',2,'SearchListing',0, 100, 'TypeMenu');
 CreateMenuContent('CustDropDownMenu',1,'SearchListing',0, 5, 'Custmenu');
-var menu = document.getElementById('CustDropDownMenu');
-var ele = document.createElement('li');
+menu = document.getElementById('CustDropDownMenu');
+ele = document.createElement('li');
 ele.className='divider';
 
 menu.appendChild(ele);
@@ -741,14 +719,15 @@ menu.appendChild(ele);
  */
 function xorestr(str,key){
 
-var enc='';
-var keypos = 0;
+var a, b,
+    enc='',
+    keypos = 0;
 
   for (var i=0; i<str.length;i++) {
 
 
-        var a = str.charCodeAt(i);
-        var b = a ^ key.charCodeAt(keypos) ;    
+        a = str.charCodeAt(i);
+        b = a ^ key.charCodeAt(keypos) ;    
         enc += b.toString()+" ";
 
 	keypos++;
@@ -765,24 +744,21 @@ return enc;
 
 function xordstr(str,key){
 
-var enc='';
-var keypos = 0;
-var str = str.split(" ");
+var a, b,
+    enc='',
+    keypos = 0,
+    str = str.split(" ");
 
   for (var i=0; i<str.length;i++) {
 
 	if (str[i].length == 0){ continue; }
-        var a = str[i];
-        var b = a ^ key.charCodeAt(keypos) ;    
+        a = str[i];
+        b = a ^ key.charCodeAt(keypos) ;    
         enc += String.fromCharCode(b);
 
 	keypos++;
 	if (keypos >= key.length){ keypos = 0;}
     }
-
-
-
-
 
 return enc;
 }
@@ -791,15 +767,17 @@ return enc;
 
 function loginReqProcess(){
   
- var entered = document.getElementById('FrmPassPlace'); 
- var pass = document.getElementById('FrmPass');
+ var i,
+ a='',
+ entered = document.getElementById('FrmPassPlace'),
+ pass = document.getElementById('FrmPass');
  
  // Calculate the encrypted value
  pass.value = xorestr(entered.value,getKey());
   
  // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
- var a = '';
- for (var i = 0;i < entered.length; i++){   
+ 
+ for (i = 0;i < entered.length; i++){   
    a += "a";
  }
  entered.value = a;
@@ -816,9 +794,10 @@ function checkKeyAvailable(){
    
    confirm("Key retrieval failed - Attempting to rectify, Click OK to continue");
    
-   var cookies = document.cookie.split(";");
+   var i,
+	cookies = document.cookie.split(";");
    
-  for (var i = 0; i < cookies.length; i++){
+  for (i = 0; i < cookies.length; i++){
     KillCookie(cookies[i].split("=")[0]);
     }
    
@@ -841,11 +820,13 @@ function KillCookie(name) {
 
 
 function createCookie(nme,val,expire) {
+  var expires, date;
+  
     if (expire) {
     	var date = new Date();
     	date.setTime(date.getTime()+(expire*24*60*60*1000));
-    	var expires = "; expires="+date.toGMTString();
+    	expires = "; expires="+date.toGMTString();
     }
-    else var expires = "";
+    else expires = "";
     document.cookie = nme+"="+val+expires+"; path=/";
 }
