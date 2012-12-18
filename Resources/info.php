@@ -54,6 +54,6 @@ header("Content-Type: text/javascript");
 ?> 
 
 function getKey(){ 
-str = '<?php echo BTMain::getSessVar('tls');?>';
+str = '<?php echo base64_encode(BTMain::getSessVar('tls'));?>';
 return str; 
 }

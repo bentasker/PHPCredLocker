@@ -109,7 +109,7 @@ var xmlhttp, resp, jsonObj, limit, cnt, count,
     User = document.getElementById('UserName'+id),
     Pass = document.getElementById('Password'+id),
     Pluginout = document.getElementById('CredPluginOutput'+id),
-    key = getKey(),
+    key = retKey(),
     clickcount = document.getElementById("clickCount"+id);
 
     if (clickcount.value != 0){
@@ -765,6 +765,14 @@ return enc;
 
 
 
+function retKey(){
+ return Base64.decode(getKey());
+}
+
+
+
+
+
 function loginReqProcess(){
   
  var i,
@@ -773,7 +781,7 @@ function loginReqProcess(){
  pass = document.getElementById('FrmPass');
  
  // Calculate the encrypted value
- pass.value = xorestr(entered.value,getKey());
+ pass.value = xorestr(entered.value,retKey());
   
  // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
  
