@@ -4,15 +4,14 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php $this->headContents(); ?>
-<!-- Temporary, need to add directly to project -->
-<link rel="stylesheet" type="text/css" href="templates/EstDeus/css/bootstrap/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="templates/EstDeus/css/bootstrap/css/bootstrap.css" />
+
+
 <link rel="stylesheet" type="text/css" href="templates/EstDeus/css/EstDeus.css" />
 
 
 
 
-<script type="text/javascript" src="templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
+
 
 <script type="text/javascript">
 window.onresize = resizebkgrnd;

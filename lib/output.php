@@ -138,12 +138,16 @@ $page = $notifications->getPageInfo();
 ?>
       <title><?php echo BTMain::getConf()->ProgName;?> - <?php echo htmlentities($page->title);?></title>
       <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
+      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive.css" />
+
 
     <?php foreach ($page->css as $css):?>
 	    <link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
     <?php endforeach;?>
 
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript" src="Resources/bootstrap/js/bootstrap.js"></script>
       <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
       <script src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
       <script src="Resources/main.js" type="text/javascript"></script>
