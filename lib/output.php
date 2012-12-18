@@ -164,7 +164,10 @@ $conf = BTMain::getConf();
     <?php endif; ?>
 
 <!-- Fire the default scripts when the browser reports document ready -->
-    <script type="text/javascript">var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); sesscheck = setInterval("checkSession()",120000);});</script>
+    <script type="text/javascript">
+    var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); 
+    <?php if (BTMain::getUser()->name):?>sesscheck = setInterval("checkSession()",120000);<?php endif;?>});
+    </script>
 
 <?php
 }
