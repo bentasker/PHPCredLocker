@@ -13,7 +13,9 @@ defined('_CREDLOCK') or die;
 
 class genOutput{
 
-
+/** Will be overhauled at some point, will most likely move the actual page content into the template
+*
+*/
 function genDefaultPage(){
 global $notifications;
 $notifications->setPageTitle("Home");
@@ -42,14 +44,10 @@ return $str . "</span>\n";
 *
 */
 function callTemplate(){
-
-
 // Load the config so we know which template to call
 
 $template = BTMain::getConf()->template;
-
 require "templates/$template/index.php";
-
 
 }
 
@@ -74,9 +72,10 @@ return ob_get_clean();
 }
 
 
-
+/** Output the Breadcrumbs
+*
+*/
 function BreadCrumbs(){
-$count = count($GLOBALS['BREADCRUMB']);
 ?>
 <ul class="breadcrumb">
  <li>
@@ -97,106 +96,30 @@ $count = count($GLOBALS['BREADCRUMB']);
 }
 
 
+
 /** Generate the HTML for any relevant Notifications
 *
 */
 function Notifications(){
 
+global $notifications;
+$nots = $notifications->getNotifications();
 
-$str[] = '';
-if (BTMain::getVar('LoginSuccess')){
+  if ($notifications){
+  
+      foreach ($nots as $not){
+      $id='';
 
-$str[] = "<div class='alert alert-success'>Logged in Successfully</div>";
+	  if (!empty($not->id)){
+	  $id = " id='{$not->id}'";
+	  }
 
-}
+      $str[] = "<div class='{$not->className}'$id>{$not->text}</div>";
 
-if (BTMain::getVar('LoginFailed')){
-
-$str[] = "<div class='alert alert-error'>Invalid Username or Password</div>";
-
-}
-
-if (BTMain::getVar('InvalidSession')){
-$str[] = "<div class='alert alert-error'>Your session is invalid (it may have expired) please log-in to continue</div>";
-}
+      }
 
 
-if (BTMain::getVar('LoggedOut')){
-
-$str[] = "<div class='alert alert-info'>You have been logged out</div>";
-}
-
-if ($GLOBALS['Notifications']['addCustSuccess']){
-$str[] = "<div class='alert alert-success'>Customer added successfully</div>";
-}
-
-
-if ($GLOBALS['Notifications']['addCustFail']){
-$str[] = "<div class='alert alert-error'>Customer not added</div>";
-}
-
-
-if ($GLOBALS['Notifications']['EditCustSuccess']){
-$str[] = "<div class='alert alert-success'>Customer edited successfully</div>";
-}
-
-if ($GLOBALS['Notifications']['NoSuchCustomer']){
-$str[] = "<div class='alert alert-error'>The Specified Record doesn't exist (or you don't have access to it)</div>";
-}
-
-
-if ($GLOBALS['Notifications']['EditCustFail']){
-$str[] = "<div class='alert alert-error'>Customer not edited</div>";
-}
-
-
-if ($GLOBALS['Notifications']['addCredSuccess']){
-$str[] = "<div class='alert alert-success'>Credential Stored successfully</div>";
-}
-
-
-if ($GLOBALS['Notifications']['addCredFail']){
-$str[] = "<div class='alert alert-error'>Credential Failed to Store</div>";
-}
-
-
-
-
-
-if ($GLOBALS['Notifications']['addGroupSuccess']){
-$str[] = "<div class='alert alert-success'>Group Successfully Stored</div>";
-}
-
-if ($GLOBALS['Notifications']['addGroupFail']){
-$str[] = "<div class='alert alert-error'>Group not Stored</div>";
-}
-
-if ($GLOBALS['Notifications']['addCredTypeSuccess']){
-$str[] = "<div class='alert alert-success'>Credential Type Stored</div>";
-}
-
-
-if ($GLOBALS['Notifications']['addCredTypeFail']){
-$str[] = "<div class='alert alert-error'>Credential Type Not Stored</div>";
-}
-
-if ($GLOBALS['Notifications']['NoCredTypes']){
-$str[] = "<div class='alert alert-info' id='CredTypeNeedsAdding'>You need to specify some Credential Types in System Settings before you can add Credentials</div><script type='text/javascript'>noCredTypes();</script>";
-}
-
-if ($GLOBALS['Notifications']['UserStoreSuccess']){
-$str[] = "<div class='alert alert-success'>User Stored Successfully</div>";
-}
-
-if ($GLOBALS['Notifications']['UserStoreFail']){
-$str[] = "<div class='alert alert-error'>User Failed to Store</div>";
-}
-
-if ($GLOBALS['Notifications']['KeyGenerationFailed']){
-
-$str[] = "<div class='alert alert-error'>Unable to add Crypto Key to config file. You <b>must</b> do this manually before you can add creds to this CredType</div>";
-}
-
+  }
 
 return implode("\n",$str);
 
@@ -208,39 +131,37 @@ return implode("\n",$str);
 *
 */
 function headContents(){
+
+global $notifications;
+$page = $notifications->getPageInfo();
+
 ?>
-<title><?php echo BTMain::getConf()->ProgName;?> - <?php echo $this->getPageTitle();?></title>
-    <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
-<?php
-    foreach ($GLOBALS['RequireCSS'] as $css){
-	    ?><link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/><?php
-	}
-?>
+      <title><?php echo BTMain::getConf()->ProgName;?> - <?php echo htmlentities($page->title);?></title>
+      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
-    <script src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
-    <script src="Resources/main.js" type="text/javascript"></script>
+    <?php foreach ($page->css as $css):?>
+	    <link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
+    <?php endforeach;?>
 
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
+      <script src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
+      <script src="Resources/main.js" type="text/javascript"></script>
 
-<?php
-  foreach ($GLOBALS['RequireScript'] as $script){?>
-    <script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script>
-<?php    }
+    <?php foreach ($page->reqscripts as $script):?>
+      <script src="Resources/<?php echo $script;?>.js" type="text/javascript"></script>
+    <?php endforeach;  if (!empty($page->custJS[0])):?>
 
-
-  if (is_array($GLOBALS['CUSTOMJS'])):
-    ?>
       <script type="text/javascript">
-      <?php echo implode("\n",$GLOBALS['CUSTOMJS']);?>
+      <?php echo implode("\n",$page->custJS);?>
       </script>
-<?php
-endif;
-?>
-<script type="text/javascript">var sesscheck; jQuery(document).ready(function() { checkKeyAvailable(); sesscheck = setInterval("checkSession()",120000);});</script>
-<?php
 
+    <?php endif; ?>
 
+<!-- Fire the default scripts when the browser reports document ready -->
+    <script type="text/javascript">var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); sesscheck = setInterval("checkSession()",120000);});</script>
+
+<?php
 }
 
 
@@ -268,16 +189,9 @@ $template = BTMain::getConf()->template;
 }
 
 
-/** Check the pagetitle global and return the contents
-*
-*/
-function getPageTitle(){
 
-return htmlentities($GLOBALS['PageTitle']);
 
-}
-
-}
+}/** Gen Output Class Ends **/
 
 
 
@@ -286,30 +200,133 @@ return htmlentities($GLOBALS['PageTitle']);
 
 
 
-
+/**                     Notifications class                                    **/
 class notifications{
 
 
+
+
+/** Return an object containing any notification items that have been set (or at least those suited for embedding in the head)
+*
+* @return object
+*
+*/
+function getPageInfo(){
+
+$page->title = '';
+$page->css = array();
+$page->reqscripts = array();
+$page->custJS = array();
+
+  if (isset($this->pagetitle)){
+  $page->title = $this->pagetitle;
+  }
+
+  if (is_array($this->css)){
+  $page->css = $this->css;
+  }
+
+  if (is_array($this->requiredscripts)){
+  $page->reqscripts = $this->requiredscripts;
+  }
+
+  if (is_array($this->customJS)){
+  $page->custJS = $this->customJS;
+  }
+
+return $page;
+}
+
+
+/** Set the page title
+*
+* @arg title
+*
+*/
 function setPageTitle($title){
-$GLOBALS['PageTitle'] = $title;
+$this->pagetitle = $title;
 }
 
+
+
+/** Get any notifications that have been triggered
+*
+* @return object (or false if no notifications)
+*
+*/
+function getNotifications(){
+
+$notif = BTMain::getVar('notif');
+$triggernotifs = is_array($this->notifications);
+
+
+// Check whether there are any notifications to push
+if (!$notif && !$triggernotifs){
+return false;
+}
+
+
+$nots = new stdClass();
+include 'conf/notifications.php';
+
+// Check for notifications triggered by views
+if ($triggernotifs){
+
+    foreach ($this->notifications as $msg){
+	$nots->$msg = $notifs->$msg;
+      }
+
+  }
+
+
+// Check for notifications triggered by the request
+if ($notif){
+  $nots->$notif = $notifs->$notif;
+  }
+
+
+return $nots;
+}
+
+
+/** Set a notification to display when getNotifications is called
+*
+* @arg notification - string containing notification name
+*
+*/
 function setNotification($notification){
-
-$GLOBALS['Notifications'][$notification] = 1;
-
-
+$this->notifications[] = $notification;
 }
 
+
+/** Trigger the inclusion of a CSS file in the document head
+*
+* @arg file - filename (Will be automatically prefixed with Resources/ and appended with .css)
+*
+*/
 function RequireCSS($file){
-
-$GLOBALS['RequireCSS'][] = $file;
+$this->css[] = $file;
 }
 
+
+/** Trigger the inclusion of a JS file in the document head
+*
+* @arg file - filename (Will be automatically prefixed with Resources/ and appended with .js)
+*
+*/
 function RequireScript($script){
-$GLOBALS['RequireScript'][] = $script;
+$this->requiredscripts[] = $script;
 }
 
+
+/** Set the breadcrumb path
+*
+* @arg path - array
+*
+* Exact schema of the array is dictated by class genOutput but at time of writing, 
+* each breadcrumb item should be an array containing elements name and url
+*
+*/
 function setBreadcrumb($path){
 
 $GLOBALS['BREADCRUMB'] = $path;
@@ -317,17 +334,19 @@ $GLOBALS['BREADCRUMB'] = $path;
 }
 
 
-
+/** Embed a JS string into the document head, will automatically be placed between script tags
+*
+* @arg js - string
+*
+*/
 function setCustomJS($js){
-$GLOBALS['CUSTOMJS'][] = "$js";
+$this->customJS[] = "$js";
+}
+
 
 }
 
 
-
-}
-
-$notifications = new notifications;
 
 
 

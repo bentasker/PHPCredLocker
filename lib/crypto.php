@@ -53,32 +53,31 @@ $this->cipher = $cipher;
 *
 * @return string
 */
-function xordstring($str,$key){
+function &xordstring($str,&$key){
 
 $keylength = strlen($key);
 $kpos = 0;
 $en = "";
 
-
-
 $str = explode(" ",$str);
-$len = count($str);
-
 
 foreach ($str as $string){
 	 if (strlen($string) == 0){ continue; }
-        $a = $string;
-        $b = $a ^ ord(substr($key,$kpos,1)) ;    // bitwise XOR with any number, e.g. 123
-
-	//echo uniord(substr($key,$kpos,1)) ." uniord(substr($key,$kpos,1))<br />";
+        
+	// Convert the character in the key to a charcode and use bitwise XOR
+        $b = $string ^ ord($key[$kpos]);
+	
+	// Convert the result back to the appropriate character
         $en .= chr($b);
 
+	// Move the key position
 	$kpos++;
+
+	// If we're at the end of the key (or something weird's happened and we're at the end of the key, move back to the beginning
 	if ($kpos >= $keylength){ $kpos = 0;}
     }
     
     return $en;
-
 }
 
 
@@ -90,7 +89,7 @@ foreach ($str as $string){
 *
 * @return string
 */
-function xorestring($str,$key){
+function xorestring(&$str,&$key){
 
 $keylength = strlen($key);
 $strlength = strlen($str);
@@ -99,19 +98,60 @@ $en = "";
 
 $i = 0;
 
-while ($i <= $strlength){
+      while ($i <= $strlength){
+	// Convert the char into a charcode
+	// Originally passed this through substr, not sure why - tired I guess
+        $a = ord($str[$i]);
+
+	// Perform a bitwise XOR
+        $b = $a ^ ord($key[$kpos]) ;    
+        
+	// add to the string
+	$en .= $b." ";
 	
-        $a = ord(substr($str,$i,1));
-        $b = $a ^ ord(substr($key,$kpos,1)) ;    
-        $en .= $b." ";
+	// Move the pointers
 	$i++;
 	$kpos++;
+
+	// If we're at the end of the cipher, move back to the beginning (EBC mode)
 	if ($kpos >= $keylength){ $kpos = 0;}
-    }
+      }
     
     return $en;
-
 }
+
+
+
+/** Generate a key that we know is safe to use with the xorencrypt function
+*
+* Because we are currently using EBC, key length doesn't have too great an effect on performance, but a big effect on security
+*
+*
+* @return string
+*
+*/
+function genxorekey(){
+
+$x = 0;
+$str = '';
+
+// Was excluding certain charcodes because the JS counterpart seems to have occasional issues with them
+// leaves 128^62 possible permutations, but figured issue may well be resolved after a few tests
+$excludes = array("58","59","60","61","62","63","64","91","92","93","94","95","96");
+
+
+
+// Gives us a 1024bit string
+  while ($x <= 128){
+	$key = mt_rand(48,122);
+	if (in_array($key,$excludes)){ continue; }
+	$str .= chr($key);
+	$x++;
+  }
+
+return $str;
+}
+
 
 
 
@@ -131,17 +171,9 @@ $this->loadConfig();
 // Trim to the required keylength
 $newkey = substr( $newkey, 0,$this->cipher->keyLength);
 
-
-   $cryptconf = fopen(getcwd() . '/conf/crypto.php','a');
-	  
-	  
-
-
+$cryptconf = fopen(getcwd() . '/conf/crypto.php','a');
 $str = "\n\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
-
 fwrite($cryptconf,$str);
-	
-
 
 unset($newkey);
 unset($str);
@@ -173,25 +205,26 @@ if (empty($string)){ $string = ' '; }
 	  }else{
 	  $this->cipher->Engine = 'Mcrypt';
 	  }
+
     }
 
 $fn = "encrypt_{$this->cipher->Engine}";
 
-
-
   if ($type != 'ONEWAY'){
-    $ciphertext = $this->$fn($string,$type);
-
+      $ciphertext = $this->$fn($string,$type);
       if ($this->safety == 1){
       unset($this->keys);
       }
+
   }else{
-  unset($this->keys);
-  $this->keys->ONEWAY = $key;
-  $ciphertext = $this->$fn($string,$type);
+      unset($this->keys);
+      $this->keys->ONEWAY = $key;
+      $ciphertext = $this->$fn($string,$type);
 
   }
+
 return $ciphertext;
+
 }
 
 
@@ -208,7 +241,10 @@ return openssl_encrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 }
 
 
-function encrypt_doubleROT13($string,$type){ return "If you've enabled this, you really shouldn't be in charge of Crypto Settings!"; }
+
+
+function encrypt_doubleROT13(&$string,$type){ return "If you've enabled this, you really shouldn't be in charge of Crypto Settings!"; }
+
 
 
 /** Encrypt the string using MCrypt
@@ -238,11 +274,15 @@ $this->loadConfig();
 
  if ($this->cipher->Engine == 'auto'){
 
+	  // At some point will add ciphertext analysis to improve this,
+	  // though it probably shouldn't ever be used without good reason
+
 	  if (function_exists('openssl_encrypt')){
-	  $this->cipher->Engine = 'OpenSSL';
+	      $this->cipher->Engine = 'OpenSSL';
 	  }else{
-	  $this->cipher->Engine = 'Mcrypt';
+	      $this->cipher->Engine = 'Mcrypt';
 	  }
+
     }
 
 

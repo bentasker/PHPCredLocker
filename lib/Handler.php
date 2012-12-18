@@ -17,6 +17,7 @@ require_once 'lib/crypto.php';
 
 
 $html = new genOutput;
+$notifications = new notifications;
 $option = BTMain::getVar('option');
 $auth = new ProgAuth;
 
@@ -33,13 +34,13 @@ $auth = new ProgAuth;
 
     $crypt = new Crypto;
     $key = BTMain::getsessVar('tls');
-    $pass = $crypt->xordstring(BTMain::getVar('FrmPass'),$key);
+    $pass =& $crypt->xordstring(BTMain::getVar('FrmPass'),$key);
 
 	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),$pass)){
 	    // Login successful
-	    header('Location: index.php?LoginSuccess=1');
+	    header('Location: index.php?notif=LoginSuccess');
 	  }else{
-	    header('Location: index.php?LoginFailed=1');
+	    header('Location: index.php?notif=LoginFailed');
 	  }
       die;
   }

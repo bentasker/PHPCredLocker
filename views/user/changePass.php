@@ -21,7 +21,7 @@ BTMain::unsetSessVar('FormToken');
 
 
   if ((BTMain::getVar('ChangePassSubmitted'))&&($sessvar != BTMain::getVar('FormToken'))){
-  echo "<div class='alert alert-error'>Invalid Form Token</div>";
+  $notifications->setNotification("frmTokenInvalid");
   $process = false;
   }
 

@@ -24,7 +24,7 @@ BTMain::unsetSessVar('FormToken');
 
 
   if ((BTMain::getVar('addUserSubmitted'))&&($sessvar != BTMain::getVar('FormToken'))){
-  echo "<div class='alert alert-error'>Invalid Form Token</div>";
+  $notifications->setNotification("frmTokenInvalid");
   $process = false;
   }
 

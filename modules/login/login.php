@@ -34,8 +34,11 @@ $frmToken = ProgAuth::generateFormToken();
 <input type="hidden" name="option" value="LogIn">
 <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 <label for='FrmUsername'>Username:</label><input type='text' name='FrmUsername' id='FrmUsername'>
-<label for='FrmPass'>Password:</label><input type='password' name='FrmPass' id='FrmPass'>
+<label for='FrmPassPlace'>Password:</label><input type='password' name='FrmPassPlace' id='FrmPassPlace'>
 <input type="hidden" name="SubmittedLoginFrm" value="1">
+
+
+      
 
 <input type="submit" class="btn btn-primary" value="Login">
 </form>

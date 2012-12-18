@@ -207,7 +207,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     if (resp[0] == 0){
      // Session Invalid
      
-     window.location.href = "index.php?InvalidSession=Y";
+     window.location.href = "index.php?notif=InvalidSession";
       return false;
     }
     
@@ -725,7 +725,8 @@ menu.appendChild(ele);
 
 
 /** Use bitwise Xor to encrypt the supplied string with the supplied key and return a base64 encoded representation of the character codes
- * Did try converting back to char, but things broke quite monumentally
+ * Did try converting back to char, but things broke quite monumentally. Realistically makes little difference to an attacker, though it is a pain
+ * as it means a longer request.
  * 
  */
 function xorestr(str,key){
@@ -738,7 +739,7 @@ var keypos = 0;
 
         var a = str.charCodeAt(i);
         var b = a ^ key.charCodeAt(keypos) ;    
-        enc = enc+b.toString()+" ";
+        enc += b.toString()+" ";
 
 	keypos++;
 	if (keypos >= key.length){ keypos = 0;}
@@ -763,7 +764,7 @@ var str = str.split(" ");
 	if (str[i].length == 0){ continue; }
         var a = str[i];
         var b = a ^ key.charCodeAt(keypos) ;    
-        enc = enc+String.fromCharCode(b);
+        enc += String.fromCharCode(b);
 
 	keypos++;
 	if (keypos >= key.length){ keypos = 0;}
@@ -780,10 +781,19 @@ return enc;
 
 function loginReqProcess(){
   
+ var entered = document.getElementById('FrmPassPlace'); 
  var pass = document.getElementById('FrmPass');
  
- pass.value = xorestr(pass.value,getKey());
+ // Calculate the encrypted value
+ pass.value = xorestr(entered.value,getKey());
   
+ // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
+ var a = '';
+ for (var i = 0;i < entered.length; i++){   
+   a += "a";
+ }
+ entered.value = a;
+ 
   return true;
 }
 

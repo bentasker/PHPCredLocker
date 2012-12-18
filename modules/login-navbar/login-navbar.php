@@ -38,7 +38,8 @@ $frmToken = ProgAuth::generateFormToken();
       <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 
     <input type='text' name='FrmUsername' class="search-query" id='FrmUsername' placeholder="Username">
-    <input type='password' name='FrmPass' class="search-query" id='FrmPass' placeholder="Password">
+    <input type="hidden" id="FrmPass" name="FrmPass"><!-- The form element that's actually submitted -->
+    <input type='password' name='FrmPassPlace' class="search-query" id='FrmPassPlace' placeholder="Password">
       
 
       <input type="submit" class="btn btn-inverse" value="Login">

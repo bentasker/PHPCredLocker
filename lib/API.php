@@ -13,6 +13,7 @@ require_once 'lib/auth.class.php';
 require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/crypto.php';
+
 $plg = new Plugins;
 
 
@@ -44,117 +45,117 @@ switch(BTMain::getVar('option')){
 
 
 case 'retCred':
-require_once 'lib/db/Credentials.php';
+    require_once 'lib/db/Credentials.php';
 
-$db = new CredDB;
-$cred = $db->FetchCredential(BTMain::getVar('id'));
+    $db = new CredDB;
+    $cred = $db->FetchCredential(BTMain::getVar('id'));
 
-$crypt = new Crypto;
-$crypt->safety = 0;
+    $crypt = new Crypto;
+    $crypt->safety = 0;
 
-$key = 'Cre'.$cred->CredType;
+    $key = 'Cre'.$cred->CredType;
 
-// Build the response
-$pass = $crypt->decrypt($cred->Hash,$key);
-$address = $crypt->decrypt($cred->Address,$key);
-if ($cred->Clicky){
-$pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
-}
+    // Build the response
+    $pass = $crypt->decrypt($cred->Hash,$key);
+    $address = $crypt->decrypt($cred->Address,$key);
 
-
-echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|";
+      if ($cred->Clicky){
+	  $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
+      }
 
 
-
-$data->cred = $cred;
-$data->cred->id = BTMain::getVar('id');
-$data->action = 'display';
+    echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . 
+	 htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|";
 
 
-echo $plg->loadPlugins("Creds",$data)->plgOutput;
+    // Call any configured plugins
+     $data->cred = $cred;
+     $data->cred->id = BTMain::getVar('id');
+     $data->action = 'display';
 
-$key = BTMain::getsessVar('tls');
-echo $crypt->xorestring(ob_get_clean(),$key);
 
-break;
+    echo $plg->loadPlugins("Creds",$data)->plgOutput;
+
+    $key = BTMain::getsessVar('tls');
+    $op = ob_get_clean();
+
+    // Encrypt the output and send back
+    echo $crypt->xorestring($op,$key);
+    return;
+    break;
+
 
 
 case 'checkSess':
-echo "OK";
-break;
+    echo "OK";
+    break;
 
 
 case 'delCred':
-require_once 'lib/db/Credentials.php';
-$db = new CredDB;
-if ( $db->DelCredential(BTMain::getVar('id'))){
-echo "1|..|\n";
-}else{
-echo "0|..|\n";
-}
-break;
+    require_once 'lib/db/Credentials.php';
+    $db = new CredDB;
+    if ( $db->DelCredential(BTMain::getVar('id'))){
+	echo "1|..|\n";
+	}else{
+	echo "0|..|\n";
+	}
+    break;
 
 
 
 case 'delUser':
-BTMain::checkSuperAdmin();
-$db = new AuthDB;
-if ( $db->DelUser(BTMain::getVar('id'))){
-echo "1|..|\n";
-}else{
-echo "0|..|\n";
-}
-
-break;
+    BTMain::checkSuperAdmin();
+    $db = new AuthDB;
+      if ( $db->DelUser(BTMain::getVar('id'))){
+	  echo "1|..|\n";
+      }else{
+	  echo "0|..|\n";
+      }
+    break;
 
 
 
 case 'delCredType':
-BTMain::checkSuperAdmin();
-require_once 'lib/db/Credentials.php';
-$db = new CredDB;
-if ( $db->DelCredentialType(BTMain::getVar('id'))) {
+      BTMain::checkSuperAdmin();
+      require_once 'lib/db/Credentials.php';
+      $db = new CredDB;
+	    if ( $db->DelCredentialType(BTMain::getVar('id'))) {
+		$data->id = BTMain::getVar('id');
+		$data->action = 'del';
+		echo $plg->loadPlugins("CredTypes",$data)->plgOutput;
 
-$data->id = BTMain::getVar('id');
-$data->action = 'del';
-
-
-echo $plg->loadPlugins("CredTypes",$data)->plgOutput;
-
-
-echo "1|..|\n";
-}else{
-echo "0|..|\n";
-}
-break;
+		echo "1|..|\n";
+	    }else{
+		echo "0|..|\n";
+	    }
+      break;
 
 
 
 
 case 'delCust':
-require_once 'lib/db/Customer.php';
-$db = new CustDB;
-if ( $db->DelCust(BTMain::getVar('id'))){
-echo "1|..|\n";
-
-}else{
-echo "0|..|\n";
-}
-break;
+    require_once 'lib/db/Customer.php';
+    $db = new CustDB;
+      if ( $db->DelCust(BTMain::getVar('id'))){
+	  echo "1|..|\n";
+      }else{
+	  echo "0|..|\n";
+      }
+    break;
 
 
 
 
 case 'delGroup':
-BTMain::checkSuperAdmin();
-$auth = new AuthDB;
-if($auth->delGroup(BTMain::getVar('id'))){
-echo "1|..|\n";
+    BTMain::checkSuperAdmin();
+    $auth = new AuthDB;
 
-}else{
-echo "0|..|\n";
-}
-break;
+	if($auth->delGroup(BTMain::getVar('id'))){
+	   echo "1|..|\n";
+	}else{	
+	  echo "0|..|\n";
+	}
+    break;
 
 
 }

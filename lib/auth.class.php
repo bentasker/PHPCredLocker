@@ -21,10 +21,12 @@ class ProgAuth{
 function createSalt(){
 
 $x=0;
-while ($x <= 100){
-$salt .= mt_rand(10,10000);
-$x++;
-}
+
+    while ($x <= 100){
+
+    $salt .= mt_rand(10,10000);
+    $x++;
+    }
 
 return md5($salt.date('y-m-dHis'));
 
@@ -39,7 +41,7 @@ return md5($salt.date('y-m-dHis'));
 */
 function generateFormToken(){
 
-$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date() . chr(mt_rand(32,254)) . mt_rand(0,999999));
+$frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) . date('YMDHis') . chr(mt_rand(32,254)) . mt_rand(0,999999));
 BTMain::setSessVar("FormToken",$frmToken);
 return $frmToken;
 
@@ -57,25 +59,24 @@ return $frmToken;
 function editUser($username,$pass,$RName, $groups){
 
 
-if (!empty($pass)){
-// We need to create a salt for the password
-$user->salt = $this->createSalt();
+    if (!empty($pass)){
+	// We need to create a salt for the password
+	$user->salt = $this->createSalt();
 
-// Salt the password
-$user->pass = md5($pass.$user->salt);
-// Get the plaintext password out of memory
-unset($pass);
+	// Salt the password
+	$user->pass = md5($pass.$user->salt);
 
-}else{
-$user->pass = false;
-}
+	// Get the plaintext password out of memory
+	unset($pass);
+
+    }else{
+	$user->pass = false;
+    }
+
 
 $user->RealName = $RName;
 $user->groups = $groups;
 $user->username = $username;
-
-
-
 
 $db = new AuthDB;
 return $db->editUser($user);
@@ -115,6 +116,7 @@ return $db->addUser($user);
 
 
 
+
 /** Log a failed attempt to login as a valid user
 *
 *.@arg username -string
@@ -134,6 +136,8 @@ return false;
 }
 
 
+
+
 /** Process an authentication request
 *
 * @arg username - string
@@ -141,25 +145,26 @@ return false;
 *
 * @return boolean
 */
-function ProcessLogIn($username,$password){
+function ProcessLogIn($username,&$password){
 
     // Check the form token
     $sessvar = BTMain::getSessVar('FormToken');
 
     BTMain::unsetSessVar('FormToken');
     if ($sessvar != BTMain::getVar('FormToken')){
-    echo "Form Token Invalid";
+    header('Location: index.php?notif=frmTokenInvalid');
     die;
     return false;
      }
 
 
-$db = new AuthDB;
+  $db = new AuthDB;
 
  if ($db->checkForBan(BTMain::getip())){
   BTMain::setSessVar('Banned',"1");
   return false;
   }
+
 
 // Trim trailing space from username & password (issue on mobiles with auto-predict)
 $password = rtrim($password," ");
@@ -167,8 +172,7 @@ $username = rtrim($username," ");
 
   if (!$user = $db->retrieveUserCreds($username)){
   return false;
-   }
-
+  }
 
 
 
@@ -179,18 +183,16 @@ unset($crypt);
 // Get the valid hash out of memory as we have it in an array anyway
 unset($user->pass);
 
-if( md5($password.$pass[1]) != $pass[0]){
-return $this->logFailedAttempt($username,$db);
-}
+    if( md5($password.$pass[1]) != $pass[0]){
+      return $this->logFailedAttempt($username,$db);
+      }
 
 // Create a Session ID
-$sessID = md5(date('YmdHis') . mt_rand(10,80000) . mt_rand(11,500) . $username . mt_rand(0,90000));
+    $sessID = md5(date('YmdHis') . mt_rand(10,80000) . mt_rand(11,500) . $username . mt_rand(0,90000));
+
 // Get the hashes out of memory
-unset($password);
-unset($pass);
-
-
-
+    unset($password);
+    unset($pass);
 
 
 // Log the user in
@@ -198,13 +200,15 @@ BTMain::setUser($username);
 BTMain::setUserDetails('groups',explode(",","0,".$user->membergroup));
 BTMain::setUserDetails('RealName',$user->Name);
 
+
 // Create the expiry time
 $expires = strtotime("+".BTMain::getConf()->sessionexpiry.' Minutes');
 $expiry = date('Y-m-d H:i:s',$expires);
 
+
 // Create a secret key
 $str = '';
-while ($X < 400){
+while ($X < 300){
 
 $key = mt_rand(32,254);
 $str .= chr($key);
@@ -224,23 +228,17 @@ $log = new Logging;
 
 // Set the session variable
 BTMain::setSessVar('Session',$sessID);
-BTMain::setSessVar('Expiry',$expires);
 
-// Set the auth cookie
-
-
-
-// Generate a key
+// Generate a key for the auth cookie
 
 $X=0;
 $str = '';
-while ($X < 100){
 
-$key = mt_rand(32,254);
-$str .= chr($key);
-
-$X++;
-}
+      while ($X < 100){
+      $key = mt_rand(32,254);
+      $str .= chr($key);
+      $X++;
+      }
 
 // Create a string for the cookie
 $cookieVal = md5($str . mt_rand(10,80000) . mt_rand(11,500) . mt_rand(0,90000) );
@@ -266,10 +264,11 @@ return true;
 *
 */
 function LoginInvalid(){
-  session_destroy();
-  header('Location: index.php?InvalidSession=1');
+  header('Location: index.php?notif=InvalidSession');
   die;
 }
+
+
 
 /** Use the provided session ID to set the relevant globals
 *
@@ -279,33 +278,33 @@ function LoginInvalid(){
 */
 function SetUserDets($sessID){
 
-if (!isset($_COOKIE['PHPCredLocker'])){
-$this->LoginInvalid();
-}
+    if (!isset($_COOKIE['PHPCredLocker'])){
+	$this->LoginInvalid();
+      }
 
 
-$db = new AuthDB;
-$user = $db->getUserSession($sessID);
+ $db = new AuthDB;
+ $user = $db->getUserSession($sessID);
 
   if (!$user){
- $this->LoginInvalid();
+  $this->LoginInvalid();
   }
 
 $expiry = strtotime($user->Expires);
 
-// Check for a session file
-if(file_exists(dirname(__FILE__)."/../sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php")){
+  // Check for a session file
+    if(file_exists(dirname(__FILE__)."/../sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php")){
 
-require "sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php";
+      require "sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php";
 
-	if ($sessKey != $user->SessKey){
-	$this->LoginInvalid();
-	}
+	  if ($sessKey != $user->SessKey){
+	      $this->LoginInvalid();
+	    }
 
-}else{
-// Session file doesn't exist, so can't be valid
-$this->LoginInvalid();
-}
+    }else{
+      // Session file doesn't exist, so can't be valid
+      $this->LoginInvalid();
+    }
 
 
 
@@ -321,13 +320,15 @@ return true;
 
 
 
+
 /** Log the user out
-* Need to remove the session from the database as well
+* Need to remove the session from the database as well as removing the sessions file and killing the cookie
 * 
 * @return boolean
 *
 */
 function killSession(){
+
 $sessID = BTMain::getSessVar('Session');
 $tls = BTMain::getSessVar('tls');
 session_destroy();
@@ -343,8 +344,6 @@ $exp = strtotime($db->KillSession($sessID));
 
 // Remove the session file
 $filename = "sessions-$exp-{$_COOKIE['PHPCredLocker']}.session.php";
-
-
 unlink(dirname(__FILE__)."/../sessions/$filename");
 
 
@@ -352,8 +351,9 @@ unlink(dirname(__FILE__)."/../sessions/$filename");
 $expires = strtotime("-2 days");
 setcookie("PHPCredLocker", $_COOKIE['PHPCredLocker'], $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
 
-
-header('Location: index.php?LoggedOut=1');
+// Redirect the user
+header('Location: index.php?notif=LoggedOut');
+return true;
 }
 
 
