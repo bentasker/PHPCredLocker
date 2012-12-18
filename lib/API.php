@@ -73,14 +73,18 @@ case 'retCred':
      $data->cred->id = BTMain::getVar('id');
      $data->action = 'display';
 
-
+    
     echo $plg->loadPlugins("Creds",$data)->plgOutput;
 
     $key = BTMain::getsessVar('tls');
-    $op = ob_get_clean();
+
+    $padding = $crypt->genXorPadding();
+    $endpadding = $crypt->genXorPadding();
+
+    $op = base64_encode($padding."|..|".ob_get_clean()."|..|".$endpadding);
 
     // Encrypt the output and send back
-    echo $crypt->xorestring($op,$key);
+    echo base64_encode($crypt->xorestring($op,$key));
     return;
     break;
 

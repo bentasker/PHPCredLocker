@@ -151,6 +151,7 @@ $conf = BTMain::getConf();
       <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
       <script src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
       <script src="Resources/main<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+      <script src="Resources/base64<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
 
     <?php foreach ($page->reqscripts as $script):?>
       <script src="Resources/<?php echo $script;?><?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>

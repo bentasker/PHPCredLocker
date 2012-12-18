@@ -134,9 +134,9 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
       
       
-      resp = xordstr(xmlhttp.responseText,key).split('|..|');
+      resp = Base64.decode(xordstr(Base64.decode(xmlhttp.responseText),key)).split('|..|');
     //resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0){
+    if (resp[1] == 0){
      // Request failed, authentication issue maybe? 
       clicky.innerHTML = 'Failed to retrieve credentials. Click to try again';
       return false;
@@ -146,10 +146,10 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     cnt = document.getElementById('PassCount'+id);
      cnt.value = limit;
     count = limit;
-      Address.innerHTML = resp[2];
-      Pass.innerHTML = resp[1];
-      User.innerHTML = resp[3];
-      Pluginout.innerHTML = resp[4];
+      Address.innerHTML = resp[3];
+      Pass.innerHTML = resp[2];
+      User.innerHTML = resp[4];
+      Pluginout.innerHTML = resp[5];
       clicky.innerHTML = 'Displaying Password for ' +count+ ' seconds';
       
       if (counter){
