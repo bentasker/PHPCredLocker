@@ -36,7 +36,7 @@ $opDivider = "|..|";
    if (empty(BTMain::getUser()->name)){
     
     ob_end_flush();
-    echo "0".$opDivider."Access Denied".$opDivider;
+    echo BTMain::getip().$opDivider."0".$opDivider."Access Denied".$opDivider;
     die;
     }
    
@@ -168,6 +168,12 @@ case 'delGroup':
 	}
     break;
 
+
+
+default:
+  ob_clean();
+  echo "2".$opDivider;
+  break;
 
 }
 

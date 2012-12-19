@@ -12,7 +12,7 @@ Copyright (c) 2012 Ben Tasker
 */
 
 
-var counter=false, cancel='', dispcred;
+var counter=false, cancel='', dispcred, interval;
 
 
 function resizebkgrnd(){
@@ -324,6 +324,11 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       
       resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
     
+      // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
+      
     if (resp[1] == 0){
      // Request failed, authentication issue maybe? 
       clicky.innerHTML = 'Failed to retrieve credentials. Click to try again';
@@ -393,6 +398,11 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
+    
     if (resp[1] == 0){
      // Session Invalid
      
@@ -462,6 +472,10 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
     if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
       notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
@@ -521,6 +535,10 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
     if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
@@ -818,6 +836,67 @@ var a, b,
 
 return enc;
 }
+
+
+function unknownAPICommand(){
+ // The API reports that the verb used wasn't recognised. We need to refresh the key file  
+  
+  var sess,sessid,parent,frm,notify;
+  
+ 
+  
+  
+  
+  sess = document.getElementById("kFile");
+  sessid = sess.getAttribute('src');
+  parent = sess.parentNode;
+  notify = document.getElementById('NotificationArea')
+  clearInterval(sesscheck);
+ 
+ 
+ 
+ notify.innerHTML += "<div id='apiError' class='alert alert-error'>API Error Detected</div>";
+ 
+ if(!confirm("The API reported an error, attempting to rectify. Click OK to try and rectify (screen will refresh)")){
+  return; 
+ }
+  notify.removeChild(document.getElementById('apiError'));
+  notify.innerHTML = "<div id='apiError' class='alert alert-info'>Attempting to rectify API issue. Window will refresh when ready</div>";
+ 
+ 
+  parent.removeChild(sess);
+  
+  
+  frm = document.createElement('iframe');
+  frm.setAttribute('id','kfile');
+  frm.setAttribute('src',sessid);
+  frm.style.width = '0px';
+  frm.style.height = '0px';
+  frm.style.border = '0px';
+  document.body.appendChild(frm);
+  // Wait 500 milliseconds so we can be sure it's loaded
+  interval = setInterval("reloadKeyf()",500);
+  
+ 
+}
+
+
+
+function reloadKeyf(){
+  var frm;
+  
+
+  
+  frm = document.getElementById('kfile');
+  frm.contentWindow.document.cookie = 'PHPCredLockerKeySet=0;';
+
+  
+  frm.contentWindow.location.reload(true);
+  window.location.reload(true);
+  
+}
+
+
 
 
 

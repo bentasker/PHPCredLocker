@@ -94,7 +94,7 @@ header("Content-Type: text/javascript");
 	// Set caching headers
 	header("Expires: $gmt");
 	header("Pragma: cache");
-	header("Cache-Control: max-age=$seconds_to_cache");
+	header("Cache-Control: max-age=$seconds_to_cache, private, must-revalidate");
 
 	// Add the key and it's expiry to the session
 	BTMain::setSessVar('KeyExpiry',$expiry);
@@ -107,6 +107,14 @@ header("Content-Type: text/javascript");
 ?> 
 function getKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
 function getDelimiter(){ return "|..|";}
-function getTerminology(a){ var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;b = eval('VarNme'+a); return b; }
+function getTerminology(a){ if (a == 'undefined' || a == 'null' || a == ''){return;}var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;b = eval('VarNme'+a); return b; }
+
+
+function destroyKeys(){
+window.getKey = '';
+window.getDelimiter = '';
+window.getTerminology = '';
+return window.destroyKeys = '';
+}
 
 

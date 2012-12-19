@@ -119,6 +119,10 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
     if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
@@ -175,6 +179,10 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
     if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
@@ -227,6 +235,10 @@ xmlhttp.onreadystatechange=function()
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    // Check for an invalid verb response
+    if (resp[1] == 2){
+     return unknownAPICommand(); 
+    }
     if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
