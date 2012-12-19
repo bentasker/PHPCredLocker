@@ -141,8 +141,9 @@ $excludes = array("58","59","60","61","62","63","64","91","92","93","94","95","9
 
 
 
-// Gives us a 1024bit string
-  while ($x <= 128){
+// Gives us a 2048bit string
+// Upped from 1024 because commit cae0ac5 increases the likelihood of key repetition
+  while ($x <= 256){
 	$key = mt_rand(48,122);
 	if (in_array($key,$excludes)){ continue; }
 	$str .= chr($key);
