@@ -131,8 +131,11 @@ function loginReqProcess(){
  entered = document.getElementById('FrmPassPlace'),
  pass = document.getElementById('FrmPass');
  
+ 
+ if (!enabledEncryption()){ pass.value = entered.value; return true;}
+ 
  // Calculate the encrypted value
- pass.value = xorestr(entered.value,retAuthKey());
+ pass.value = Base64.encode(xorestr(entered.value,retAuthKey()));
   
  // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
  
@@ -861,6 +864,8 @@ function unknownAPICommand(){
  
  notify.innerHTML += "<div id='apiError' class='alert alert-error'>API Error Detected</div>";
  
+ if (!enabledEncryption()){ return; }
+ 
  if(!confirm("The API reported an error, attempting to rectify. Click OK to try and rectify")){
    
   return; 
@@ -924,7 +929,7 @@ function reloadKeyf(sessid){
 
 
 function decryptAPIResp(str,key){
-    if (!enabledEncryption()){ return Base64.decode(str); }
+    if (!enabledEncryption()){ return str; }
   
  return Base64.decode(xordstr(Base64.decode(str),key));
 }
@@ -945,9 +950,13 @@ function cryptReq(str){
    * because we may want to implement a second key used for sending requests,
    * whether that's a symmetric or asymetric key.
    */  
-  var key = retKey(), 
+  var ciphert,key = retKey(), 
   div = getDivider();
- return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + div + getTerms(str) + div + genPadding()),key))); 
+  
+  ciphert = genPadding() + div + getTerms(str) + div + genPadding();
+  if (!enabledEncryption()){ return ciphert; }
+  
+  return encodeURIComponent(Base64.encode(xorestr(Base64.encode(ciphert),key))); 
 }
 
 
@@ -978,6 +987,7 @@ function retKey(){
 
 
 function checkKeyAvailable(){
+ 
   
  if(typeof getKey != 'function') {
    

@@ -37,7 +37,7 @@ $auth = new ProgAuth;
     $pass = BTMain::getVar('FrmPass');
     
     if (!BTMain::getConnTypeSSL()){
-    $pass =& $crypt->xordstring($pass,$key);
+    $pass =& $crypt->xordstring(base64_decode($pass),$key);
     }
 
 

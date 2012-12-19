@@ -168,7 +168,7 @@ return $str;
 */
 function genXorPadding(){
 
-if (!BTMain::getConnTypeSSL()){
+if (BTMain::getConnTypeSSL()){
 return "a";
 }
 

@@ -73,54 +73,46 @@ header("Content-Type: text/javascript");
 
 if (isset($_COOKIE['PHPCredLocker'])):
 
-  foreach ($apiterms as $term){
+	  foreach ($apiterms as $term){
 
-	  $x = 0;
-	  $new = '';
-
-      $termlength = mt_rand(4,15);
-
-
-	while ($x <= $termlength){
-
-	  $new .= chr(mt_rand(97,122));
-
-	  if (($x == $termlength) && in_array($new,$usedterms)){
-	      // Make sure the termcode isn't already in used, if so, start again
-	      $x = 0;
-	      $new = '';
-	      }
-	  $x++;
-	}	
-
-      $usedterms[] = $new;
-      $terms[$new] = $term;
-   }
+		$x = 0;
+		$new = '';
+		$termlength = mt_rand(4,15);
 
 
+		while ($x <= $termlength){
+		      $new .= chr(mt_rand(97,122));
+			  if (($x == $termlength) && in_array($new,$usedterms)){
+			  // Make sure the termcode isn't already in used, if so, start again
+			  $x = 0;
+			  $new = '';
+		      }
+		  $x++;
+		}	
+
+		$usedterms[] = $new;
+		$terms[$new] = $term;
+      }
 
 
+	  $expiry = strtotime('+10 minutes');
+	  $seconds_to_cache = $expiry - time();
+	  $gmt = gmdate("D, d M Y H:i:s", $expiry) . " GMT";
 
+	  // Set caching headers
+	  header("Expires: $gmt");
+	  header("Pragma: cache");
+	  header("Cache-Control: Private, max-age=$seconds_to_cache");
 
-	
-	$expiry = strtotime('+10 minutes');
-	$seconds_to_cache = $expiry - time();
-	$gmt = gmdate("D, d M Y H:i:s", $expiry) . " GMT";
+	  // Add the key and it's expiry to the session
+	  BTMain::setSessVar('KeyExpiry',$expiry);
+	  BTMain::setSessVar('tls',Crypto::genxorekey());
+	  BTMain::setSessVar('apiterms',$terms);
 
-	// Set caching headers
-	header("Expires: $gmt");
-	header("Pragma: cache");
-	header("Cache-Control: Private, max-age=$seconds_to_cache");
+	  // By setting a cookie, we provide an easy mechanism for allowing the API to force a key refresh
+	  setcookie("PHPCredLockerKeySet", 1, $expiry, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
 
-	// Add the key and it's expiry to the session
-	BTMain::setSessVar('KeyExpiry',$expiry);
-	BTMain::setSessVar('tls',Crypto::genxorekey());
-	BTMain::setSessVar('apiterms',$terms);
-
-	// By setting a cookie, we provide an easy mechanism for allowing the API to force a key refresh
-	setcookie("PHPCredLockerKeySet", 1, $expiry, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
-
-endif;
+      endif;
 
       // We use a different method to generate Auth keys - in case a pattern does somehow appear in the TLS generation stuff we don't want anyone to be
       // able to view those keys without a valid login (at which point they won't really need to do key analysis!)
@@ -152,6 +144,19 @@ else:
      BTMain::setSessVar('tls',' ');
      BTMain::setSessVar('AuthKey',' ');
      $enabled = 'false';
+
+
+
+    $expiry = strtotime('+1 day');
+    $seconds_to_cache = $expiry - time();
+    $gmt = gmdate("D, d M Y H:i:s", $expiry) . " GMT";
+
+    // Set caching headers
+    header("Expires: $gmt");
+    header("Pragma: cache");
+    header("Cache-Control: Private, max-age=$seconds_to_cache");
+
+
 endif;
 
 

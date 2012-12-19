@@ -48,15 +48,18 @@ echo "1".$opDivider;
 
 // Decrypt the request
 
-$option = base64_decode(BTMain::getVar('option'));
-$tlskey = BTMain::getsessVar('tls');
+$option = BTMain::getVar('option');
+
 $crypt = new Crypto;
 
-if (!BTMain::getConnTypeSSL()){
-$option = $crypt->xordstring($option,$tlskey);
-}
 
-$option = explode($opDivider,base64_decode($option));
+	if (!BTMain::getConnTypeSSL()){
+	    $tlskey = BTMain::getsessVar('tls');
+	    $option = base64_decode($crypt->xordstring(base64_decode($option),$tlskey));
+	 }
+
+
+$option = explode($opDivider,$option);
 
 $terms = BTMain::getSessVar('apiterms');
 
@@ -188,10 +191,10 @@ default:
 $padding = $crypt->genXorPadding();
 $endpadding = $crypt->genXorPadding();
 
-$op = base64_encode($padding.$opDivider.ob_get_clean().$opDivider.$endpadding);
+$op = $padding.$opDivider.ob_get_clean().$opDivider.$endpadding;
 
 if (!BTMain::getConnTypeSSL()){
-$op = base64_encode($crypt->xorestring($op,$tlskey));
+$op = base64_encode($crypt->xorestring(base64_encode($op),$tlskey));
 }
 
 echo $op;
