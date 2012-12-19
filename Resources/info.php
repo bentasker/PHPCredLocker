@@ -58,27 +58,29 @@ require_once 'lib/crypto.php';
 
 
 
-    foreach ($apiterms as $term){
+  foreach ($apiterms as $term){
 
 	  $x = 0;
 	  $new = '';
 
+      $termlength = mt_rand(4,15);
 
-    while ($x <= 11){
 
-	      $new .= chr(mt_rand(97,122));
+	while ($x <= $termlength){
 
-	  if (($x == 11) && in_array($new,$usedterms)){
+	  $new .= chr(mt_rand(97,122));
+
+	  if (($x == $termlength) && in_array($new,$usedterms)){
 	      // Make sure the termcode isn't already in used, if so, start again
 	      $x = 0;
 	      $new = '';
 	      }
-      $x++;
-      }	
+	  $x++;
+	}	
 
       $usedterms[] = $new;
       $terms[$new] = $term;
-      }
+   }
 
 
 
