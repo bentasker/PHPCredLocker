@@ -33,7 +33,7 @@ $auth = new ProgAuth;
     if ($option == "LogIn"){
 
     $crypt = new Crypto;
-    $key = BTMain::getsessVar('tls');
+    $key = BTMain::getSessVar('AuthKey');
     $pass =& $crypt->xordstring(BTMain::getVar('FrmPass'),$key);
 
 	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),$pass)){

@@ -20,6 +20,7 @@
 * See LICENSE
 *
 */
+ob_start();
 
 session_start();
 define('_CREDLOCK',1);
@@ -35,13 +36,24 @@ $expiry = BTMain::setSessVar('KeyExpiry');
 
 
 // If the key is still valid and we know the browser has already retrieved it, just tell the browser to use the cache
-if  ((time() > $expiry) && (isset($_COOKIE['PHPCredLocker'])) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
+if  ((time() < $expiry) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
 header("HTTP/1.1 304 Not Modified");
 die;
 }
 
 // Would actually prefer not to include this in an unauthenticated session, but want to put key generation in the most logical place.
 require_once 'lib/crypto.php';
+
+
+
+// Set MIME-Header
+header("Content-Type: text/javascript");
+
+
+
+
+
+if (isset($_COOKIE['PHPCredLocker'])):
 
 
 
@@ -84,8 +96,9 @@ require_once 'lib/crypto.php';
 
 
 
-// Set MIME-Header
-header("Content-Type: text/javascript");
+
+
+
 	
 	$expiry = strtotime('+10 minutes');
 	$seconds_to_cache = $expiry - time();
@@ -94,7 +107,7 @@ header("Content-Type: text/javascript");
 	// Set caching headers
 	header("Expires: $gmt");
 	header("Pragma: cache");
-	header("Cache-Control: max-age=$seconds_to_cache, private, must-revalidate");
+	header("Cache-Control: Private, max-age=$seconds_to_cache");
 
 	// Add the key and it's expiry to the session
 	BTMain::setSessVar('KeyExpiry',$expiry);
@@ -104,17 +117,63 @@ header("Content-Type: text/javascript");
 	// By setting a cookie, we provide an easy mechanism for allowing the API to force a key refresh
 	setcookie("PHPCredLockerKeySet", 1, $expiry, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
 
+endif;
+
+      // We use a different method to generate Auth keys - in case a pattern does somehow appear in the TLS generation stuff we don't want anyone to be
+      // able to view those keys without a valid login (at which point they won't really need to do key analysis!)
+
+      $x = 0;
+      $str = '';
+      while ($x < 40){
+
+      $str .= chr(rand(33,126)) .mt_rand(16,45);
+      
+      $x++;
+
+      }
+
+
+      BTMain::setSessVar('AuthKey',rtrim(base64_encode($str),"="));
+
+
+
+
+ob_start();
 ?> 
 function getKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
+
+
 function getDelimiter(){ return "|..|";}
-function getTerminology(a){ if (a == 'undefined' || a == 'null' || a == ''){return;}var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;b = eval('VarNme'+a); return b; }
+
+
+function getTerminology(a){ 
+
+if (a == 'undefined' || a == 'null' || a == ''){
+return;}
+
+var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;
+
+b = eval('VarNme'+a); 
+return b;
+ }
+
+
+
+function getAuthKey(){
+return '<?php echo base64_encode(BTMain::getSessVar('AuthKey')); ?>';
+}
 
 
 function destroyKeys(){
 window.getKey = '';
 window.getDelimiter = '';
 window.getTerminology = '';
+window.getAuthKey = '';
 return window.destroyKeys = '';
 }
 
 
+<?php
+echo str_replace("\n","",ob_get_clean());
+
+ob_end_flush();

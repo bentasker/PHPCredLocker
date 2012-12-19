@@ -961,7 +961,7 @@ function genPadding(){
 
 
 function retAuthKey(){
- return retKey(); 
+ return Base64.decode(getAuthKey()); 
 }
 
 function retKey(){
