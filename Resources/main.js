@@ -26,6 +26,188 @@ img.style.minHeight = eval(height * 0.8)+'px';
 }
 
 
+function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
+  
+  var  menuentry, ind, item, str,
+  lim = 0, 
+  menu = document.getElementById(menu),  
+  table = document.getElementById(tbl);
+  
+    if (!table){ return false; }
+    
+  
+  
+	for (var r = 0; r < table.rows.length; r++){
+		if ( lim == limit) { break; }
+		ind = table.rows[r].cells[3].innerHTML;
+		if (ind == type ){
+		  
+		  
+		  item = document.createElement('li');
+		  item.id = menucode + table.rows[r].cells[2].innerHTML;		  
+		  
+		  item.innerHTML = "<a href='index.php?option="+table.rows[r].cells[5].innerHTML+"&id="+table.rows[r].cells[2].innerHTML+"'>"+table.rows[r].cells[cellNr].innerHTML+"</a>";
+		  menu.appendChild(item);
+		  
+		  lim = lim + 1;
+		  }
+		
+	}
+  
+  
+  
+  
+}
+
+
+
+
+function Credtimer(id)
+{
+  var count,
+  cnt = document.getElementById('PassCount'+id),
+  field = document.getElementById('retrievePassword'+id);
+ 
+ 
+  count=cnt.value-1;
+  cnt.value = count;
+  
+   
+  if (count <= 0 || cancel == 1)
+  {
+     clearInterval(counter);
+     
+     field.innerHTML = 'Display Password';
+     document.getElementById('Address'+id).innerHTML = '';
+     document.getElementById('UserName'+id).innerHTML = '';
+     document.getElementById('Password'+id).innerHTML = '';
+     document.getElementById('CredPluginOutput'+id).innerHTML = '';
+     document.getElementById("clickCount"+id).value = 0;
+     return;
+  }
+
+  field.innerHTML = 'Displaying Password for ' +count+ ' seconds';
+}
+
+
+
+
+
+function noCredTypes(){
+  
+  $(document).ready(function(){
+    var btntop;
+    
+    if (document.getElementById('AddCredBtnTop')){
+     btntop =  document.getElementById('AddCredBtnTop');
+     btntop.parentNode.removeChild(btntop);
+    }
+
+    if (document.getElementById('AddCredBtnBottom')){
+     btntop =  document.getElementById('AddCredBtnBottom');
+     btntop.parentNode.removeChild(btntop);
+    }
+  });
+  
+  
+  
+  
+  
+}
+
+
+
+
+
+
+/*********              Validation Stuff                       ****/
+
+
+
+function loginReqProcess(){
+  
+ var i,
+ a='',
+ entered = document.getElementById('FrmPassPlace'),
+ pass = document.getElementById('FrmPass');
+ 
+ // Calculate the encrypted value
+ pass.value = xorestr(entered.value,retKey());
+  
+ // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
+ 
+ for (i = 0;i < entered.length; i++){   
+   a += "a";
+ }
+ entered.value = a;
+ 
+  return true;
+}
+
+
+
+function checkNewCred(){
+
+  
+  var cred = document.getElementById('frmCredential'),
+      user = document.getElementById('frmUser'),
+      addr = document.getElementById('frmAddress');
+  
+if (cred.value.indexOf("http") !== -1){
+
+
+if (confirm("Click OK to make this credential a hyperlink in the database, click cancel to set not clicky")){
+
+document.getElementById('frmClicky').value = 1;
+}
+}
+}
+
+
+
+
+function checkEditCred(){
+
+  
+  var cred = document.getElementById('frmCredential'),
+      user = document.getElementById('frmUser'),
+      addr = document.getElementById('frmAddress');
+  
+if (cred.value.indexOf("http") !== -1){
+
+
+if (confirm("Click OK to make this credential a hyperlink in the database, click cancel to set not clicky")){
+
+document.getElementById('frmClicky').value = 1;
+}
+
+
+
+
+
+
+
+}
+
+
+// See if any have been blanked
+
+if (cred.value == null || cred.value == ''){
+ cred.value = ' '; 
+}
+
+if (user.value == null || user.value == ''){
+ user.value = ' '; 
+}
+
+if (addr.value == null || addr.value == ''){
+ cred.value = ' '; 
+}
+
+
+return true;
+}
+
 
 
 function comparePwds(){
@@ -101,6 +283,11 @@ function comparePwds(){
 	
 	
 	
+	
+/**********                 AJAX                                  *****/	
+	
+	
+	
 function getCreds(id){
 
 var xmlhttp, resp, jsonObj, limit, cnt, count, option,
@@ -134,8 +321,9 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
       
       
-      resp = Base64.decode(xordstr(Base64.decode(xmlhttp.responseText),key)).split('|..|');
-    //resp = xmlhttp.responseText.split('|..|');
+      
+      resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    
     if (resp[1] == 0){
      // Request failed, authentication issue maybe? 
       clicky.innerHTML = 'Failed to retrieve credentials. Click to try again';
@@ -174,12 +362,16 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
  
-  option = cryptReq('retCred',key);
+  option = cryptReq('retCred');
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send('option='+option+'&id='+id);
  
 }
+
+
+
+
 
 
 function checkSession(){
@@ -200,8 +392,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0){
      // Session Invalid
      
     cookies = document.cookie.split(";");
@@ -229,7 +421,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
-  option = cryptReq('checkSess',key);
+  option = cryptReq('checkSess');
   // Add an id, it's completely pointless but sessioncheck requests are the only ones not specifying an id - bit easy to check
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -269,8 +461,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
       notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
       return false;
@@ -294,7 +486,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
   
   
   
-  option = cryptReq('delCust',key);
+  option = cryptReq('delCust');
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send('option='+option+'&id='+id);
@@ -328,8 +520,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
       return false;
@@ -348,7 +540,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     }
   
   
-  option = cryptReq('delCred',key);
+  option = cryptReq('delCred');
 xmlhttp.open("POST","api.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send('option='+option+'&id='+id);
@@ -357,157 +549,9 @@ xmlhttp.send('option='+option+'&id='+id);
 
 
 
-function cryptReq(str,key){
- return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + "|..|"+str+"|..|"+ genPadding()),key))); 
-}
-
-
-function Credtimer(id)
-{
-  var count,
-  cnt = document.getElementById('PassCount'+id),
-  field = document.getElementById('retrievePassword'+id);
- 
- 
-  count=cnt.value-1;
-  cnt.value = count;
-  
-   
-  if (count <= 0 || cancel == 1)
-  {
-     clearInterval(counter);
-     
-     field.innerHTML = 'Display Password';
-     document.getElementById('Address'+id).innerHTML = '';
-     document.getElementById('UserName'+id).innerHTML = '';
-     document.getElementById('Password'+id).innerHTML = '';
-     document.getElementById('CredPluginOutput'+id).innerHTML = '';
-     document.getElementById("clickCount"+id).value = 0;
-     return;
-  }
-
-  field.innerHTML = 'Displaying Password for ' +count+ ' seconds';
-}
-
-
-function checkNewCred(){
-
-  
-  var cred = document.getElementById('frmCredential'),
-      user = document.getElementById('frmUser'),
-      addr = document.getElementById('frmAddress');
-  
-if (cred.value.indexOf("http") !== -1){
-
-
-if (confirm("Click OK to make this credential a hyperlink in the database, click cancel to set not clicky")){
-
-document.getElementById('frmClicky').value = 1;
-}
-}
-}
 
 
 
-
-function checkEditCred(){
-
-  
-  var cred = document.getElementById('frmCredential'),
-      user = document.getElementById('frmUser'),
-      addr = document.getElementById('frmAddress');
-  
-if (cred.value.indexOf("http") !== -1){
-
-
-if (confirm("Click OK to make this credential a hyperlink in the database, click cancel to set not clicky")){
-
-document.getElementById('frmClicky').value = 1;
-}
-
-
-
-
-
-
-
-}
-
-
-// See if any have been blanked
-
-if (cred.value == null || cred.value == ''){
- cred.value = ' '; 
-}
-
-if (user.value == null || user.value == ''){
- user.value = ' '; 
-}
-
-if (addr.value == null || addr.value == ''){
- cred.value = ' '; 
-}
-
-
-return true;
-}
-
-
-function noCredTypes(){
-  
-  $(document).ready(function(){
-    var btntop;
-    
-    if (document.getElementById('AddCredBtnTop')){
-     btntop =  document.getElementById('AddCredBtnTop');
-     btntop.parentNode.removeChild(btntop);
-    }
-
-    if (document.getElementById('AddCredBtnBottom')){
-     btntop =  document.getElementById('AddCredBtnBottom');
-     btntop.parentNode.removeChild(btntop);
-    }
-  });
-  
-  
-  
-  
-  
-}
-
-
-function CreateMenuContent(menu,type,tbl,cellNr, limit, menucode){
-  
-  var  menuentry, ind, item, str,
-  lim = 0, 
-  menu = document.getElementById(menu),  
-  table = document.getElementById(tbl);
-  
-    if (!table){ return false; }
-    
-  
-  
-	for (var r = 0; r < table.rows.length; r++){
-		if ( lim == limit) { break; }
-		ind = table.rows[r].cells[3].innerHTML;
-		if (ind == type ){
-		  
-		  
-		  item = document.createElement('li');
-		  item.id = menucode + table.rows[r].cells[2].innerHTML;		  
-		  
-		  item.innerHTML = "<a href='index.php?option="+table.rows[r].cells[5].innerHTML+"&id="+table.rows[r].cells[2].innerHTML+"'>"+table.rows[r].cells[cellNr].innerHTML+"</a>";
-		  menu.appendChild(item);
-		  
-		  lim = lim + 1;
-		  }
-		
-	}
-  
-  
-  
-  
-}
 
 
 /****                  SEARCH FUNCTIONS                 *******/
@@ -721,7 +765,7 @@ menu.appendChild(ele);
 }
 
 
-
+/*****                            Crypto Functions                                  ******/
 
 
 /** Use bitwise Xor to encrypt the supplied string with the supplied key and return a base64 encoded representation of the character codes
@@ -777,6 +821,36 @@ return enc;
 
 
 
+
+
+function decryptAPIResp(str,key){
+  
+ return Base64.decode(xordstr(Base64.decode(str),key));
+  
+}
+
+
+function getDivider(){
+  /* This is specified here so we can easily implement a mechanism for automatically
+   * changing during the session later
+   */
+ return "|..|"; 
+}
+
+
+
+function cryptReq(str){
+  /* We retrieve the key here (even though it's available to the parent) 
+   * because we may want to implement a second key used for sending requests,
+   * whether that's a symmetric or asymetric key.
+   */  
+  var key = retKey(), 
+  div = getDivider();
+ return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + div + str + div + genPadding()),key))); 
+}
+
+
+
 function genPadding(){
   
  return Math.random().toString(36).substring(7); 
@@ -786,32 +860,6 @@ function genPadding(){
 function retKey(){
  return Base64.decode(getKey());
 }
-
-
-
-
-
-function loginReqProcess(){
-  
- var i,
- a='',
- entered = document.getElementById('FrmPassPlace'),
- pass = document.getElementById('FrmPass');
- 
- // Calculate the encrypted value
- pass.value = xorestr(entered.value,retKey());
-  
- // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
- 
- for (i = 0;i < entered.length; i++){   
-   a += "a";
- }
- entered.value = a;
- 
-  return true;
-}
-
-
 
 
 function checkKeyAvailable(){
@@ -837,6 +885,12 @@ function checkKeyAvailable(){
   
 }
 
+
+
+
+
+
+/*********                  MMMMMMMMMMMM COOKIES!                 ******/
 
 
 function KillCookie(name) {

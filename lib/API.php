@@ -17,6 +17,12 @@ require_once 'lib/crypto.php';
 $plg = new Plugins;
 
 
+/**
+ Implemented so that we can treat the divider as a key and reduce the likelihood/effectiveness 
+ of a known plaintext attack by changing it occasionally throughout the session. Just need to 
+ work out a good mechanism for doing so first!
+*/
+$opDivider = "|..|";
 
 
 
@@ -30,13 +36,13 @@ $plg = new Plugins;
    if (empty(BTMain::getUser()->name)){
     
     ob_end_flush();
-    echo "0|..|Access Denied|..|";
+    echo "0".$opDivider."Access Denied".$opDivider;
     die;
     }
    
 
 
-echo "1|..|";
+echo "1".$opDivider;
 
 // Decrypt the request
 
@@ -44,7 +50,7 @@ $option = base64_decode(BTMain::getVar('option'));
 $tlskey = BTMain::getsessVar('tls');
 $crypt = new Crypto;
 
-$option = explode("|..|",base64_decode($crypt->xordstring($option,$tlskey)));
+$option = explode($opDivider,base64_decode($crypt->xordstring($option,$tlskey)));
 
 switch($option[1]){
 
@@ -69,8 +75,8 @@ case 'retCred':
       }
 
 
-    echo htmlspecialchars($pass)."|..|<a href='$address' target=_blank>".htmlspecialchars($address)."</a>|..|" . 
-	 htmlspecialchars($crypt->decrypt($cred->UName,$key)) . "|..|";
+    echo htmlspecialchars($pass).$opDivider."<a href='$address' target=_blank>".htmlspecialchars($address)."</a>" .$opDivider. 
+	 htmlspecialchars($crypt->decrypt($cred->UName,$key)) . $opDivider;
 
 
     // Call any configured plugins
@@ -81,14 +87,7 @@ case 'retCred':
     
     echo $plg->loadPlugins("Creds",$data)->plgOutput;
 
-    $padding = $crypt->genXorPadding();
-    $endpadding = $crypt->genXorPadding();
-
-    $op = base64_encode($padding."|..|".ob_get_clean()."|..|".$endpadding);
-
-    // Encrypt the output and send back
-    echo base64_encode($crypt->xorestring($op,$tlskey));
-    return;
+   
     break;
 
 
@@ -102,9 +101,9 @@ case 'delCred':
     require_once 'lib/db/Credentials.php';
     $db = new CredDB;
     if ( $db->DelCredential(BTMain::getVar('id'))){
-	echo "1|..|\n";
+	echo "1$opDivider\n";
 	}else{
-	echo "0|..|\n";
+	echo "0$opDivider\n";
 	}
     break;
 
@@ -114,9 +113,9 @@ case 'delUser':
     BTMain::checkSuperAdmin();
     $db = new AuthDB;
       if ( $db->DelUser(BTMain::getVar('id'))){
-	  echo "1|..|\n";
+	  echo "1$opDivider\n";
       }else{
-	  echo "0|..|\n";
+	  echo "0$opDivider\n";
       }
     break;
 
@@ -131,9 +130,9 @@ case 'delCredType':
 		$data->action = 'del';
 		echo $plg->loadPlugins("CredTypes",$data)->plgOutput;
 
-		echo "1|..|\n";
+		echo "1$opDivider\n";
 	    }else{
-		echo "0|..|\n";
+		echo "0$opDivider|\n";
 	    }
       break;
 
@@ -144,9 +143,9 @@ case 'delCust':
     require_once 'lib/db/Customer.php';
     $db = new CustDB;
       if ( $db->DelCust(BTMain::getVar('id'))){
-	  echo "1|..|\n";
+	  echo "1$opDivider\n";
       }else{
-	  echo "0|..|\n";
+	  echo "0$opDivider\n";
       }
     break;
 
@@ -158,14 +157,23 @@ case 'delGroup':
     $auth = new AuthDB;
 
 	if($auth->delGroup(BTMain::getVar('id'))){
-	   echo "1|..|\n";
+	   echo "1$opDivider\n";
 	}else{	
-	  echo "0|..|\n";
+	  echo "0$opDivider\n";
 	}
     break;
 
 
 }
 
-ob_end_flush();
+
+// Encrypt the output and send back
+$padding = $crypt->genXorPadding();
+$endpadding = $crypt->genXorPadding();
+
+$op = base64_encode($padding.$opDivider.ob_get_clean().$opDivider.$endpadding);
+
+echo base64_encode($crypt->xorestring($op,$tlskey));
+
+
 ?>

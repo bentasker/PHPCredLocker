@@ -170,15 +170,13 @@ function genXorPadding(){
 $x =0;
 $count = mt_rand(5,40);
 
-while ($x <= $count){
+    while ($x <= $count){
 
-$chr = mt_rand(65,122);
-
-if ($chr >=91 && $chr <=96){ continue; }
-
-$str .= chr($chr) . mt_rand(0,300);
-$x++;
-}
+      $chr = mt_rand(65,122);
+	if ($chr >=91 && $chr <=96){ continue; }
+      $str .= chr($chr) . mt_rand(0,300);
+      $x++;
+    }
 
 
 return $str;

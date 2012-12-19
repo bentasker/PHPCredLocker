@@ -89,7 +89,7 @@ Copyright (c) 2012 Ben Tasker
 function delGroup(id){
 
   var xmlhttp, resp,jsonObj, option, 
-  key = retCred(),
+  key = retKey(),
   credrow = document.getElementById('GroupDisp'+id),
   notify = document.getElementById('NotificationArea');
   
@@ -118,8 +118,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
       return false;
@@ -152,7 +152,7 @@ xmlhttp.send('option='+option+'&id='+id);
 function delUser(id){
 
   var xmlhttp, resp, jsonObj, option, 
-  key=retCred(),
+  key=retKey(),
   credrow = document.getElementById('User'+id),
   notify = document.getElementById('NotificationArea');  
 
@@ -174,8 +174,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
       return false;
@@ -205,7 +205,7 @@ xmlhttp.send('option='+option+'&id='+id);
 function delCredType(id){
 
   var xmlhttp, resp, jsonObj, option, 
-  key=retCred(),
+  key=retKey(),
   credrow = document.getElementById('CredType'+id),
   notify = document.getElementById('NotificationArea');  
 
@@ -226,8 +226,8 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = xmlhttp.responseText.split('|..|');
-    if (resp[0] == 0 || resp[1] == 0){
+    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    if (resp[1] == 0 || resp[2] == 0){
      // Request failed, authentication issue maybe? 
        notify.innerHTML += '<div class="alert alert-error">Failed to Delete</div>';
       return false;
