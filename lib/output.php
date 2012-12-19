@@ -138,8 +138,8 @@ $conf = BTMain::getConf();
 ?>
       <title><?php echo $conf->ProgName;?> - <?php echo htmlentities($page->title);?></title>
       <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
-      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap.css" />
-      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive.css" />
+      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
+      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
 
 
     <?php foreach ($page->css as $css):?>
@@ -147,7 +147,7 @@ $conf = BTMain::getConf();
     <?php endforeach;?>
 
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-      <script type="text/javascript" src="Resources/bootstrap/js/bootstrap.js"></script>
+      <script type="text/javascript" src="Resources/bootstrap/js/bootstrap<?php echo $conf->JSMinName;?>.js"></script>
       <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
       <script src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
       <script src="Resources/main<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
