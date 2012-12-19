@@ -851,22 +851,23 @@ function unknownAPICommand(){
   sessid = sess.getAttribute('src');
   parent = sess.parentNode;
   notify = document.getElementById('NotificationArea')
-  clearInterval(sesscheck);
- 
+  
+ clearInterval(sesscheck);
  
  
  notify.innerHTML += "<div id='apiError' class='alert alert-error'>API Error Detected</div>";
  
- if(!confirm("The API reported an error, attempting to rectify. Click OK to try and rectify (screen will refresh)")){
+ if(!confirm("The API reported an error, attempting to rectify. Click OK to try and rectify")){
+   
   return; 
  }
   notify.removeChild(document.getElementById('apiError'));
   notify.innerHTML = "<div id='apiError' class='alert alert-info'>Attempting to rectify API issue. Window will refresh when ready</div>";
  
- 
+  destroyKeys();
   parent.removeChild(sess);
   
-  
+  // We need to delete the cookie, but can't do that from the current location
   frm = document.createElement('iframe');
   frm.setAttribute('id','kfile');
   frm.setAttribute('src',sessid);
@@ -875,24 +876,40 @@ function unknownAPICommand(){
   frm.style.border = '0px';
   document.body.appendChild(frm);
   // Wait 500 milliseconds so we can be sure it's loaded
-  interval = setInterval("reloadKeyf()",500);
+  interval = setInterval("reloadKeyf('"+sessid+"')",500);
   
  
 }
 
 
 
-function reloadKeyf(){
-  var frm;
+function reloadKeyf(sessid){
+  var frm, date, notify;
   
-
+  clearInterval(interval);
   
   frm = document.getElementById('kfile');
   frm.contentWindow.document.cookie = 'PHPCredLockerKeySet=0;';
-
+  frm.parentNode.removeChild(frm);
   
-  frm.contentWindow.location.reload(true);
-  window.location.reload(true);
+  date = new Date();
+  
+  frm = document.createElement('script');
+  frm.setAttribute('id','kFile');
+  
+  // Append a string to ensure the browser doesn't use the cache.
+  frm.setAttribute('src',sessid+date.getTime());
+  
+  document.getElementsByTagName("head")[0].appendChild(frm);
+  
+ 
+  if (window.getKey != ''){
+    notify = document.getElementById('apiError');
+    notify.parentNode.removeChild(notify);
+    
+   sesscheck = setInterval("checkSession()",120000); 
+   
+  }
   
 }
 
@@ -956,7 +973,7 @@ function checkKeyAvailable(){
   
  if(typeof getKey != 'function') {
    
-   confirm("Key retrieval failed - Attempting to rectify, Click OK to continue");
+   if (confirm("Key retrieval failed - Attempting to rectify, Click OK to continue - Screen will refresh")){
    
    var i,
 	cookies = document.cookie.split(";");
@@ -966,10 +983,11 @@ function checkKeyAvailable(){
     }
    
    window.location.href = location.reload();
-   
+  return false; 
+  }
  }
   
-  
+  return true;
   
   
   
@@ -993,7 +1011,7 @@ function createCookie(nme,val,expire) {
   var expires, date;
   
     if (expire) {
-    	var date = new Date();
+	date = new Date();
     	date.setTime(date.getTime()+(expire*24*60*60*1000));
     	expires = "; expires="+date.toGMTString();
     }
