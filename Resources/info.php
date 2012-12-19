@@ -6,6 +6,15 @@
 * ignored the expiry date, so only requested once.
 *
 *
+* Although not currently implemented, this file will eventually define the following
+*
+*  - Encryption key for received data
+*  - Encryption key for sent data
+*  - Delimiter to use for API requests
+*  - API terminology to use (allowing us to replace known calls such as retCred with a random string)
+* 
+*
+*
 * Copyright (C) 2012 B Tasker
 * Released under GNU GPL V2
 * See LICENSE
@@ -26,7 +35,7 @@ $expiry = BTMain::setSessVar('KeyExpiry');
 
 
 // If the key is still valid and we know the browser has already retrieved it, just tell the browser to use the cache
-if  ((time() > $expiry) && (isset($_COOKIE['PHPCredLocker']))&&($expiry)&&(!empty($tls))){
+if  ((time() > $expiry) && (isset($_COOKIE['PHPCredLocker'])) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
 header("HTTP/1.1 304 Not Modified");
 die;
 }
@@ -51,9 +60,12 @@ header("Content-Type: text/javascript");
 	BTMain::setSessVar('KeyExpiry',$expiry);
 	BTMain::setSessVar('tls',Crypto::genxorekey());
 
-?> 
+	// By setting a cookie, we provide an easy mechanism for allowing the API to force a key refresh
+	setcookie("PHPCredLockerKeySet", 1, $expiry, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
 
-function getKey(){ 
-str = '<?php echo base64_encode(BTMain::getSessVar('tls'));?>';
-return str; 
-}
+?> 
+function getKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
+function getDelimiter(){ return "|..|";}
+function getTerminology(a){ return a; }
+
+

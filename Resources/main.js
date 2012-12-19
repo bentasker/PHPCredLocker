@@ -132,7 +132,7 @@ function loginReqProcess(){
  pass = document.getElementById('FrmPass');
  
  // Calculate the encrypted value
- pass.value = xorestr(entered.value,retKey());
+ pass.value = xorestr(entered.value,retAuthKey());
   
  // Update the placeholder so we're not accompanying our encrypted text with the plaintext value
  
@@ -824,19 +824,18 @@ return enc;
 
 
 function decryptAPIResp(str,key){
-  
  return Base64.decode(xordstr(Base64.decode(str),key));
-  
 }
 
 
 function getDivider(){
-  /* This is specified here so we can easily implement a mechanism for automatically
-   * changing during the session later
-   */
- return "|..|"; 
+ return getDelimiter(); 
 }
 
+
+function getTerms(a){
+  return getTerminology(a);
+}
 
 
 function cryptReq(str){
@@ -846,16 +845,28 @@ function cryptReq(str){
    */  
   var key = retKey(), 
   div = getDivider();
- return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + div + str + div + genPadding()),key))); 
+ return encodeURIComponent(Base64.encode(xorestr(Base64.encode(genPadding() + div + getTerms(str) + div + genPadding()),key))); 
 }
 
 
-
+/** Really not that familiar with random string generation in JS, but this seems to work! */
 function genPadding(){
+  var i,c,
+      a='';
+
+  c = Math.random().toString(10).substring(2,3);
   
- return Math.random().toString(36).substring(7); 
+  for (i=0;i < c;i++){  
+   a += Math.random().toString(10).substring(Math.random().toString(10).substring(2,3));
+  }
+
+ return a; 
 }
 
+
+function retAuthKey(){
+ return retKey(); 
+}
 
 function retKey(){
  return Base64.decode(getKey());
