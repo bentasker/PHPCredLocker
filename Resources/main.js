@@ -792,7 +792,8 @@ menu.appendChild(ele);
  * 
  */
 function xorestr(str,key){
-
+    if (!enabledEncryption()){ return str; }
+    
 var a, b,
     enc='',
     keypos = 0;
@@ -818,6 +819,9 @@ return enc;
 
 function xordstr(str,key){
 
+  if (!enabledEncryption()){ return str; }
+  
+  
 var a, b,
     enc='',
     keypos = 0,
@@ -920,6 +924,8 @@ function reloadKeyf(sessid){
 
 
 function decryptAPIResp(str,key){
+    if (!enabledEncryption()){ return Base64.decode(str); }
+  
  return Base64.decode(xordstr(Base64.decode(str),key));
 }
 
@@ -947,6 +953,8 @@ function cryptReq(str){
 
 /** Really not that familiar with random string generation in JS, but this seems to work! */
 function genPadding(){
+  if (!enabledEncryption()){ return 'a'; }
+  
   var i,c,
       a='';
 

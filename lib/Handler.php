@@ -34,7 +34,12 @@ $auth = new ProgAuth;
 
     $crypt = new Crypto;
     $key = BTMain::getSessVar('AuthKey');
-    $pass =& $crypt->xordstring(BTMain::getVar('FrmPass'),$key);
+    $pass = BTMain::getVar('FrmPass');
+    
+    if (!BTMain::getConnTypeSSL()){
+    $pass =& $crypt->xordstring($pass,$key);
+    }
+
 
 	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),$pass)){
 	    // Login successful

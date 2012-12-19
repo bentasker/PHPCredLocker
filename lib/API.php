@@ -52,7 +52,11 @@ $option = base64_decode(BTMain::getVar('option'));
 $tlskey = BTMain::getsessVar('tls');
 $crypt = new Crypto;
 
-$option = explode($opDivider,base64_decode($crypt->xordstring($option,$tlskey)));
+if (!BTMain::getConnTypeSSL()){
+$option = $crypt->xordstring($option,$tlskey);
+}
+
+$option = explode($opDivider,base64_decode($option));
 
 $terms = BTMain::getSessVar('apiterms');
 
@@ -186,8 +190,11 @@ $endpadding = $crypt->genXorPadding();
 
 $op = base64_encode($padding.$opDivider.ob_get_clean().$opDivider.$endpadding);
 
-echo base64_encode($crypt->xorestring($op,$tlskey));
+if (!BTMain::getConnTypeSSL()){
+$op = base64_encode($crypt->xorestring($op,$tlskey));
+}
 
+echo $op;
 
-?>
 ob_end_flush();
+?>

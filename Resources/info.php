@@ -35,6 +35,24 @@ $tls = BTMain::getSessVar('tls');
 $expiry = BTMain::setSessVar('KeyExpiry');
 
 
+
+$apiterms = array(
+			"retCred",
+			"checkSess",
+			"delCred",
+			"delUser",
+			"delCredType",
+			"delCust",
+			"delGroup"
+				    );
+
+
+
+
+// We only to do key generation if  we're not on a SSL connection
+if (!BTMain::getConnTypeSSL()):
+
+
 // If the key is still valid and we know the browser has already retrieved it, just tell the browser to use the cache
 if  ((time() < $expiry) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
 header("HTTP/1.1 304 Not Modified");
@@ -54,21 +72,6 @@ header("Content-Type: text/javascript");
 
 
 if (isset($_COOKIE['PHPCredLocker'])):
-
-
-
-// Create an array containing the supported API terms so we can use them in string Obfuscation
-      $apiterms = array(
-			"retCred",
-			"checkSess",
-			"delCred",
-			"delUser",
-			"delCredType",
-			"delCust",
-			"delGroup"
-				    );
-
-
 
   foreach ($apiterms as $term){
 
@@ -134,7 +137,22 @@ endif;
 
 
       BTMain::setSessVar('AuthKey',rtrim(base64_encode($str),"="));
+      $enabled = 'true';
 
+
+
+else:
+// We don't need to generate keys as we're on a SSL connection
+
+     foreach ($apiterms as $value){
+	$terms[$value] = $value;
+      }
+
+     BTMain::setSessVar('apiterms',$terms);
+     BTMain::setSessVar('tls',' ');
+     BTMain::setSessVar('AuthKey',' ');
+     $enabled = 'false';
+endif;
 
 
 
@@ -172,8 +190,13 @@ window.getAuthKey = '';
 return window.destroyKeys = '';
 }
 
-
+function enabledEncryption(){
+return <?php echo $enabled;?>;
+}
 <?php
+
+
+
 echo str_replace("\n","",ob_get_clean());
 
 ob_end_flush();

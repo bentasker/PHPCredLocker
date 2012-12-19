@@ -168,6 +168,12 @@ return $str;
 */
 function genXorPadding(){
 
+if (!BTMain::getConnTypeSSL()){
+return "a";
+}
+
+
+
 $x =0;
 $count = mt_rand(5,40);
 
