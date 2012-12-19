@@ -52,7 +52,12 @@ $crypt = new Crypto;
 
 $option = explode($opDivider,base64_decode($crypt->xordstring($option,$tlskey)));
 
-switch($option[1]){
+$terms = BTMain::getSessVar('apiterms');
+
+$option = $terms[$option[1]];
+
+
+switch($option){
 
 
 case 'retCred':

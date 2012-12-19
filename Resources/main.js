@@ -834,7 +834,7 @@ function getDivider(){
 
 
 function getTerms(a){
-  return getTerminology(a);
+  return Base64.decode(getTerminology(a));
 }
 
 

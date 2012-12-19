@@ -44,6 +44,44 @@ die;
 require_once 'lib/crypto.php';
 
 
+
+// Create an array containing the supported API terms so we can use them in string Obfuscation
+      $apiterms = array(
+			"retCred",
+			"checkSess",
+			"delCred",
+			"delUser",
+			"delCredType",
+			"delCust",
+			"delGroup"
+				    );
+
+
+
+    foreach ($apiterms as $term){
+
+	  $x = 0;
+	  $new = '';
+
+
+    while ($x <= 11){
+
+	      $new .= chr(mt_rand(97,122));
+
+	  if (($x == 11) && in_array($new,$usedterms)){
+	      // Make sure the termcode isn't already in used, if so, start again
+	      $x = 0;
+	      $new = '';
+	      }
+      $x++;
+      }	
+
+      $usedterms[] = $new;
+      $terms[$new] = $term;
+      }
+
+
+
 // Set MIME-Header
 header("Content-Type: text/javascript");
 	
@@ -59,6 +97,7 @@ header("Content-Type: text/javascript");
 	// Add the key and it's expiry to the session
 	BTMain::setSessVar('KeyExpiry',$expiry);
 	BTMain::setSessVar('tls',Crypto::genxorekey());
+	BTMain::setSessVar('apiterms',$terms);
 
 	// By setting a cookie, we provide an easy mechanism for allowing the API to force a key refresh
 	setcookie("PHPCredLockerKeySet", 1, $expiry, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
@@ -66,6 +105,6 @@ header("Content-Type: text/javascript");
 ?> 
 function getKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
 function getDelimiter(){ return "|..|";}
-function getTerminology(a){ return a; }
+function getTerminology(a){ var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;b = eval('VarNme'+a); return b; }
 
 
