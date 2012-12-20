@@ -29,6 +29,16 @@ $group = BTMain::getVar('frmGroup');
 $address = BTMain::getVar('frmAddress');
 $uname = BTMain::getVar('frmUser');
 $group = BTMain::getVar('frmGroup');
+  
+  if (!BTMain::getConnTypeSSL()){
+	    $crypt = new Crypto;
+	    $tlskey = BTMain::getsessVar('tls');
+	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);
+	    $address = $crypt->xordstring(base64_decode($address),$tlskey);
+	    $uname = $crypt->xordstring(base64_decode($uname),$tlskey);
+	 }
+
+
 
 if ($id == "NOCHANGE"){ $id = false; }
 if ($cred == "NOCHANGE"){ $cred = false; }

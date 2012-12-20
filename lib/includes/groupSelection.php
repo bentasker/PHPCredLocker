@@ -30,7 +30,7 @@ if ($multiselect != 1):
 ?> 
 <label for="frmGroup">Group</label><select name="frmGroup" id="frmGroup">
 <option value='null'> -- Select Group --</option>
-<option value="0">All users</option>
+<option value="0" <?php if ($preselect == 0){ echo "selected";}>All users</option>
 <?php
 
 foreach ($groups as $group){

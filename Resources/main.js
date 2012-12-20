@@ -233,12 +233,6 @@ if (confirm("Click OK to make this credential a hyperlink in the database, click
 document.getElementById('frmClicky').value = 1;
 }
 
-
-
-
-
-
-
 }
 
 
@@ -253,9 +247,16 @@ if (user.value == null || user.value == ''){
 }
 
 if (addr.value == null || addr.value == ''){
- cred.value = ' '; 
+ addr.value = ' '; 
 }
 
+if (enabledEncryption()){ 
+ 
+ // Calculate the encrypted value
+ cred.value = Base64.encode(xorestr(cred.value,retKey()));
+ user.value = Base64.encode(xorestr(user.value,retKey()));
+ addr.value = Base64.encode(xorestr(addr.value,retKey()));
+}
 
 return true;
 }
