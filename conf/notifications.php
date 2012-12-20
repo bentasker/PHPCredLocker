@@ -54,9 +54,12 @@ $notifs->KeyGenerationFailed->className = 'alert alert-error';
 $notifs->KeyGenerationFailed->text = 'Unable to add Crypto Key to config file. You <b>must</b> do this manually before you can add creds to this CredType';
 
 
+$notifs->UserGroupStoreFail->className = 'alert alert-error';
+$notifs->UserGroupStoreFail->text = 'User stored but unable to create a user specific group';
 
-//UserGroupStoreFail
-//UserGroupLinkFail
+
+$notifs->UserGroupLinkFail->className = 'alert alert-error';
+$notifs->UserGroupLinkFail->text = 'User and User-specific group created, but unable to link the two';
 
 
 /** Following are generally triggered by the request URI var notif but can be called by views etc as well  **/

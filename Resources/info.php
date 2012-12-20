@@ -32,7 +32,7 @@ chdir(dirname(__FILE__)."/../");
 require_once 'lib/Framework/main.php';
 
 $tls = BTMain::getSessVar('tls');
-$expiry = BTMain::setSessVar('KeyExpiry');
+$expiry = BTMain::getSessVar('KeyExpiry');
 
 
 
