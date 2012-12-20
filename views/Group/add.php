@@ -11,6 +11,7 @@ BTMain::checkSuperAdmin();
 
 global $notifications;
 $notifications->setPageTitle("Add ".Lang::_('UserGroup'));
+$notifications->requireScript('admin');
 
 if (BTMain::getVar('GrpAddSubmitted')){
 
@@ -36,7 +37,7 @@ $notifications->setBreadcrumb($path);
 
 ?>
 <h1>Add User Group</h1>
-<form method="POST">
+<form method="POST" onsubmit="return checkNewGroup();">
 <input type="hidden" name="option" value="addGrp">
 <input type="hidden" name="GrpAddSubmitted" value="1">
 <label for="frmName">Group Name</label><input type="text" id="frmName" name="frmName">

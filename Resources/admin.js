@@ -10,6 +10,37 @@ Repo: https://github.com/bentasker/PHPCredLocker/
 Copyright (c) 2012 Ben Tasker
 
 */
+	function checkNewGroup(){
+	 var nme =  document.getElementById('frmName');
+	 
+	 if (nme.value.length <= 0){
+	      nme.className += ' frmEntryMissed'; 
+	    return false;
+	   
+	 }
+	  
+	  return true;
+	}
+
+
+	function checkAddCredType(){
+	  var nme = document.getElementById('frmName'),
+	  ent = document.getElementById('ClickDiv').className.indexOf('EntropyGenerated');
+	  
+	  
+	  if (nme.value.length <= 0){
+	   nme.className += ' frmEntryMissed'; 
+	    return false;
+	  }
+	  
+	  if (ent >= 0){
+	   return true; 
+	  }
+	    alert("You must generate Entropy");
+	    return false;
+	    
+	}
+
 
 
 	function validateUserAdd(){
@@ -17,13 +48,13 @@ Copyright (c) 2012 Ben Tasker
 	      RealName = document.getElementById('frmRName');
 	  
 	  
-	 if (username.value == null || username.value == ''){
+	 if (username.value.length <= 0){
 	  username.className = 'frmEntryMissed'; 
 	  error = 1;
 	 }
 	 
 	 
-	   if (RealName.value == null || RealName.value == ''){
+	   if (RealName.value.length <= 0){
 	  RealName.className = 'frmEntryMissed'; 
 	  error = 1;
 	 }
@@ -54,19 +85,19 @@ Copyright (c) 2012 Ben Tasker
 	  error = 0;
 	  
 	  
-	  if (username.value == null || username.value == ''){
+	  if (username.value.length <= 0 ){
 	  username.className = 'frmEntryMissed'; 
 	  error = 1;
 	 }
 	 
 	 
-	   if (RealName.value == null || RealName.value == ''){
+	   if (RealName.value.length <= 0 ){
 	  RealName.className = 'frmEntryMissed'; 
 	  error = 1;
 	 }
 	  
 	  
-	  if (pass.value != null && pass.value != ''){
+	  if (pass.value.length > 0){
 	  if (!comparePwds()){
 	    
 	   error = 1; 

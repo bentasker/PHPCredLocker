@@ -148,13 +148,42 @@ function loginReqProcess(){
 }
 
 
+function checkNewCust(){
+  
+  var nme = document.getElementById('FrmName'),
+  grp = document.getElementById('frmGroup');
+      
+      
+      
+      if (grp.options[grp.selectedIndex].value == 'null'){
+	grp.className += ' frmEntryMissed';
+	return false;
+      }
+      
+      
+      if (nme.value == ''){
+	nme.className += ' frmEntryMissed';
+	return false;
+      }
+  return true;
+}
+
+
 
 function checkNewCred(){
 
   
   var cred = document.getElementById('frmCredential'),
       user = document.getElementById('frmUser'),
-      addr = document.getElementById('frmAddress');
+      addr = document.getElementById('frmAddress'),
+      grp = document.getElementById('frmGroup');
+      
+      
+      
+      if (grp.options[grp.selectedIndex].value == 'null'){
+	grp.className += ' frmEntryMissed';
+	return false;
+      }
   
 if (cred.value.indexOf("http") !== -1){
 
@@ -174,7 +203,17 @@ function checkEditCred(){
   
   var cred = document.getElementById('frmCredential'),
       user = document.getElementById('frmUser'),
-      addr = document.getElementById('frmAddress');
+      addr = document.getElementById('frmAddress'),
+      grp = document.getElementById('frmGroup');
+      
+      
+      
+      if (grp.options[grp.selectedIndex].value == 'null'){
+	grp.className += ' frmEntryMissed';
+	return false;
+      }
+      
+      
   
 if (cred.value.indexOf("http") !== -1){
 

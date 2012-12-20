@@ -29,6 +29,7 @@ $groups = $auth->retrieveGroupNames();
 if ($multiselect != 1):
 ?> 
 <label for="frmGroup">Group</label><select name="frmGroup" id="frmGroup">
+<option value='null'> -- Select Group --</option>
 <option value="0">All users</option>
 <?php
 

@@ -13,6 +13,7 @@ global $notifications;
 $plugins = new Plugins;
 
 $notifications->setPageTitle("Add " . Lang::_('Credential Type'));
+$notifications->requireScript('admin');
 
 if (BTMain::getVar('AddCredType')){
 $db = new CredDB;
@@ -60,7 +61,7 @@ $notifications->setBreadcrumb($path);
 ?>
 <h1>Add <?php echo Lang::_("Credential Type");?></h1>
 
-<form method="POST">
+<form method="POST" onsubmit="return checkAddCredType();">
 <input type="hidden" name="option" value="addCredType">
 <input type="hidden" name="AddCredType" value="1">
 

@@ -38,7 +38,7 @@ $notifications->setBreadcrumb($path);
 
 
 ?>
-<form method="POST">
+<form method="POST" onsubmit="return checkNewCust();">
 <input type="hidden" name="option" value="addCustomer">
 <input type="hidden" name="AddCustSubmitted" value="1">
 <label for="FrmName">Company Name</label><input type="text" name="FrmName" id="FrmName">
