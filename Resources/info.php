@@ -20,7 +20,7 @@
 * See LICENSE
 *
 */
-ob_start();
+ob_start("ob_gzhandler");
 
 session_start();
 define('_CREDLOCK',1);

@@ -16,9 +16,22 @@ $notifications->setPageTitle("Add ". Lang::_('Credential'));
 
 if (BTMain::getVar('addCredSubmitted')){
 
+  $cred = BTMain::getVar('frmCredential');
+  $addr = BTMain::getVar('frmAddress');
+  $user = BTMain::getVar('frmUser');
+  
+  if (!BTMain::getConnTypeSSL()){
+	    $crypt = new Crypto;
+	    $tlskey = BTMain::getsessVar('tls');
+	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);
+	    $addr = $crypt->xordstring(base64_decode($addr),$tlskey);
+	    $user = $crypt->xordstring(base64_decode($user),$tlskey);
+	 }
+
+
 
   // Add the cred to the db
-  if ($creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),BTMain::getVar('frmCredential'),BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),BTMain::getVar('frmAddress'),BTMain::getVar('frmUser'))){
+  if ($creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user)){
   // Success
   $notifications->setNotification("addCredSuccess");
   }else{
