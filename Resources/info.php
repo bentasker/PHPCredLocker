@@ -174,10 +174,9 @@ function getTerminology(a){
 if (a == 'undefined' || a == 'null' || a == ''){
 return;}
 
-var b,<?php foreach ($terms as $key=>$value){ echo "VarNme$value='".base64_encode($key) ."',"; }?>c;
+<?php foreach ($terms as $key=>$value){ echo "this.$value='".base64_encode($key) ."';"; }?>
 
-b = eval('VarNme'+a); 
-return b;
+return this[a];
  }
 
 
@@ -198,6 +197,8 @@ return window.destroyKeys = '';
 function enabledEncryption(){
 return <?php echo $enabled;?>;
 }
+
+new getTerminology();
 <?php
 
 

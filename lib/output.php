@@ -137,7 +137,7 @@ $page = $notifications->getPageInfo();
 $conf = BTMain::getConf();
 ?>
       <title><?php echo $conf->ProgName;?> - <?php echo htmlentities($page->title);?></title>
-      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip.css" />
+      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
 

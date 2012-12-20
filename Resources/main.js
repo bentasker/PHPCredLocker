@@ -293,7 +293,7 @@ function comparePwds(){
 	
 function getCreds(id){
 
-var xmlhttp, resp, jsonObj, limit, cnt, count, option,
+var xmlhttp, resp, limit, cnt, count, option,
     clicky = document.getElementById('retrievePassword'+id),
     Address = document.getElementById('Address'+id),
     User = document.getElementById('UserName'+id),
@@ -445,7 +445,7 @@ xmlhttp.send('option='+option+'&id='+Math.floor((Math.random()*100)+1));
 
 function DelCust(id){
 
-  var xmlhttp, resp, jsonObj, credrow, notify, option, key = retKey();
+  var xmlhttp, resp, credrow, notify, option, key = retKey();
 
 
 if (!confirm("Are you sure you want to delete this customer and all associated credentials?")){
@@ -513,7 +513,7 @@ xmlhttp.send('option='+option+'&id='+id);
 
 function DelCred(id){
 
-  var xmlhttp, resp, jsonObj, credrow, notify, option, key = retKey();
+  var xmlhttp, resp, credrow, notify, option, key = retKey();
 
 
 if (!confirm("Are you sure you want to delete this credential?")){
