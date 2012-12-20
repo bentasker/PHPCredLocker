@@ -106,8 +106,8 @@ function logCredAction($data){
 $db = new BTDB;
 
 // Protect against SQLi
-$id = $db->StringEscape($data->cred);
-$username = $db->StringEscape($data->user);
+$id = $db->stringEscape($data->cred);
+$username = $db->stringEscape($data->user);
 
 // Build the query
 $sql = "SELECT a.cust, b.Name as Name, b.ContactName, b.ContactSurname, b.Email, c.Name as CredType ".

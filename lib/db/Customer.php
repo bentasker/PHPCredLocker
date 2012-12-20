@@ -30,11 +30,11 @@ $firstname = $crypt->encrypt($firstname,'Customer');
 $lastname = $crypt->encrypt($lastname,'Customer');
 $email = $crypt->encrypt($email,'Customer');
 
-$firstname = $this->StringEscape($firstname);
-$lastname = $this->StringEscape($lastname);
-$email = $this->StringEscape($email);
-$group = $this->StringEscape($group);
-$name = $this->StringEscape($name);
+$firstname = $this->stringEscape($firstname);
+$lastname = $this->stringEscape($lastname);
+$email = $this->stringEscape($email);
+$group = $this->stringEscape($group);
+$name = $this->stringEscape($name);
 $sql = "INSERT INTO #__Cust (`name`,`Group`,`ContactName`,`ContactSurname`,`Email`) VALUES ('$name','$group','$firstname','$lastname','$email')";
 $this->setQuery($sql);
 
@@ -77,12 +77,12 @@ $firstname = $crypt->encrypt($firstname,'Customer');
 $lastname = $crypt->encrypt($lastname,'Customer');
 $email = $crypt->encrypt($email,'Customer');
 
-$id = $this->StringEscape($id);
-$firstname = $this->StringEscape($firstname);
-$lastname = $this->StringEscape($lastname);
-$email = $this->StringEscape($email);
-$group = $this->StringEscape($group);
-$name = $this->StringEscape($name);
+$id = $this->stringEscape($id);
+$firstname = $this->stringEscape($firstname);
+$lastname = $this->stringEscape($lastname);
+$email = $this->stringEscape($email);
+$group = $this->stringEscape($group);
+$name = $this->stringEscape($name);
 
 $sql = "UPDATE #__Cust SET `name`='$name',`Group`='$group',`ContactName`='$firstname',".
 "`ContactSurname`='$lastname',`Email`='$email' WHERE `id`='$id' AND ($ACL);";
@@ -113,7 +113,7 @@ return true;
 * @return boolean
 */
 function DelCust($id){
-$id = $this->StringEscape($id);
+$id = $this->stringEscape($id);
 $ACL = BTMain::buildACLQuery();
 
 
@@ -161,7 +161,7 @@ return $this->loadResults();
 * @return object
 */
 function getCustomerViewData($id){
-$id = $this->StringEscape($id);
+$id = $this->stringEscape($id);
 
 
 
@@ -186,7 +186,7 @@ return $this->loadResults();
 * @return object
 */
 function getCustomerDetail($id){
-$id = $this->StringEscape($id);
+$id = $this->stringEscape($id);
 $ACL = BTMain::buildACLQuery();
 
 $sql = "SELECT * FROM #__Cust WHERE id='$id' AND ($ACL)";

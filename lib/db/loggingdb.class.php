@@ -43,9 +43,9 @@ $loggingenabled = BTMain::getConf()->loggingenabled;
 
 $user = BTMain::getUser()->name;
 
-$useres = $this->StringEscape($user);
-$credes = $this->StringEscape($cred);
-$actiones = $this->StringEscape($action);
+$useres = $this->stringEscape($user);
+$credes = $this->stringEscape($cred);
+$actiones = $this->stringEscape($action);
 $timestamp = date('Y-m-d H:i:s');
 
   if ($loggingenabled){
