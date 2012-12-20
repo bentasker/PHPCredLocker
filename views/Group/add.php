@@ -14,7 +14,7 @@ $notifications->setPageTitle("Add ".Lang::_('UserGroup'));
 
 if (BTMain::getVar('GrpAddSubmitted')){
 
-$auth = new AuthDB;
+$auth = new ProgAuth;
 if ($auth->addGroup(BTMain::getVar('frmName'))){
 $notifications->setNotification("addGroupSuccess");
 

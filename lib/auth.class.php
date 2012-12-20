@@ -13,6 +13,16 @@ require_once 'lib/db/authdb.class.php';
 class ProgAuth{
 
 
+/** Add a user group
+*
+* @arg name string - New groups name
+*
+*/
+function addGroup($name){
+$authdb = new AuthDB;
+return $authdb->addGroup($name);
+}
+
 
 /** Create a salt for the user
 *
@@ -45,6 +55,18 @@ $frmToken = sha1(mt_rand(0,90000) . chr(mt_rand(32,254)) . chr(mt_rand(32,254)) 
 BTMain::setSessVar("FormToken",$frmToken);
 return $frmToken;
 
+}
+
+
+/** Append a group ID to a user
+*
+* @arg user - string
+* @arg group - Int
+*
+*/
+function addUserToGroup($user,$group){
+$db = new AuthDB;
+return $db->userAppendGroup($user,$group);
 }
 
 

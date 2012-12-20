@@ -55,6 +55,9 @@ $notifs->KeyGenerationFailed->text = 'Unable to add Crypto Key to config file. Y
 
 
 
+//UserGroupStoreFail
+//UserGroupLinkFail
+
 
 /** Following are generally triggered by the request URI var notif but can be called by views etc as well  **/
 

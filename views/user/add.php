@@ -49,10 +49,27 @@ $groups[] = "-1";
 $authname = new ProgAuth;
 
 if ($authname->createUser($username,$pass,$RName, $groups)){
-$notifications->setNotification('UserStoreSuccess');
+
+
+
+    $id = $authname->addGroup("User: " . $username);
+
+
+
+      if (!$id){
+	  $notifications->setNotification('UserGroupStoreFail');
+
+      }else{
+	      if (!$authname->addUserToGroup($username,$id)){
+		$notifications->setNotification('UserGroupLinkFail');
+	      }
+
+      }
+
+    $notifications->setNotification('UserStoreSuccess');
 
 }else{
-$notifications->setNotification('UserStoreFail');
+    $notifications->setNotification('UserStoreFail');
 
 }
 
