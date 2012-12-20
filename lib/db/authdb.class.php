@@ -392,8 +392,17 @@ return $exp->Expires;
 */
 function retrieveGroupNames(){
 
+  if(BTMain::checkisSuperAdmin()){
+    $where = "1=1";
+  }else{
 
-$sql = "SELECT * FROM #__Groups";
+    $grps = implode(",",BTMain::getUser()->groups);
+
+    $where = "id IN ($grps)";
+  }
+
+
+$sql = "SELECT * FROM #__Groups WHERE $where";
 $this->setQuery($sql);
 return $this->loadResults();
 
