@@ -263,6 +263,23 @@ return true;
 
 
 
+function checkChngPwds(){
+ if(!comparePwds() ){ return false; }
+ 
+ if (!enabledEncryption()){ return true; }
+ 
+
+ var pass = document.getElementById('frmPass'),
+ passconf = document.getElementById('frmPassConf');
+ pass.value = Base64.encode(xorestr(pass.value,retKey()));
+ passconf.value = Base64.encode(xorestr(passconf.value,retKey()));
+ 
+ return true;
+  
+  
+}
+
+
 function comparePwds(){
 	  
 	  

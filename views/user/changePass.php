@@ -31,7 +31,16 @@ BTMain::unsetSessVar('FormToken');
 
       $auth = new ProgAuth;
 
-      if($auth->editUser($user->name,BTMain::getVar('frmPass'),$user->RealName, $user->groups)){
+      $pass = BTMain::getVar('frmPass');
+
+	    if (!BTMain::getConnTypeSSL()){
+	    $crypt = new Crypto;
+	    $tlskey = BTMain::getsessVar('tls');
+	    $pass = $crypt->xordstring(base64_decode($pass),$tlskey);
+	 }
+
+
+      if($auth->editUser($user->name,$pass,$user->RealName, $user->groups)){
 
       $notifications->setNotification('UserStoreSuccess');
       }else{
@@ -50,7 +59,7 @@ $frmToken = ProgAuth::generateFormToken();
 ?>
 <h1>Change Password</h1>
 
-<form method="POST" onsubmit="return comparePwds();">
+<form method="POST" onsubmit="return checkChngPwds();">
 <input type="hidden" name="Option" value="ChangePass">
 <input type="hidden" name="ChangePassSubmitted" value="1">
 <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
