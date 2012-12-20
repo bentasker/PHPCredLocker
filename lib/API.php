@@ -8,7 +8,7 @@
 */
 defined('_CREDLOCK') or die;
 
-ob_start();
+if(!ob_start("ob_gzhandler")) ob_start();
 
 require_once 'lib/lang.php';
 require_once 'lib/auth.class.php';
