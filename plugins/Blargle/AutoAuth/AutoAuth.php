@@ -168,7 +168,7 @@ if (!$settings){ return; }
 	// We load the page using img src so that the browser has any cookies that it might need
 	?>	
 	    <img src="<?php echo $address;?>" style="width: 1px; height: 1px; border: 0px">
-	    <form action="<?php echo $address; if (!empty($settings->frmAutoAuthURL)){ echo $settings->frmAutoAuthURL;} ?>" method="POST" <?php echo $onsubmit;?>>
+	    <form target=_blank action="<?php echo $address; if (!empty($settings->frmAutoAuthURL)){ echo $settings->frmAutoAuthURL;} ?>" method="POST" <?php echo $onsubmit;?>>
 	    <input type="hidden" name="<?php echo $settings->user; ?>" value="<?php echo $user; ?>"><input type="hidden" name="<?php echo $settings->pass; ?>" value="<?php echo $pass; ?>">
 	    <input type="submit" class="btn btn-primary" value="Log-In">
 
