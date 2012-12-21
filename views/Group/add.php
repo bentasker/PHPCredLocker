@@ -16,7 +16,7 @@ $notifications->requireScript('admin');
 if (BTMain::getVar('GrpAddSubmitted')){
 
 $auth = new ProgAuth;
-if ($auth->addGroup(BTMain::getVar('frmName'))){
+if ($auth->addGroup(htmlspecialchars(BTMain::getVar('frmName')))){
 $notifications->setNotification("addGroupSuccess");
 
 }else{

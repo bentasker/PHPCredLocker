@@ -18,7 +18,7 @@ if (BTMain::getVar('EditCustSubmitted')){
 
 
 
-if ($db->editCustomer(BTMain::getVar('id'),BTMain::getVar('FrmName'),BTMain::getVar('frmGroup'),BTMain::getVar('FrmconName'),BTMain::getVar('FrmSurname'),BTMain::getVar('FrmEmail'))){
+if ($db->editCustomer(BTMain::getVar('id'),htmlspecialchars(BTMain::getVar('FrmName')),BTMain::getVar('frmGroup'),htmlspecialchars(BTMain::getVar('FrmconName')),htmlspecialchars(BTMain::getVar('FrmSurname')),htmlspecialchars(BTMain::getVar('FrmEmail')))){
 
 
 $notifications->setNotification("EditCustSuccess");

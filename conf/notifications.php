@@ -41,7 +41,7 @@ $notifs->addCredTypeFail->className = "alert alert-error";
 $notifs->addCredTypeFail->text = 'Credential Type Not Stored';
 
 $notifs->NoCredTypes->className = 'alert alert-info';
-$notifs->NoCredTypes->text = "You need to specify some Credential Types in System Settings before you can add Credentials</div><script type='text/javascript'>noCredTypes();</script>";
+$notifs->NoCredTypes->text = "You need to specify some Credential Types in System Settings before you can add Credentials<script type='text/javascript'>noCredTypes();</script>";
 $notifs->NoCredTypes->id = 'CredTypeNeedsAdding';
 
 $notifs->UserStoreSuccess->className = 'alert alert-success';

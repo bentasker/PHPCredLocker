@@ -8,7 +8,7 @@
 */
 defined('_CREDLOCK') or die;
 
-if(!ob_start("ob_gzhandler")) ob_start();
+ob_start();
 
 require_once 'lib/lang.php';
 require_once 'lib/auth.class.php';
@@ -81,16 +81,17 @@ case 'retCred':
     $key = 'Cre'.$cred->CredType;
 
     // Build the response
-    $pass = $crypt->decrypt($cred->Hash,$key);
-    $address = $crypt->decrypt($cred->Address,$key);
+    $pass = htmlspecialchars($crypt->decrypt($cred->Hash,$key));
+    $address = htmlspecialchars($crypt->decrypt($cred->Address,$key));
+    $uname = htmlspecialchars($crypt->decrypt($cred->UName,$key));
 
       if ($cred->Clicky){
 	  $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
       }
 
 
-    echo htmlspecialchars($pass).$opDivider."<a href='$address' target=_blank>".htmlspecialchars($address)."</a>" .$opDivider. 
-	 htmlspecialchars($crypt->decrypt($cred->UName,$key)) . $opDivider;
+    echo $pass.$opDivider."<a href='$address' target=_blank>".$address."</a>" .$opDivider. 
+	 $uname . $opDivider;
 
 
     // Call any configured plugins

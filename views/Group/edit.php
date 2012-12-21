@@ -20,7 +20,7 @@ $notifications->setPageTitle("Edit ".Lang::_('UserGroup'));
 if (BTMain::getVar('GrpEditSubmitted')){
 
 
-if ($auth->editGroup(BTMain::getVar('id'),BTMain::getVar('frmName'))){
+if ($auth->editGroup(BTMain::getVar('id'),htmlspecialchars(BTMain::getVar('frmName')))){
 $notifications->setNotification("addGroupSuccess");
 
 }else{

@@ -121,7 +121,7 @@ foreach ($credtypes as $cred){
 <?php if ($credtype == $cred->id):?>
 selected
 <?php endif; ?>
-><?php echo $crypt->decrypt($cred->Name,'CredType');?></option>
+><?php echo htmlspecialchars($crypt->decrypt($cred->Name,'CredType'));?></option>
 <?php
 
 }

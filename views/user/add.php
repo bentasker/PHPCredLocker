@@ -48,7 +48,7 @@ $groups[] = "-1";
 
 $authname = new ProgAuth;
 
-if ($authname->createUser($username,$pass,$RName, $groups)){
+if ($authname->createUser(htmlspecialchars($username),$pass,htmlspecialchars($RName), $groups)){
 
 
 

@@ -16,7 +16,7 @@ if (BTMain::getVar('AddCustSubmitted')){
 
 $db = new CustDB;
 
-if ($db->addCustomer(BTMain::getVar('FrmName'),BTMain::getVar('frmGroup'),BTMain::getVar('FrmconName'),BTMain::getVar('FrmSurname'),BTMain::getVar('FrmEmail'))){
+if ($db->addCustomer(htmlspecialchars(BTMain::getVar('FrmName')),BTMain::getVar('frmGroup'),htmlspecialchars(BTMain::getVar('FrmconName')),htmlspecialchars(BTMain::getVar('FrmSurname')),htmlspecialchars(BTMain::getVar('FrmEmail')))){
 
 
 $notifications->setNotification("addCustSuccess");

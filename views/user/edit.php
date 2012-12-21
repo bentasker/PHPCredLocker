@@ -47,7 +47,7 @@ $groups = BTMain::getVar('frmGroup');
 
 $authname = new ProgAuth;
 
-    if ($authname->editUser($username,$pass,$RName, $groups)){
+    if ($authname->editUser(htmlspecialchars($username),$pass,htmlspecialchars($RName), $groups)){
     $notifications->setNotification('UserStoreSuccess');
     }else{
     $notifications->setNotification('UserStoreFail');

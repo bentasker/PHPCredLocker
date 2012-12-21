@@ -41,7 +41,7 @@ $auth = new ProgAuth;
     }
 
 
-	if ($auth->ProcessLogIn(BTMain::getVar('FrmUsername'),$pass)){
+	if ($auth->ProcessLogIn(htmlspecialchars(BTMain::getVar('FrmUsername')),$pass)){
 	    // Login successful
 	    header('Location: index.php?notif=LoginSuccess');
 	  }else{
