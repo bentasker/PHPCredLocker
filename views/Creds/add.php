@@ -110,6 +110,7 @@ echo implode("\n",$custdets);
 <label for="frmUser"><?php echo Lang::_("User");?></label><input type="text" name="frmUser" id="frmUser">
 
 <label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential"></textarea>
+<a href="javascript: genPwd('frmCredential',10);">Generate Password</a>
 
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 

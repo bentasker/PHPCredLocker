@@ -198,6 +198,12 @@ function enabledEncryption(){
 return <?php echo $enabled;?>;
 }
 
+
+
+
+
+
+
 new getTerminology();
 <?php
 

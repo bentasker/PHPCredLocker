@@ -15,6 +15,26 @@ Copyright (c) 2012 Ben Tasker
 var counter=false, cancel='', dispcred, interval;
 
 
+
+function genPwd(a,l){
+var i,
+    p='',
+    key="(=?)+.,abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    
+    for (i=0; i<l; i++){
+     p+=key.charAt(Math.floor(Math.random()*key.length)); 
+    }
+
+
+if (a =='r'){ return p; }
+document.getElementById(a).value = p;
+
+
+}
+
+
+
 function resizebkgrnd(){
   
 var width = document.documentElement.clientHeight, height = width, img;
