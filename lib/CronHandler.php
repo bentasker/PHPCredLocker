@@ -46,7 +46,7 @@ foreach ($dir as $fileinfo) {
     $fn = $fileinfo->getFilename();
 
    
-    if ($fn == "index.html"){ continue; }
+    if ($fn == "index.html" || $fn == ".htaccess"){ continue; }
 
     $fname = explode("-",$fn);
     
