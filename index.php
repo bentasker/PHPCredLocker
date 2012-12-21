@@ -8,6 +8,8 @@
 */
 session_start();
 ob_start();
+error_reporting(0);
+
 define('_CREDLOCK',1);
 
 // Prevent Caching

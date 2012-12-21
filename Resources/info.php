@@ -20,7 +20,11 @@
 * See LICENSE
 *
 */
-if(!ob_start("ob_gzhandler")) ob_start();
+
+
+// Using gzhandler broke on a few systems. A lot seem to automatically gzip where possible though, so removed gzhandler call
+ob_start();
+error_reporting(0);
 
 session_start();
 define('_CREDLOCK',1);

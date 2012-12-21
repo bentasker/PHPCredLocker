@@ -171,8 +171,13 @@ function loginReqProcess(){
 function checkNewCust(){
   
   var nme = document.getElementById('FrmName'),
-  grp = document.getElementById('frmGroup');
+  grp = document.getElementById('frmGroup'),
+  email = document.getElementById('FrmEmail');
       
+      if (email.value.indexOf('@') == -1){
+	email.className += ' frmEntryMissed';
+	return false;
+      }
       
       
       if (grp.options[grp.selectedIndex].value == 'null'){
@@ -185,6 +190,25 @@ function checkNewCust(){
 	nme.className += ' frmEntryMissed';
 	return false;
       }
+      
+      
+      if (enabledEncryption()){ 
+ 
+ var fname = document.getElementById('FrmconName'),
+  sname = document.getElementById('FrmSurname');
+ 
+  // Calculate the encrypted value
+ nme.value = Base64.encode(xorestr(nme.value,retKey()));
+ email.value = Base64.encode(xorestr(email.value,retKey()));
+ fname.value = Base64.encode(xorestr(fname.value,retKey()));
+ sname.value = Base64.encode(xorestr(sname.value,retKey()));
+}
+      
+      
+      
+      
+      
+      
   return true;
 }
 

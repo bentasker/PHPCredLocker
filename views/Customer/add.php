@@ -16,7 +16,25 @@ if (BTMain::getVar('AddCustSubmitted')){
 
 $db = new CustDB;
 
-if ($db->addCustomer(htmlspecialchars(BTMain::getVar('FrmName')),BTMain::getVar('frmGroup'),htmlspecialchars(BTMain::getVar('FrmconName')),htmlspecialchars(BTMain::getVar('FrmSurname')),htmlspecialchars(BTMain::getVar('FrmEmail')))){
+
+$frmname = BTMain::getVar('FrmName');
+$fname = BTMain::getVar('FrmconName');
+$sname = BTMain::getVar('FrmSurname');
+$email = BTMain::getVar('FrmEmail');
+
+
+
+
+	if (!BTMain::getConnTypeSSL()){
+	    $tlskey = BTMain::getsessVar('tls');
+	    $frmname = base64_decode($crypt->xordstring(base64_decode($frmname),$tlskey));
+	    $fname = base64_decode($crypt->xordstring(base64_decode($fname),$tlskey));
+	    $sname = base64_decode($crypt->xordstring(base64_decode($sname),$tlskey));
+	    $email = base64_decode($crypt->xordstring(base64_decode($email),$tlskey));
+	 }
+
+
+if ($db->addCustomer(htmlspecialchars($frmname),BTMain::getVar('frmGroup'),htmlspecialchars($fname),htmlspecialchars($sname),htmlspecialchars($email))){
 
 
 $notifications->setNotification("addCustSuccess");

@@ -8,7 +8,9 @@
 */
 
 session_start();
-ob_start("ob_gzhandler");
+error_reporting(0);
+
+ob_start();
 
 
 define('_CREDLOCK',1);
