@@ -164,11 +164,19 @@ if (!$settings){ return; }
 	$onsubmit = "onsubmit=\"return confirm('This will take you to another site, are you sure you wish to continue?');\"";
 	}
 
+    $add = $address; 
+
+    if (!empty($settings->frmAutoAuthURL)){ $add = rtrim($add,"/") . $settings->frmAutoAuthURL;}
     ob_start();
 	// We load the page using img src so that the browser has any cookies that it might need
-	?>	
-	    <img src="<?php echo $address;?>" style="width: 1px; height: 1px; border: 0px">
-	    <form target=_blank action="<?php echo $address; if (!empty($settings->frmAutoAuthURL)){ echo $settings->frmAutoAuthURL;} ?>" method="POST" <?php echo $onsubmit;?>>
+
+	      if ($settings->cookie == 1):?>
+		  <img src="<?php echo $address;?>" style="width: 1px; height: 1px; border: 0px">
+	     <?php endif; ?>
+
+
+
+	    <form target=_blank action="<?php echo $add ?>" method="POST" <?php echo $onsubmit;?>>
 	    <input type="hidden" name="<?php echo $settings->user; ?>" value="<?php echo $user; ?>"><input type="hidden" name="<?php echo $settings->pass; ?>" value="<?php echo $pass; ?>">
 	    <input type="submit" class="btn btn-primary" value="Log-In">
 
@@ -197,7 +205,7 @@ if (!$settings){ return; }
     unset($user);
     unset($pass);
 
-    return ob_get_clean();
+    return str_replace("\n","",str_replace("\t","",ob_get_clean()));
 
     }
 
@@ -376,7 +384,7 @@ function store_addsettings($id){
       $conf->$key = $value;
 
       }
-      
+      if (!isset($conf->cookie)){ $conf->cookie = 0; }
       
       $settings = json_encode($conf);
 
@@ -439,12 +447,17 @@ $pass = 'pass';
 $url = '';
 $checked = '';
 $additional = '';
+$reqcookie = '';
+
 
     if (is_object($settings)){
 	$user = $settings->user;
 	$pass = $settings->pass;
 	$url = $settings->frmAutoAuthURL;
 	$additional = $settings->additional;
+	
+	if ($settings->cookie == 1){ $reqcookie = ' checked';}
+
 	  if ($settings->Enabled == 1){
 	  $checked = ' checked';
 	  }
@@ -461,11 +474,24 @@ ob_start();
 
 <div id="AAuthSettings" style="display: none;">
 
+<label for="frmAutoAuthPreConf">Use Preconfigured Settings</label><select onchange="AAuthPrePopSettings(this.value)" id="frmAutoAuthPreConf" name="preConfSettings">
+<option value="0">Use Settings Below</option>
+<option value="1">CPanel/WHM</option>
+<option value="2">WebMin</option>
+<option value="3">WordPress</option>
+<option value="4">Drupal</option>
+</select>
+
+
 <label for="frmAutoAuthURL">Additional address path</label><input type="text" title="Additional URL params to add, for example for CPanel you need /login/" id="frmAutoAuthURL"  value="<?php echo $url; ?>"name="settings[frmAutoAuthURL]">
 
 <label for="frmAutoAuthUser">User Field</label><input type="text" title="The field name to submit usernames as" id="frmAutoAuthUser" name="settings[user]" value="<?php echo $user; ?>">
 
 <label for="frmAutoAuthPass">Password Field</label><input type="text" title="The field name to submit usernames as" id="frmAutoAuthPass" name="settings[pass]" value="<?php echo $pass;?>">
+
+
+<label for="frmAutoAuthCookie">Requires a Cookie</label><input type="checkbox" name="settings[cookie]" id="frmAutoAuthCookie" title="Check this if the site type requires a cookie to be set to process logins" value="1" <?php echo $reqcookie; ?>>
+
 
 <label for="frmAutoAuthAdditional">Additional Fields</label><textarea id="frmAutoAuthAdditional" title="Additional field names and values, comma seperated in the format key=value" name="settings[additional]"><?php echo $additional;?></textarea>
 
@@ -474,6 +500,68 @@ ob_start();
 </div>
 
 <script type="text/javascript">
+
+
+function AAuthPrePopSettings(v){
+if (v==0){return;}
+
+var addpath = document.getElementById('frmAutoAuthURL'),
+user = document.getElementById('frmAutoAuthUser'),
+pass = document.getElementById('frmAutoAuthPass'),
+addfld = document.getElementById('frmAutoAuthAdditional'),
+cookie = document.getElementById('frmAutoAuthCookie');
+
+
+
+  switch(v){
+
+  case '1':
+  // Populate the CPanel/WHM settings
+  addpath.value = '/login/';
+  user.value = 'user';
+  pass.value = 'pass';
+  addfld.value = '';
+  cookie.checked = false;
+  break;
+
+  case '2':
+  // Populate the Webmin settings
+  addpath.value = '/session_login.cgi';
+  user.value = 'user';
+  pass.value = 'pass';
+  addfld.value = 'page=/,';
+  cookie.checked = true;
+  break;
+
+
+  case '3':
+  // WordPress Values 
+  //requires a cookie
+  addpath.value = '/wp-login.php';
+  user.value = 'log';
+  pass.value = 'pwd';
+  addfld.value = '';
+  cookie.checked = true;
+  break;
+
+
+  case '4':
+  // Populate the Drupal values
+  addpath.value = '/?q=user';
+  user.value = 'name';
+  pass.value = 'pass';
+  addfld.value = 'form_id=user_login';
+  cookie.checked = false;
+  break;
+
+
+
+  }
+
+
+
+}
+
 function AAuthboxChange(checked){
 if (checked){
 
