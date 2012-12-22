@@ -140,7 +140,7 @@ $conf = BTMain::getConf();
       <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
-
+      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
 
     <?php foreach ($page->css as $css):?>
 	    <link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
