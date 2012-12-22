@@ -52,8 +52,15 @@ $notifications->setBreadcrumb($path);
 
 
 <h1>Credentials for <?php echo $customer; ?></h1>
-<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred&cust=<?php echo BTMain::getVar('id'); ?>';" class='btn btn-primary'>Add Credential</button>
-<br /><Br />
+
+
+<div class='viewButtons'>
+
+<button id='EditCustBtnTop' onclick="window.location.href='index.php?option=EditCustomer&id=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Edit <?php echo Lang::_('Customer');?></button>
+<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred&cust=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Add Credential</button>
+
+</div>
+
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
 <table class='credTbl table table-hover' id='CredsTbl'>
 <tr><th>Credential Type</th><th></th><th>Address</th><th>Username</th><th>Password</th><th></th><th></th><th></th></tr>
@@ -67,7 +74,7 @@ ob_start();
 $cname = $crypt->decrypt($customer->CredName,'CredType');
 ?>
 
-<tr id='CredDisp<?php echo $customer->id;?>'>
+<tr class="CredDisp" id='CredDisp<?php echo $customer->id;?>'>
   <td>
     <?php echo $cname;?>
   </td>
@@ -117,4 +124,11 @@ echo implode("\n",$custs);
 
 </table>
 <br />
-<button id='AddCredBtnBottom' onclick="window.location.href='index.php?option=addCred&cust=<?php echo BTMain::getVar('id'); ?>';" class='btn btn-primary'>Add Credential</button>
+
+
+<div class='viewButtons'>
+
+<button id='EditCustBtnBottom' onclick="window.location.href='index.php?option=EditCustomer&id=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Edit <?php echo Lang::_('Customer');?></button>
+<button id='AddCredBtnBottom' onclick="window.location.href='index.php?option=addCred&cust=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Add Credential</button>
+
+</div>

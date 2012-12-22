@@ -3,9 +3,9 @@
 
 
 .viewAll a {font-weight: bold; font-size: 1.2em;}
+.viewButtons {text-align: center; padding-bottom: 20px; padding-top: 20px;}
 
-
-
+.CredDisp td {vertical-align: middle;}
 .content {width: 80%; margin: auto; margin-bottom: 20px; margin-top: 20px;}
 
 .testPass {color: green;}

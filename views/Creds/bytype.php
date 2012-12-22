@@ -58,10 +58,18 @@ ksort($creds);
 
 
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>" disabled="true">
-<br />
-<button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add <?php echo Lang::_("Credential");?></button>
-<br />
 
+<div class='viewButtons'>
+
+
+    <?php if (BTMain::checkisSuperAdmin()):?>
+    <button id='AddCredBtnTop' onclick="window.location.href='index.php?option=editCredType&id=<?php echo htmlspecialchars(BTMain::getVar('id'));?>';" class='btn btn-primary'>Edit <?php echo Lang::_("Credential Type");?></button>
+
+    <?php endif; ?>
+
+    <button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred';" class='btn btn-primary'>Add <?php echo Lang::_("Credential");?></button>
+
+<div class='viewButtons'>
 
 <table class="table table-hover" id="CredsByTypetbl">
 <tr><th><?php echo Lang::_("Customer");?></th><th></th><th><?php echo Lang::_("Address");?></th>

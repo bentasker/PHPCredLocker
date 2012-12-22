@@ -176,7 +176,7 @@ if (!$settings){ return; }
 
 
 
-	    <form target=_blank action="<?php echo $add ?>" method="POST" <?php echo $onsubmit;?>>
+	    <form style="margin: 0px;" target=_blank action="<?php echo $add ?>" method="POST" <?php echo $onsubmit;?>>
 	    <input type="hidden" name="<?php echo $settings->user; ?>" value="<?php echo $user; ?>"><input type="hidden" name="<?php echo $settings->pass; ?>" value="<?php echo $pass; ?>">
 	    <input type="submit" class="btn btn-primary" value="Log-In">
 
