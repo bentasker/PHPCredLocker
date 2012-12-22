@@ -250,7 +250,7 @@ $id = $this->insertID();
     if ($id){
       $log = new Logging;
       $log->logEntry($id,7);
-      return true;
+      return $id;
       }else{
       return false;
       }

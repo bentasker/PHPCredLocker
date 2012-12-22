@@ -13,6 +13,7 @@ defined('_CREDLOCK') or die;
 $creds = new CredDB;
 global $notifications;
 $notifications->setPageTitle("Add ". Lang::_('Credential'));
+$plg = new Plugins;
 
 if (BTMain::getVar('addCredSubmitted')){
 
@@ -29,11 +30,19 @@ if (BTMain::getVar('addCredSubmitted')){
 	 }
 
 
-
+  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user);
   // Add the cred to the db
-  if ($creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user)){
+  if ($newcred){
   // Success
   $notifications->setNotification("addCredSuccess");
+
+     $data->cred->id = $newcred;
+     $data->action = 'edit';
+
+    
+    echo $plg->loadPlugins("Creds",$data)->plgOutput;
+
+
   }else{
   $notifications->setNotification("addCredFail");
   }
@@ -117,6 +126,19 @@ echo implode("\n",$custdets);
 
 
 <?php include 'lib/includes/groupSelection.php'; ?>
+
+
+<?php
+
+    // Call any configured plugins
+         
+     $data->action = 'editfrmnew';
+
+    
+    echo $plg->loadPlugins("Creds",$data)->plgOutput;
+
+
+?>
 
 <input type="submit" class="btn btn-primary" value="Add <?php echo Lang::_("Credential");?>">
 </form>

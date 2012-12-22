@@ -47,6 +47,7 @@ getting them wrong will result in a failed login.<br />
 <li><b><i>Additional address path: </b></i> Specifies any additional URL params that need to be specified to enable login</li>
 <li><b><i>User Field:</b></i> The field name used by the login form of the linked system</li>
 <li><b><i>Password Field:</b></i> The field name use by the login form of the linked system</li>
+<li><b><i>Requires Cookies:</b></i> Some systems require a specific cookie to exist. If this is checked, the target page will be loaded as part of the form (the user won't see it) to ensure all relevant cookies are set. </li>
 <li><b><i>Additional Fields:</b></i> Some systems require additional hidden fields to be submitted. This field allows you to specify names and values in CSV format using key=value (i.e. <i>page=home,action=login</i>)
 </ul>
 <br />
@@ -63,6 +64,8 @@ getting them wrong will result in a failed login.<br />
 <tr class='confVal'><th>User Field</th><td>user</td><td>user</td><td>log</td></tr>
 
 <tr class='confVal'><th>Password Field</th><td>pass</td><td>pass</td><td>pwd</td></tr>
+
+<tr class='confVal'><th>Requires Cookie</th><td>No</td><td>Yes</td><td>Yes</td></tr>
 
 <tr class='confVal'><th>Additional Fields</th><td>none</td><td>page=/,</td><td></td></tr>
 </table>
