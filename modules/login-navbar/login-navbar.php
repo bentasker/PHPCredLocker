@@ -15,7 +15,7 @@ defined('_CREDLOCK') or die;
 
     <?php if (!empty(BTMain::getUser()->name)): ?>
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
-    <?php echo BTMain::getUser()->name; ?>
+    <span class="hidden-phone"><?php echo BTMain::getUser()->name; ?></span>
 
     </a>
 
