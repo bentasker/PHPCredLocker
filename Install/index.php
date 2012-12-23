@@ -879,8 +879,8 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 <head>
 <title>Install PHPCredLocker</title>
 
-<link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="../Resources/bootstrap/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="../Resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/EstDeus.css" />
 <link rel="stylesheet" type="text/css" href="../Resources/jquery.tooltip.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -913,9 +913,10 @@ li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
 </div>
 <div id='FFContainer'>
 <div class='contentArea pgbackground' id='contentArea'>
-<div class="row hidden-phone">
-<div class="blankCol span2">&nbsp;</div>
-<div class='BreadCrumbs span4' id='BreadCrumbs'>
+<div class='content' id='ContentWrap'>
+
+
+<div class='BreadCrumbs' id='BreadCrumbs'>
 
   <ul class="breadcrumb">
 
@@ -934,12 +935,9 @@ li.stage<?php echo $_POST['stage'];?> {font-weight: bold;}
 
 </div>
 
-<div class="blankCol span2">&nbsp;</div>
 
-</div>
-<div class="row">
-<div class="blankCol span2"></div>
-<div class='content span8' id='ContentWrap'>
+
+<div class='content'>
 <?php
 
 
@@ -976,14 +974,12 @@ $fn();
 ?>
 </div>
 
-<div class="blankCol span2">&nbsp;</div>
-</div>
 
 </div>
 
 </div>
 
-
+</div>
 </div>
 <script type="text/javascript">
 $('#ContentWrap *').tooltip({track: true, fade: 250});
