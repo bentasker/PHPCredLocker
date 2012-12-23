@@ -23,9 +23,10 @@ $notifications->setPageTitle("System Information");
 ?>
 <h2>PHPCredLocker Version <?php echo BTMain::getSoftVersion(); ?></h2>
 
-<i>PHPCredLocker is Copyright &copy; <a href="http://www.bentasker.co.uk" target=_blank>Ben Tasker</a> and released under 
-the <A href="http://www.gnu.org/licenses/gpl-2.0.html" target=_blank>GNU GPL V2</a></i>
+<i><a href="http://www.bentasker.co.uk/documentation/70-phpcredlocker/163-phpcredlocker" target=_blank>PHPCredLocker</a> is Copyright &copy; <a href="http://www.bentasker.co.uk" target=_blank>Ben Tasker</a> and released under 
+the <A href="http://www.gnu.org/licenses/gpl-2.0.html" target=_blank>GNU GPL V2</a>
 
+<p>PHPCredLocker is a PHP based Credential Locker (AKA Password Vault) with a strong focus on security.</p>
 
 <br /><br />
 <h2>Cryptography</h2>
@@ -49,7 +50,14 @@ echo 'Fail">Not Available';
 }
 ?></td></tr>
 
+<tr><th>Connection Type</th><td class="test<?php if (BTMain::getConnTypeSSL()){
+echo 'Pass">SSL Enabled';
+}else{
+echo 'Fail">SSL Not Enabled'
+}
+?>
+</td></tr>
+
 </table>
 
 <br />
-<a href="http://www.bentasker.co.uk/documentation/70-phpcredlocker/163-phpcredlocker" target=_blank>Project homepage</a>
