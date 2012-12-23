@@ -54,7 +54,7 @@ $apiterms = array(
 
 
 // We only to do key generation if  we're not on a SSL connection
-if (!BTMain::getConnTypeSSL()):
+if (!BTMain::getConnTypeSSL() && !BTMain::getConf()->forceTLS):
 
 
 // If the key is still valid and we know the browser has already retrieved it, just tell the browser to use the cache

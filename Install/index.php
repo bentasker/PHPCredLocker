@@ -416,12 +416,17 @@ return;
 $str = "<?php\n/** System Configuration\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU GPL V2\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
 
 fwrite($fh,$str);
-foreach ($_POST as $key=>$value){
+  foreach ($_POST as $key=>$value){
 
-$str = "\$conf->$key = '$value';\n";
-fwrite($fh,$str);
+      if ($value == 'true' || $value == 'false'){
+	$val = $value;
+      }else{
+	$val = "'$value'";
+      }
 
-}
+    $str = "\$conf->$key = $val;\n";
+    fwrite($fh,$str);
+  }
 
 fwrite($fh,"\n\n?>");
 fclose($fh);
@@ -445,11 +450,6 @@ fclose($fh);
 }else{
 echo "<div class='alert alert-error'>Could not Obfuscate Plugin path, you will need to do this manually</div>";
 }
-
-
-
-
-
 
 
 
@@ -599,6 +599,7 @@ function credlocker_install_stage_2(){
 <input type="hidden" name="stage" value="3">
 <input type="hidden" name="template" value="EstDeus">
 <input type="hidden" name="JSMinName" value=".min">
+<input type="hidden" name="forceSSL" value="false">
 
 <table>
 <tr>
