@@ -87,9 +87,7 @@ $notifications->RequireCSS('Entropy');
 <script type="text/javascript">
 var count=15;
 document.getElementById('ClickDiv').onclick=function(e){ var c = whereAt(e), b=document.getElementById('EntropylastClick');if (c == b.value){ return; } b.value=c; document.getElementById('content').value += c; count=count-1; document.getElementById('countsremaining').value = count; if(count == 0){document.getElementById('ClickDiv').className = 'EntropyDiv EntropyGenerated';}};
-
 $('#EntropyGeneration *').tooltip({track: true, fade: 250});
-
 </script>
 
 <?php
