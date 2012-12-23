@@ -511,6 +511,7 @@ $sqls = array(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` blob,
   `Parent` int(11) NOT NULL DEFAULT 0,
+  `OwnCrypt` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `idx_grp_parents` (`Parent`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;',
