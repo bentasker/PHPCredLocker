@@ -53,12 +53,12 @@ $apiterms = array(
 
 
 
-// We only to do key generation if  we're not on a SSL connection
-if (!BTMain::getConnTypeSSL() && !BTMain::getConf()->forceTLS):
+// We only to do key generation if  we're not on a SSL connection or if the system is configured to force use
+if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 
 
 // If the key is still valid and we know the browser has already retrieved it, just tell the browser to use the cache
-if  ((time() < $expiry) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
+if  ((BTMain::getVar('forceload') != 'y') && (time() < $expiry) && ($_COOKIE['PHPCredLockerKeySet'] == 1) && ($expiry) && (!empty($tls))){
 header("HTTP/1.1 304 Not Modified");
 die;
 }
@@ -137,7 +137,7 @@ if (isset($_COOKIE['PHPCredLocker'])):
 
 
 
-else:
+}else{
 // We don't need to generate keys as we're on a SSL connection
 
      foreach ($apiterms as $value){
@@ -160,8 +160,7 @@ else:
     header("Pragma: cache");
     header("Cache-Control: Private, max-age=$seconds_to_cache");
 
-
-endif;
+}
 
 
 

@@ -317,6 +317,48 @@ $plugins = $plug->listloadedPlugins();
       endif;
 
 
+    if (isset($plugins->CredTypes)):
+  foreach($plugins->CredTypes as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (<?php echo Lang::_('Credential Type');?> Plugin)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=CredTypes</td>
+  </tr>
+
+	<?php
+	  }
+
+
+      endif;
+
+
+
+ if (isset($plugins->Resources)):
+  foreach($plugins->Resources as $plugin=>$status){
+	  ?>
+
+  <tr>
+    <td><?php echo $plugin; ?> (Resources Plugin)</td>
+    <td>Plugin:</td>
+    <td><?php echo $plugin; ?></td>
+    <td></td>
+    <td>plg</td>
+    <td>plgInfo</td>
+    <td>type=Res</td>
+  </tr>
+
+	<?php
+	  }
+
+
+      endif;
+
   endif;?>
 
 

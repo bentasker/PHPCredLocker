@@ -511,7 +511,7 @@ xmlhttp.onreadystatechange=function()
   {
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+    resp = xmlhttp.responseText.split(getDivider());
     // Check for an invalid verb response
     if (resp[1] == 2){
      return unknownAPICommand(); 
@@ -519,7 +519,8 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     
     if (resp[1] == 0){
      // Session Invalid
-     
+    removeCurrKey(0);
+    
     cookies = document.cookie.split(";");
    
     for (var i = 0; i < cookies.length; i++){
@@ -772,8 +773,19 @@ if(keynum === 40) { // down
 		   }
 		   
 		    if (table.rows[r].cells[6]){
+		     
+		      
+		     add = table.rows[r].cells[6].innerHTML.split("=");
+		      
+		     res.setAttribute('entid2',add[0]);
+		     res.setAttribute('entid2val',add[1]);
 		      
 		     add = "&"+ table.rows[r].cells[6].innerHTML;
+		     
+		     
+		     
+		     
+		     
 		    }else{
 		     add = ''; 
 		    }
@@ -839,6 +851,8 @@ function selectResult(dir){
   document.getElementById('SrchOpt').value = SearchResult.getAttribute('link');
   document.getElementById('SrchID').name = SearchResult.getAttribute('frmName');
   document.getElementById('SrchID').value = SearchResult.getAttribute('entID');
+  document.getElementById('SrchID2').name = SearchResult.getAttribute('entid2');
+  document.getElementById('SrchID2').value = SearchResult.getAttribute('entid2val');
   document.getElementById('SearchBox').focus();
  
 }
@@ -959,16 +973,7 @@ return enc;
 function unknownAPICommand(){
  // The API reports that the verb used wasn't recognised. We need to refresh the key file  
   
-  var sess,sessid,parent,frm,notify;
-  
- 
-  
-  
-  
-  sess = document.getElementById("kFile");
-  sessid = sess.getAttribute('src');
-  parent = sess.parentNode;
-  notify = document.getElementById('NotificationArea')
+  var notify = document.getElementById('NotificationArea');
   
  clearInterval(sesscheck);
  
@@ -985,25 +990,37 @@ function unknownAPICommand(){
   notify.innerHTML = "<div id='apiError' class='alert alert-info'>Attempting to rectify API issue. Window will refresh when ready</div>";
  
   destroyKeys();
+  removeCurrKey(1);
+  
+}
+
+
+
+function removeCurrKey(n){
+  
+  var frm,
+  sess = document.getElementById("kFile"),
+  sessid = sess.getAttribute('src'),
+  parent = sess.parentNode;
+  
   parent.removeChild(sess);
   
   // We need to delete the cookie, but can't do that from the current location
   frm = document.createElement('iframe');
   frm.setAttribute('id','kfile');
-  frm.setAttribute('src',sessid);
+  frm.setAttribute('src',sessid+'&forceload=y');
   frm.style.width = '0px';
   frm.style.height = '0px';
   frm.style.border = '0px';
   document.body.appendChild(frm);
   // Wait 500 milliseconds so we can be sure it's loaded
-  interval = setInterval("reloadKeyf('"+sessid+"')",500);
+  interval = setInterval("reloadKeyf('"+sessid+"',"+n+")",500);
   
- 
 }
 
 
 
-function reloadKeyf(sessid){
+function reloadKeyf(sessid,n){
   var frm, date, notify;
   
   clearInterval(interval);
@@ -1018,12 +1035,13 @@ function reloadKeyf(sessid){
   frm.setAttribute('id','kFile');
   
   // Append a string to ensure the browser doesn't use the cache.
-  frm.setAttribute('src',sessid+date.getTime());
+  frm.setAttribute('src',sessid+'&forceload=y'+'&rand='+date.getTime());
   
   document.getElementsByTagName("head")[0].appendChild(frm);
   
  
-  if (window.getKey != ''){
+  if (window.getKey != '' && n == 1){
+    
     notify = document.getElementById('apiError');
     notify.parentNode.removeChild(notify);
     
@@ -1102,7 +1120,7 @@ function checkKeyAvailable(){
   
  if(typeof getKey != 'function') {
    
-   if (confirm("Key retrieval failed - Attempting to rectify, Click OK to continue - Screen will refresh")){
+   if (confirm("Key retrieval failed - Attempting to rectify, Click OK to continue - Screen may refresh")){
    
    var i,
 	cookies = document.cookie.split(";");
@@ -1111,7 +1129,15 @@ function checkKeyAvailable(){
     KillCookie(cookies[i].split("=")[0]);
     }
    
-   window.location.href = location.reload();
+   removeCurrKey();
+   
+    if(typeof getKey == 'function') {
+      alert("Keys retrieved successfully");
+      return true;
+      
+    }
+   
+   window.location.reload(true);
   return false; 
   }
  }

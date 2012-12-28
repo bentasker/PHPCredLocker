@@ -38,14 +38,7 @@ $opDivider = "|..|";
    if (empty(BTMain::getUser()->name)){
     
     ob_end_flush();
-    $op = BTMain::getip().$opDivider."0".$opDivider."Access Denied".$opDivider;
-
-
-    if (!BTMain::getConnTypeSSL()){
-    $op = base64_encode($crypt->xorestring(base64_encode($op),$tlskey));
-    }
-
-    echo $op;
+    echo BTMain::getip().$opDivider."0".$opDivider."Access Denied".$opDivider;
     die;
     }
    
@@ -115,7 +108,9 @@ case 'retCred':
 
 
 case 'checkSess':
-    echo "OK";
+    ob_end_clean();
+    echo BTMain::getip().$opDivider."1".$opDivider."OK".$opDivider;
+    die;
     break;
 
 

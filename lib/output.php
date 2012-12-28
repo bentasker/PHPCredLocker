@@ -109,8 +109,9 @@ function Notifications(){
 
 global $notifications;
 $nots = $notifications->getNotifications();
+$str = array();
 
-  if ($notifications){
+  if ($nots){
   
       foreach ($nots as $not){
       $id='';
@@ -140,26 +141,47 @@ function headContents(){
 global $notifications;
 $page = $notifications->getPageInfo();
 $conf = BTMain::getConf();
+
+
+$plg = new Plugins;
+
+
+    $resourcespath = "Resources";
+
+
+// Call any configured plugins
+     $data->resourcespath = $resourcespath;
+     $data->action = 'loadresource';
+
+       
+    $plgoutput = $plg->loadPlugins("Resources",$data)->plgOutput;
+    
+    if (!empty($plgoutput)){
+    $resourcespath = $plgoutput;
+    }
+
+
+
 ?>
       <title><?php echo $conf->ProgName;?> - <?php echo htmlentities($page->title);?></title>
-      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="Resources/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="Resources/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
+      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
 
     <?php foreach ($page->css as $css):?>
-	    <link rel="stylesheet" type="text/css" href='Resources/<?php echo $css;?>.css'/>
+	    <link rel="stylesheet" type="text/css" href='<?php echo $resourcespath; ?>/<?php echo $css;?>.css'/>
     <?php endforeach;?>
 
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-      <script type="text/javascript" src="Resources/bootstrap/js/bootstrap<?php echo $conf->JSMinName;?>.js"></script>
-      <script type="text/javascript" src="Resources/jquery.tooltip.min.js"></script>
+      <script type="text/javascript" src="<?php echo $resourcespath; ?>/bootstrap/js/bootstrap<?php echo $conf->JSMinName;?>.js"></script>
+      <script type="text/javascript" src="<?php echo $resourcespath; ?>/jquery.tooltip.min.js"></script>
       <script id='kFile' src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
-      <script src="Resources/main<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
-      <script src="Resources/base64<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+      <script src="<?php echo $resourcespath; ?>/main<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+      <script src="<?php echo $resourcespath; ?>/base64<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
 
     <?php foreach ($page->reqscripts as $script):?>
-      <script src="Resources/<?php echo $script;?><?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+      <script src="<?php echo $resourcespath; ?>/<?php echo $script;?><?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
     <?php endforeach;  if (!empty($page->custJS[0])):?>
 
       <script type="text/javascript">

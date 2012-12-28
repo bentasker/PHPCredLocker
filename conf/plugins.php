@@ -17,5 +17,6 @@ $plugins->Customers = array();
 $plugins->Creds = array('AutoAuth');
 $plugins->CredTypes = array('AutoAuth');
 $plugins->Cron = array();
+$plugins->Resources = array('ExternalResources');
 
 
