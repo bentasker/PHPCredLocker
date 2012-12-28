@@ -7,6 +7,15 @@
 *
 */
 
+$notifs->HomePageTextNotLoggedIn->className = 'HomePgText';
+$notifs->HomePageTextNotLoggedIn->text = 'You must log in to use this system';
+
+
+$notifs->HomePageTextLoggedIn->className = 'HomePgText';
+$notifs->HomePageTextLoggedIn->text = 'Welcome to PHPCredLocker, please use the menus to proceed';
+
+
+
 $notifs->addCustSuccess->className = 'alert alert-success';
 $notifs->addCustSuccess->text = 'Customer added successfully';
 

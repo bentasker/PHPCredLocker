@@ -15,7 +15,7 @@ defined('_CREDLOCK') or die;
 
     <?php if (!empty(BTMain::getUser()->name)): ?>
 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
-    <span class="hidden-phone"><?php echo BTMain::getUser()->name; ?></span>
+    <span class="UserMenuUserName"><?php echo BTMain::getUser()->name; ?></span>
 
     </a>
 
@@ -32,7 +32,7 @@ $frmToken = ProgAuth::generateFormToken();
 ?>
 
 
-      <form method='POST' class="navbar-form navbar-search pull-right" onsubmit="return loginReqProcess();">
+      <form method='POST' id='NavBarLoginForm' class="navbar-form navbar-search pull-right" onsubmit="return loginReqProcess();">
       <input type="hidden" disabled="disabled" value="<?php echo $tls;?>" id="tls">
       <input type="hidden" name="option" value="LogIn">
       <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">

@@ -13,26 +13,31 @@ defined('_CREDLOCK') or die;
 
 class genOutput{
 
-/** Will be overhauled at some point, will most likely move the actual page content into the template
+/** Ouputs the default content for the homepage. Content can be controlled in the notifications config file
 *
 */
 function genDefaultPage(){
 global $notifications;
 $notifications->setPageTitle("Home");
 
-$str = "<span class='basic-content default-page'>";
-if (BTMain::getUser()->name){
-
-$str .= 'Welcome to the cred handling system. Please use the menus to proceed';
-
-}else{
-
-$str .= 'Please log-in to continue';
+  if (BTMain::getUser()->name){
+    $notname= 'HomePageTextLoggedIn';
+  }else{
+    $notname= 'HomePageTextNotLoggedIn';
+  }
 
 
-}
+$notif = $notifications->getNotification($notname);
+$str = "<div class='{$notif->className}'";
 
-return $str . "</span>\n";
+
+  if (isset($notif->id)){
+      $str .= " id='{$notif->id}'";
+    }
+
+
+
+return $str . $notif->text . "</div>\n";
 
 }
 
@@ -254,6 +259,29 @@ return $page;
 function setPageTitle($title){
 $this->pagetitle = $title;
 }
+
+
+
+
+/** Return the content of a single named notification
+*
+* @arg notname - string - notification name
+*
+* @return object
+*
+*/
+function getNotification($notname){
+
+if (empty($notname)){ return false; }
+
+include 'conf/notifications.php';
+
+return $notifs->$notname;
+
+
+}
+
+
 
 
 

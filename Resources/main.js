@@ -97,7 +97,7 @@ function Credtimer(id)
   {
      clearInterval(counter);
      
-     field.innerHTML = 'Display Password';
+     field.innerHTML = 'Display<span class="DisPwdText"> Password</span>';
      document.getElementById('Address'+id).innerHTML = '';
      document.getElementById('UserName'+id).innerHTML = '';
      document.getElementById('Password'+id).innerHTML = '';

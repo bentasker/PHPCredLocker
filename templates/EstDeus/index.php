@@ -7,7 +7,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="templates/EstDeus/css/EstDeus.css" />
-
+<link rel="stylesheet" type="text/css" href="templates/EstDeus/css/mobile.css" />
 
 
 

@@ -63,7 +63,11 @@ $notifications->setBreadcrumb($path);
 
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
 <table class='credTbl table table-hover' id='CredsTbl'>
-<tr><th>Credential Type</th><th></th><th>Address</th><th>Username</th><th>Password</th><th></th><th></th><th></th></tr>
+<tr><th><span class='DisPwdText'>Credential </span>Type</th><th></th>
+<th><span class='DisPwdText'>Address</span><span class='DisPwdTextMob'>URL</span></th>
+<th>User<span class='DisPwdText'>name</span></th>
+<th><span class='DisPwdText'>Password</span><span class='DisPwdTextMob'>Pwd</span></th>
+<th></th><th></th><th></th></tr>
 
 <?php
 
@@ -83,7 +87,7 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
   <td class="passViewNotif" onclick="getCreds('<?php echo $customer->id;?>');">
   <input type="hidden" id="clickCount<?php echo $customer->id;?>" value="0" disabled="disabled">
     <input type="hidden" id="PassCount<?php echo $customer->id;?>" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
-    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display Password</span>
+    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display<span class='DisPwdText'> Password</span></span>
   </td>
 
   <td>
@@ -107,7 +111,7 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
   <i class="icon-remove"></i>
   </td>
 
-  <td id='CredPluginOutput<?php echo $customer->id;?>'>
+  <td id='CredPluginOutput<?php echo $customer->id;?>' class="CredPluginOutput">
 
   </td>
 

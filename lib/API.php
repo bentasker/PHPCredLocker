@@ -17,7 +17,7 @@ require_once 'lib/plugins.php';
 require_once 'lib/crypto.php';
 
 $plg = new Plugins;
-
+$crypt = new Crypto;
 
 /**
  Implemented so that we can treat the divider as a key and reduce the likelihood/effectiveness 
@@ -38,7 +38,14 @@ $opDivider = "|..|";
    if (empty(BTMain::getUser()->name)){
     
     ob_end_flush();
-    echo BTMain::getip().$opDivider."0".$opDivider."Access Denied".$opDivider;
+    $op = BTMain::getip().$opDivider."0".$opDivider."Access Denied".$opDivider;
+
+
+    if (!BTMain::getConnTypeSSL()){
+    $op = base64_encode($crypt->xorestring(base64_encode($op),$tlskey));
+    }
+
+    echo $op;
     die;
     }
    
@@ -50,7 +57,7 @@ echo "1".$opDivider;
 
 $option = BTMain::getVar('option');
 
-$crypt = new Crypto;
+
 
 
 	if (!BTMain::getConnTypeSSL()){

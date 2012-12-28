@@ -14,9 +14,9 @@ global $notifications;
 
 ?>
 <div class="span12" style="width: 100%;">
-<a class="brand hidden-phone" href="index.php"><?php echo BTMain::getConf()->ProgName;?></a>
+<a class="brand" href="index.php"><?php echo BTMain::getConf()->ProgName;?></a>
 <ul class="nav">
-<li class="divider-vertical hidden-phone"></li>
+<li id="menuDivi1" class="divider-vertical"></li>
 
 <?php
 if (BTMain::getUser()->name):
@@ -37,9 +37,9 @@ $this->loadModule('search-table');
   <!-- Customer menu ends -->
 
   <!-- CredType menu -->
-<li class="divider-vertical hidden-phone"></li>
+<li id="menuDivi2" class="divider-vertical"></li>
 
-<li class="nav dropdown hidden-phone">
+<li id="navbyCredType" class="nav dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Lang::_("Credential Type");?></a>
       <ul class="dropdown-menu" role="menu" id='TypeDropDownMenu' aria-Labelled-by='dLabel'>
       
