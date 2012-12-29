@@ -99,27 +99,37 @@ function subResources($resr){
 
 
 
-  foreach ($res as $r => $v){
+  foreach ($res->css as $r => $v){
 
   if ($r == "resourcespath"){ continue; }
 
     $u='';
-   if (isset($v->url) && (!empty($this->$r->url))){ $v->url = $this->$r->url; }
-   if (isset($v->path) && (!empty($this->$r->path))){ $v->$path .= $this->$r->path; }
+   if (!empty($this->css->$r->url)){ $v->url = $this->css->$r->url; }
+   if (!empty($this->css->$r->path)){ $v->$path .= $this->css->$r->path; }
+   if (!empty($this->css->$r->fname)){ $v->fname = $this->css->$r->fname;}
+   if (isset($this->css->$r->disable)){ $v->disable = $this->css->$r->disable;}
 
-
-    $resr->resources->$r = $v;
-
-
-
-
+    $resr->resources->css->$r = $v;
 
   }
 
 
+  foreach ($res->js as $r => $v){
+
+  if ($r == "resourcespath"){ continue; }
+
+    $u='';
+   if (!empty($this->js->$r->url)){ $v->url = $this->js->$r->url; }
+   if (!empty($this->js->$r->path)){ $v->$path .= $this->js->$r->path; }
+   if (!empty($this->js->$r->fname)){ $v->fname = $this->js->$r->fname;}
+   if (isset($this->js->$r->disable)){ $v->disable = $this->js->$r->disable;}
+
+    $resr->resources->js->$r = $v;
+
+   }
+
+
 return $resr;
-
-
 
 }
 

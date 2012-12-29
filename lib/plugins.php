@@ -110,7 +110,17 @@ $fn = "PlgCall";
 
 if (class_exists($cls)){
 $plg = new $cls;
-$data->plgOutput .= $plg->$fn($data);
+
+$op = $plg->$fn($data);
+
+    if (is_object($op)){
+    $oop = $data->plgOutput;
+    $data = $op;
+    $data->plgOutput = $oop;
+    }else{
+    $data->plgOutput .= $op;
+    }
+
 }
 
 

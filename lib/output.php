@@ -132,6 +132,34 @@ return implode("\n",$str);
 }
 
 
+/** Defines (almost) every static resource to be included in the document head
+*
+* @return object
+*
+*/
+function includedresources(){
+$coreres->css->bootstrap->fname = 'bootstrap';
+$coreres->css->bootstrap->path = 'bootstrap/css/';
+$coreres->css->bootstrapresponsive->fname = 'bootstrap-responsive';
+$coreres->css->bootstrapresponsive->path = 'bootstrap/css/';
+$coreres->css->jquerytooltip->fname = 'jquery.tooltip';
+
+
+$coreres->js->jquery->fname = 'jquery';
+$coreres->js->jquery->forcemin = '.min';
+$coreres->js->bootstrap->fname = 'bootstrap';
+$coreres->js->bootstrap->path = 'bootstrap/js/';
+$coreres->js->jquerytooltip->fname = 'jquery.tooltip';
+$coreres->js->jquerytooltip->forcemin = '.min';
+$coreres->js->main->fname = 'main';
+$coreres->js->base64->fname = 'base64';
+
+$coreres->resourcespath = "Resources";
+
+return $coreres;
+}
+
+
 
 /** Push the required headers
 *
@@ -143,30 +171,15 @@ $page = $notifications->getPageInfo();
 $conf = BTMain::getConf();
 $plg = new Plugins;
 
-
-$coreres->css->jquerytooltip->fname = 'jquery.tooltip';
-$coreres->css->bootstrap->fname = 'bootstrap';
-$coreres->css->bootstrap->path = 'bootstrap/css/';
-$coreres->css->bootstrapresponsive->fname = 'bootstrap-responsive';
-$coreres->css->bootstrapresponsive->path = 'bootstrap/css/';
-
-$coreres->js->jquery->fname = 'jquery';
-$coreres->js->bootstrap->fname = 'bootstrap';
-$coreres->js->bootstrap->path = 'bootstrap/js/';
-$coreres->js->jquerytooltip->fname = 'jquery.tooltip';
-$coreres->js->main->fname = 'main';
-$coreres->js->base64->fname = 'base64';
-
-$coreres->resourcespath = "Resources";
-
+$coreres = $this->includedresources();
 
 // Call any configured plugins
      $data->resources = $coreres;
      $data->action = 'loadresource';
 
        
-    $coreres = $plg->loadPlugins("Resources",$data)->plgOutput;
-    
+    $coreres = $plg->loadPlugins("Resources",$data);
+
 
 
 // I'm knackered, quitting while I'm ahead. Will improve/finish later
@@ -177,29 +190,72 @@ $resourcespath = $coreres->resourcespath;
       <title><?php echo $conf->ProgName;?> - <?php echo htmlentities($page->title);?></title>
 
 
-      
+      <?php
+      foreach($coreres->resources->css as $css){
 
+	    if ($css->disable){ continue; }
 
+	if (!empty($css->url)){
+	  $path = $css->url;
+	}else{
+	  $path = $coreres->resources->resourcespath . "/";
+	      if (!empty($css->path)){
+	      $path .= $css->path;
+	      }
+	  $path .= $css->fname;
 
+	      if ($css->forcemin){
+		$path .= $css->forcemin;
+	      }else{
+		$path .= $conf->JSMinName;
+	      }
+	    $path .= '.css';
+	}
 
-      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
-      
+      ?>
+	  <link rel="stylesheet" type="text/css" href="<?php echo $path; ?>" />
+      <?php
+      }
+      ?>
 
     <?php foreach ($page->css as $css):?>
-	    <link rel="stylesheet" type="text/css" href='<?php echo $resourcespath; ?>/<?php echo $css;?>.css'/>
+	    <link rel="stylesheet" type="text/css" href='<?php echo $coreres->resources->resourcespath; ?>/<?php echo $css;?>.css'/>
     <?php endforeach;?>
 
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-      <script type="text/javascript" src="<?php echo $resourcespath; ?>/bootstrap/js/bootstrap<?php echo $conf->JSMinName;?>.js"></script>
-      <script type="text/javascript" src="<?php echo $resourcespath; ?>/jquery.tooltip.min.js"></script>
+
       <script id='kFile' src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
-      <script src="<?php echo $resourcespath; ?>/main<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
-      <script src="<?php echo $resourcespath; ?>/base64<?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+
+
+      <?php
+      foreach($coreres->resources->js as $js){
+	  if ($js->disable){ continue; }
+	
+	if (!empty($js->url)){
+	  $path = $js->url;
+	}else{
+	  $path = $coreres->resources->resourcespath . "/";
+	      if (!empty($js->path)){
+	      $path .= $js->path;
+	      }
+	  $path .= $js->fname;
+
+	      if ($js->forcemin){
+		$path .= $js->forcemin;
+	      }else{
+		$path .= $conf->JSMinName;
+	      }
+	      $path .= '.js';
+	}
+
+      ?>
+	  <script type="text/javascript" src="<?php echo $path; ?>" /></script>
+      <?php
+      }
+      ?>
+
 
     <?php foreach ($page->reqscripts as $script):?>
-      <script src="<?php echo $resourcespath; ?>/<?php echo $script;?><?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
+      <script src="<?php echo $coreres->resources->resourcespath; ?>/<?php echo $script;?><?php echo $conf->JSMinName;?>.js" type="text/javascript"></script>
     <?php endforeach;  if (!empty($page->custJS[0])):?>
 
       <script type="text/javascript">
@@ -210,8 +266,7 @@ $resourcespath = $coreres->resourcespath;
 
 <!-- Fire the default scripts when the browser reports document ready -->
     <script type="text/javascript">
-    var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); 
-    <?php if (BTMain::getUser()->name):?>sesscheck = setInterval("checkSession()",120000);<?php endif;?>});
+    var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); <?php if (BTMain::getUser()->name):?>sesscheck = setInterval("checkSession()",120000);<?php endif;?>});
     </script>
 
 <?php

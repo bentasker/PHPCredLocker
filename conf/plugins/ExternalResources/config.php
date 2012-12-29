@@ -15,5 +15,6 @@ $this->active = false;
 // URL to prefix resources with (don't include a trailing slash)
 $this->url = "";
 
-
+$this->css->jquerytooltip->disable = true;
+$this->js->jquery->url = 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
 ?> 
