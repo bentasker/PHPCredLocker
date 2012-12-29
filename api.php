@@ -31,16 +31,4 @@ require_once 'lib/Framework/main.php';
 
 require_once 'lib/API.php';
 
-
-
-
-
-
-
-
-
-
-
-
-
 ?>

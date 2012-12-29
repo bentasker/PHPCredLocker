@@ -23,3 +23,4 @@ require_once 'lib/Framework/main.php';
 
 // pass off to the handler
 include_once 'lib/CronHandler.php';
+?>

@@ -47,5 +47,4 @@ die;
 // pass off to the handler
 include_once 'lib/Handler.php';
 
-
 ?>
