@@ -141,33 +141,51 @@ function headContents(){
 global $notifications;
 $page = $notifications->getPageInfo();
 $conf = BTMain::getConf();
-
-
 $plg = new Plugins;
 
 
-    $resourcespath = "Resources";
+$coreres->css->jquerytooltip->fname = 'jquery.tooltip';
+$coreres->css->bootstrap->fname = 'bootstrap';
+$coreres->css->bootstrap->path = 'bootstrap/css/';
+$coreres->css->bootstrapresponsive->fname = 'bootstrap-responsive';
+$coreres->css->bootstrapresponsive->path = 'bootstrap/css/';
+
+$coreres->js->jquery->fname = 'jquery';
+$coreres->js->bootstrap->fname = 'bootstrap';
+$coreres->js->bootstrap->path = 'bootstrap/js/';
+$coreres->js->jquerytooltip->fname = 'jquery.tooltip';
+$coreres->js->main->fname = 'main';
+$coreres->js->base64->fname = 'base64';
+
+$coreres->resourcespath = "Resources";
 
 
 // Call any configured plugins
-     $data->resourcespath = $resourcespath;
+     $data->resources = $coreres;
      $data->action = 'loadresource';
 
        
-    $plgoutput = $plg->loadPlugins("Resources",$data)->plgOutput;
+    $coreres = $plg->loadPlugins("Resources",$data)->plgOutput;
     
-    if (!empty($plgoutput)){
-    $resourcespath = $plgoutput;
-    }
 
+
+// I'm knackered, quitting while I'm ahead. Will improve/finish later
+$resourcespath = $coreres->resourcespath;
 
 
 ?>
       <title><?php echo $conf->ProgName;?> - <?php echo htmlentities($page->title);?></title>
+
+
+      
+
+
+
+
       <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap<?php echo $conf->JSMinName;?>.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/bootstrap/css/bootstrap-responsive<?php echo $conf->JSMinName;?>.css" />
-      <link rel="stylesheet" type="text/css" href="<?php echo $resourcespath; ?>/jquery.tooltip<?php echo $conf->JSMinName;?>.css" />
+      
 
     <?php foreach ($page->css as $css):?>
 	    <link rel="stylesheet" type="text/css" href='<?php echo $resourcespath; ?>/<?php echo $css;?>.css'/>

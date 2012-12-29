@@ -67,9 +67,9 @@ if (!$this->active){ return; }
 
     case 'loadresource':
   
-    if ($this->url && (!empty($this->url))){
-    return $this->url;
-    }
+  
+    return $this->subResources($data);
+
     return false;
     break;
 
@@ -80,6 +80,50 @@ if (!$this->active){ return; }
 
 
 }
+
+
+/** Swap the configured paths for those passed to us
+*
+*/
+function subResources($resr){
+
+
+  $res = $resr->resources;
+
+  if ($this->url && (!empty($this->url))){
+
+  $resr->resources->resourcespath = $this->url;
+
+  }
+
+
+
+
+  foreach ($res as $r => $v){
+
+  if ($r == "resourcespath"){ continue; }
+
+    $u='';
+   if (isset($v->url) && (!empty($this->$r->url))){ $v->url = $this->$r->url; }
+   if (isset($v->path) && (!empty($this->$r->path))){ $v->$path .= $this->$r->path; }
+
+
+    $resr->resources->$r = $v;
+
+
+
+
+
+  }
+
+
+return $resr;
+
+
+
+}
+
+
 
 
 }
