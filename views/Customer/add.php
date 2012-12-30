@@ -16,7 +16,7 @@ if (BTMain::getVar('AddCustSubmitted')){
 
 $db = new CustDB;
 
-
+$crypt = new Crypto;
 $frmname = BTMain::getVar('FrmName');
 $fname = BTMain::getVar('FrmconName');
 $sname = BTMain::getVar('FrmSurname');
@@ -27,10 +27,10 @@ $email = BTMain::getVar('FrmEmail');
 
 	if (!BTMain::getConnTypeSSL()){
 	    $tlskey = BTMain::getsessVar('tls');
-	    $frmname = base64_decode($crypt->xordstring(base64_decode($frmname),$tlskey));
-	    $fname = base64_decode($crypt->xordstring(base64_decode($fname),$tlskey));
-	    $sname = base64_decode($crypt->xordstring(base64_decode($sname),$tlskey));
-	    $email = base64_decode($crypt->xordstring(base64_decode($email),$tlskey));
+	    $frmname = $crypt->xordstring(base64_decode($frmname),$tlskey);
+	    $fname = $crypt->xordstring(base64_decode($fname),$tlskey);
+	    $sname = $crypt->xordstring(base64_decode($sname),$tlskey);
+	    $email = $crypt->xordstring(base64_decode($email),$tlskey);
 	 }
 
 

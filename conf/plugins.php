@@ -14,8 +14,8 @@ defined('_CREDLOCK') or die;
 $plugins->Auth = array();
 $plugins->Logging = array('AffinityLive');
 $plugins->Customers = array();
-$plugins->Creds = array('AutoAuth');
-$plugins->CredTypes = array('AutoAuth');
+$plugins->Creds = array('');
+$plugins->CredTypes = array('');
 $plugins->Cron = array();
 $plugins->Resources = array('ExternalResources');
 
