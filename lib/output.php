@@ -37,7 +37,7 @@ $str = "<div class='{$notif->className}'";
 
 
 
-return $str . $notif->text . "</div>\n";
+return $str . ">" . $notif->text . "</div>\n";
 
 }
 

@@ -179,7 +179,7 @@ if (isset($plugins->Resources)){
 
     ?>
     <tr>
-	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td><td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Res">View ReadMe</a></td>
+	<td><?php echo $plugin; ?></td><td><?php echo Plugins::transStatus($status);?></td><td><a href="index.php?option=plgInfo&plg=<?php echo $plugin;?>&type=Resources">View ReadMe</a></td>
     </tr>
     <?php
     }

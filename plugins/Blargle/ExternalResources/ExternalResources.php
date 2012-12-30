@@ -12,7 +12,7 @@ defined('_CREDLOCK') or die;
 /**                            Resources PLUGIN STARTS                            **/
 
 
-
+ 
 /** Credentials Plugin class
 *
 */
@@ -29,7 +29,7 @@ require 'conf/plugins/ExternalResources/config.php';
 /** Return the plugin details
 *
 */
-function getDetails(){
+function getPlgDetails(){
 $details->Name = "plg_ExternalResources";
 $details->Description = "Allows the contents of the Resources directory (excluding info.php) to be moved to another server";
 $details->Author = 'B Tasker';

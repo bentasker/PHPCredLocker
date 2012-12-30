@@ -3,6 +3,7 @@
 <ul>
   <li><a href="#about">About ExternalResources</a></li>
   <li><a href="#plgConfig">Plugin Configuration</a>
+  <li><a href="#SupResources">Supported Resources</a>
 </ul>
 
 
@@ -22,7 +23,7 @@ The configuration file contains two key options<br />
   <li><b><i>active</i></b> - Is the plugin enabled?</li>
   <li><b><i>url</i></b> - The main resources path to use, this allows all files (except info.php) to be automatically redirected to another URL. Each file's path will be appended onto the end</li>
 </ul>
-
+<br />
 <h4>Additional configuration</h4>
 
 It's also possible to override on a per-resource basis:
@@ -39,5 +40,21 @@ Essentially, the url parameter overrides all other settings (except <i>disabled<
 <li><b>fname</b> - The filename to load (.js will be appended automatically)</li>
 <li><b>forcemin</b> - Force use of minimal code, takes one of three options - false, ".min","". The first disables the setting, the second forces the fname to be followed by .min and the final ensures that .min will never be added, regardless of the main system config</li>
 
+</ul>
 
+
+
+<h3><a name="SupResources">Supported Resources</a></h3>
+<p>Resources must be specified by internal name, the following are used in PHPCredLocker</p>
+<ul>
+	<li><em>css-&gt;bootstrap</em></li>
+	<li><em>css-&gt;bootstrapresponsive</em></li>
+	<li><em>css-&gt;jquerytooltip</em></li>
+	<li><em>js-&gt;jquery</em></li>
+	<li><em>js-&gt;bootstrap</em></li>
+	<li><em>js-&gt;jquerytooltip</em></li>
+	<li><em>js-&gt;main</em></li>
+	<li><em>js-&gt;base64</em></li>
+</ul>
+<p>Each can be overriden in the plugin config in the manner specified above</p>
 

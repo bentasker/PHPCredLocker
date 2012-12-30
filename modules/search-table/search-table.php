@@ -350,7 +350,7 @@ $plugins = $plug->listloadedPlugins();
     <td></td>
     <td>plg</td>
     <td>plgInfo</td>
-    <td>type=Res</td>
+    <td>type=Resources</td>
   </tr>
 
 	<?php
