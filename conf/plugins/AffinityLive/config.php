@@ -12,7 +12,7 @@ defined('_CREDLOCK') or die;
 $this->active = false;
 
 // Set this to true to stop the plugin sending data to AL (Debug output will be generated instead
-$this->testmode = true;
+$this->testmode = false;
 
 // URL to post logging data to
 $this->url = "https://yourdomain.affinitylive.com/forms/public/issue";
