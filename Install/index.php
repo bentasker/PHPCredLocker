@@ -885,9 +885,9 @@ echo "<div class='alert alert-success'>Created Cryptographic key for $text</div>
 <link rel="stylesheet" type="text/css" href="../Resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="../templates/EstDeus/css/EstDeus.css" />
 <link rel="stylesheet" type="text/css" href="../Resources/jquery.tooltip.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="../Resources/jquery.min.js"></script>
 <script type="text/javascript" src="../Resources/jquery.tooltip.min.js"></script>
-<script type="text/javascript" src="../templates/EstDeus/css/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="../Resources/bootstrap/js/bootstrap.js"></script>
 
 
 

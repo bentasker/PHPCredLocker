@@ -10,11 +10,15 @@ rights not  explicitly permitted by the license are reserved
 
 ------------------------------
 
-
-In BETA at the moment, shouldn't be too long until stable. Wouldn't recommend
-using in anger just yet as still have a few kinks to work out and backwards
-compatability isn't being worried about at this early stage!
-
 I'm not an interface designer, so the template is very rough around the edges.
 It's designed to support custom templates though so you can skin and brand as
-you see fit
+you see fit.
+
+Passwords are encrypted with either OpenSSL or MCrypt (depending what you have
+available). The system is intended for use over a https connection, though steps
+have been taken to help reduce the likelihood of credential compromise over a
+http connection. Still it's _STRONGLY_ recommended that connections be made over
+https to ensure that all credentials are protected in transit.
+
+You can view a demo at http://demo.bentasker.co.uk/PHPCredLocker/ including all
+developed plugins.
