@@ -58,14 +58,15 @@ function &xordstring($str,&$key){
 $keylength = strlen($key);
 $kpos = 0;
 $en = "";
-
+$k = explode(":",$key);
 $str = explode(" ",$str);
 
 foreach ($str as $string){
 	 if (strlen($string) == 0){ continue; }
         
 	// Convert the character in the key to a charcode and use bitwise XOR
-        $b = $string ^ ord($key[$kpos]);
+        $b = $string ^ ord($k[1][$kpos]);
+	$b = $b ^ ord($k[0][$kpos]);
 	
 	// Convert the result back to the appropriate character
         $en .= chr($b);
@@ -95,6 +96,7 @@ $keylength = strlen($key);
 $strlength = strlen($str);
 $kpos = 0;
 $en = "";
+$k = explode(":",$key);
 
 $i = 0;
 
@@ -104,8 +106,9 @@ $i = 0;
         $a = ord($str[$i]);
 
 	// Perform a bitwise XOR
-        $b = $a ^ ord($key[$kpos]) ;    
+        $b = ($a ^ ord($k[0][$kpos])) ^ ord($k[1][$kpos]);    
         
+    
 	// add to the string
 	$en .= $b." ";
 	
@@ -145,12 +148,16 @@ $excludes = array("58","59","60","61","62","63","64","91","92","93","94","95","9
 // Upped from 1024 because commit cae0ac5 increases the likelihood of key repetition
   while ($x <= 256){
 	$key = mt_rand(48,122);
+	$key2 = mt_rand(48,122);
+
 	if (in_array($key,$excludes)){ continue; }
+	if (in_array($key2,$excludes)){ continue; }
 	$str .= chr($key);
+	$str2 .= chr($key2);
 	$x++;
   }
 
-return $str;
+return $str.":".$str2;
 }
 
 

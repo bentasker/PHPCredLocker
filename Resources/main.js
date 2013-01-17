@@ -924,13 +924,14 @@ function xorestr(str,key){
     
 var a, b,
     enc='',
-    keypos = 0;
+    keypos = 0,
+    k = key.split(":");
 
   for (var i=0; i<str.length;i++) {
 
 
         a = str.charCodeAt(i);
-        b = a ^ key.charCodeAt(keypos) ;    
+        b = (a ^ k[0].charCodeAt(keypos)) ^ k[1].charCodeAt(keypos) ;    
         enc += b.toString()+" ";
 
 	keypos++;
@@ -953,13 +954,13 @@ function xordstr(str,key){
 var a, b,
     enc='',
     keypos = 0,
-    str = str.split(" ");
-
+    str = str.split(" "),
+    k = key.split(":");
   for (var i=0; i<str.length;i++) {
 
 	if (str[i].length == 0){ continue; }
         a = str[i];
-        b = a ^ key.charCodeAt(keypos) ;    
+        b = (a ^ k[1].charCodeAt(keypos)) ^ k[0].charCodeAt(keypos) ;    
         enc += String.fromCharCode(b);
 
 	keypos++;

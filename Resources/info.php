@@ -123,16 +123,18 @@ if (isset($_COOKIE['PHPCredLocker'])):
 
       $x = 0;
       $str = '';
+      $str2 = '';
+
       while ($x < 40){
 
       $str .= chr(rand(33,126)) .mt_rand(16,45);
-      
+      $str2 .= chr(rand(33,126)) .mt_rand(16,45);
       $x++;
 
       }
 
 
-      BTMain::setSessVar('AuthKey',rtrim(base64_encode($str),"="));
+      BTMain::setSessVar('AuthKey',rtrim(base64_encode($str),"=") . ":" . rtrim(base64_encode($str2),"="));
       $enabled = 'true';
 
 
