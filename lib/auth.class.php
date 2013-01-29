@@ -43,6 +43,30 @@ return md5($salt.date('y-m-dHis'));
 }
 
 
+/** Generate a random password of the specified length
+*
+* @arg length - INT
+*
+* @return string
+*
+*/
+function generatePassword($length = 8){
+
+ $key="(=?)+.,abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ $x = 0;
+ $p = '';
+
+  while ($x < $length){
+  $select = mt_rand(1,strlen($key)) - 1;
+  $p .= $key[$select];
+  $x++;
+  }
+
+return $p;
+  
+}
+
+
 /** Generate a unique value and add to the session
 *
 * Moved here to allow easy improvement on randomness at a later date

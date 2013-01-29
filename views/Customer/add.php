@@ -14,8 +14,8 @@ $notifications->setPageTitle("Add ".Lang::_('Customer'));
 
 if (BTMain::getVar('AddCustSubmitted')){
 
-$db = new CustDB;
 
+$cust = new CredLockCust;
 $crypt = new Crypto;
 $frmname = BTMain::getVar('FrmName');
 $fname = BTMain::getVar('FrmconName');
@@ -34,7 +34,7 @@ $email = BTMain::getVar('FrmEmail');
 	 }
 
 
-if ($db->addCustomer(htmlspecialchars($frmname),BTMain::getVar('frmGroup'),htmlspecialchars($fname),htmlspecialchars($sname),htmlspecialchars($email))){
+if ($cust->add(htmlspecialchars($frmname),BTMain::getVar('frmGroup'),htmlspecialchars($fname),htmlspecialchars($sname),htmlspecialchars($email))){
 
 
 $notifications->setNotification("addCustSuccess");

@@ -14,6 +14,7 @@ require_once 'lib/auth.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/crypto.php';
+require_once 'lib/customer.class.php';
 
 
 $html = new genOutput;

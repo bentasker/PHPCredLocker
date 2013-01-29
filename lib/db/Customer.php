@@ -48,7 +48,7 @@ $newcust = $this->insertID();
 $log = new Logging;
 $log->logEntry($newcust,3);
 
-return true;
+return $newcust;
 
 
 

@@ -27,6 +27,36 @@ return $this->loadResult();
 }
 
 
+
+
+/** Add a customer record to the portal authentication table
+*
+* @arg id - Customers Id
+* @arg email - Customer's login email address
+* @arg pass - A pre-salted pass phrase
+* @arg active - tinyint(1)
+*
+* @return mysql object
+*/
+function addCusttoPortal($id,$email,$pass,$active = 0){
+
+$crypt = new Crypto;
+
+$id = $this->stringEscape($id);
+$email = $this->stringEscape($crypt->encrypt($email,'auth'));
+$pass = $this->stringEscape($crypt->encrypt($pass,'auth'));
+$active = $this->stringEscape($active);
+
+
+
+$sql = "INSERT INTO #__CustPortal VALUES('$id','$email','$pass','$active')";
+$this->setQuery($sql);
+return $this->runQuery();
+
+}
+
+
+
 /** If an IP has crossed the ban threshold, ban them
 *
 * @arg threshold - How many attempts are they allowed?

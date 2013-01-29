@@ -56,4 +56,8 @@ $conf->banProximity = 24;
 
 // Time in hours to block the IP for
 $conf->banLength = 24;
+
+
+// Enable the customer facing portal?
+$conf->custPortalEnabled = 1;
 ?>
