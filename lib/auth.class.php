@@ -245,9 +245,20 @@ unset($user->pass);
     unset($pass);
 
 
+
+if ($user->membergroup != "-99,"){
+    $groups = explode(",","0,".$user->membergroup);
+    }else{
+    $groups = array("-99");
+    BTMain::setUserDetails('PortalLogin','1');
+    $username = $user->id;
+  }
+
 // Log the user in
 BTMain::setUser($username);
-BTMain::setUserDetails('groups',explode(",","0,".$user->membergroup));
+
+BTMain::setUserDetails('groups',$groups);
+
 BTMain::setUserDetails('RealName',$user->Name);
 
 
@@ -348,8 +359,15 @@ function SetUserDets($sessID){
  $user = $db->getUserSession($sessID);
 
   if (!$user){
-  $this->LoginInvalid();
+      $this->LoginInvalid();  
   }
+
+$cust = new CredLockCust;
+if (is_numeric($user->User) && (BTMain::getConf()->custPortalEnabled) && ($usedets = $cust->checkSession($user->User))){
+$user->username = $usedets->email;
+$user->Name = $usedets->Name;
+$user->membergroup = "-99,";
+}
 
 $expiry = strtotime($user->Expires);
 
@@ -372,7 +390,17 @@ $expiry = strtotime($user->Expires);
 
 // Users session is valid
 BTMain::setUser($user->username);
-BTMain::setUserDetails('groups',explode(",","0,".$user->membergroup));
+
+
+if ($user->membergroup != "-99,"){
+    $groups = explode(",","0,".$user->membergroup);
+    }else{
+    $groups = array("-99");
+    BTMain::setUserDetails('PortalLogin','1');
+  }
+
+
+BTMain::setUserDetails('groups',$groups);
 BTMain::setUserDetails('RealName',$user->Name);
 
 

@@ -75,18 +75,35 @@ return $this->runQuery();
 
 /** See if a Customer Portal record exists, and return it if it does
 * @arg username
+* @arg state - 1/0 - Does the user have to be active? 
 *
 * @return object
 */
-function getPortalByUsername($username){
+function getPortalByUsername($username,$state = 1){
 $crypt = new Crypto;
 $username=$this->stringEscape($crypt->encrypt($username,'auth'));
-$sql = "SELECT a.*, b.ContactName, b.ContactSurname FROM #__CustPortal as a LEFT JOIN #__Cust as b ON a.id = b.id WHERE a.`email`='$username'";
+$state = $this->stringEscape($state);
+$sql = "SELECT a.*, b.ContactName, b.ContactSurname FROM #__CustPortal as a LEFT JOIN #__Cust as b ON a.id = b.id WHERE a.`email`='$username' AND a.active LIKE '$state'";
 $this->setQuery($sql);
 return $this->loadResult();
 }
 
+/** Get a Portal user's record by ID
+* @arg id
+* @arg state - 1/0 - Does the user have to be active? 
+*
+* @return object
+*/
+function getPortalByID($id, $state = 1){
 
+$id=$this->stringEscape($id);
+$state = $this->stringEscape($state);
+$sql = "SELECT a.*, b.ContactName, b.ContactSurname FROM #__CustPortal as a LEFT JOIN #__Cust as b ON a.id = b.id WHERE a.`id`='$id' AND a.active LIKE '$state'";
+$this->setQuery($sql);
+return $this->loadResult();
+
+
+}
 
 /** If an IP has crossed the ban threshold, ban them
 *
@@ -412,7 +429,7 @@ $sess = $this->stringEscape($sess);
 $date = date('Y-m-d H:i:s');
 $ip = BTMain::getip();
 
-$sql = "SELECT a.ClientIP, a.SessKey, a.`Expires`, b.* FROM #__Sessions as a LEFT JOIN #__Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
+$sql = "SELECT a.ClientIP, a.SessKey, a.`Expires`, a.User, b.* FROM #__Sessions as a LEFT JOIN #__Users as b ON a.User = b.username WHERE a.SessionID = '$sess' AND a.Expires > '$date' AND a.`ClientIP` = '$ip'";
 $this->setQuery($sql);
 
 return $this->loadResult();

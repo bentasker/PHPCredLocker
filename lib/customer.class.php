@@ -113,6 +113,26 @@ return $user;
 
 
 
+/** Portal sessions have an ID rather than a username stored against them. See if that ID matches our table
+*
+*/
+function checkSession($id){
+$db = new AuthDB;
+$crypt = new Crypto;
+
+$usedets = $db->getPortalByID($id);
+
+if (!$usedets){
+  return false;
+ }
+
+$usedets->membergroup = "-99,";
+$usedets->Name = $crypt->decrypt($usedets->ContactName,'auth')." ".$crypt->decrypt($usedets->ContactSurname,'auth');
+$usedets->email = $crypt->decrypt($usedets->email,'auth');
+return $usedets;
+}
+
+
 
 
 
