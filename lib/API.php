@@ -15,6 +15,7 @@ require_once 'lib/auth.class.php';
 require_once 'lib/db/loggingdb.class.php';
 require_once 'lib/plugins.php';
 require_once 'lib/crypto.php';
+require_once 'lib/customer.class.php';
 
 $plg = new Plugins;
 $crypt = new Crypto;
@@ -89,6 +90,10 @@ case 'retCred':
 	  $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
       }
 
+    // If a URL has been entered without http - See #31
+    if (substr($address,0,3) == "www"){
+    $address = "http://".$address;
+    }
 
     echo $pass.$opDivider."<a href='$address' target=_blank>".$address."</a>" .$opDivider. 
 	 $uname . $opDivider;

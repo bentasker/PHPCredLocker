@@ -562,7 +562,8 @@ $sqls = array(
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;',
 
 'CREATE TABLE CustPortal( `id` INT NOT NULL, `email` TEXT, `pass` TEXT, `active` TINYINT(1), PRIMARY KEY (`id`));',
-'CREATE UNIQUE INDEX idx_portal_logins ON CustPortal(`email`(100));'
+'CREATE UNIQUE INDEX idx_portal_logins ON CustPortal(`email`(100));',
+'CREATE INDEX ifdx_active_portal ON wewt_CustPortal(`active`);,'
 
 );
 
