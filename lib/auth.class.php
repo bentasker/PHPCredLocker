@@ -397,6 +397,7 @@ if ($user->membergroup != "-99,"){
     }else{
     $groups = array("-99");
     BTMain::setUserDetails('PortalLogin','1');
+    BTMain::setUserDetails('PortalID',$user->User);
   }
 
 

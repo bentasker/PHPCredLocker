@@ -19,7 +19,7 @@ global $notifications;
 <li id="menuDivi1" class="divider-vertical"></li>
 
 <?php
-if (BTMain::getUser()->name):
+if (BTMain::getUser()->name && (!in_array("-99",BTMain::getUser()->groups))):
 
 $this->loadModule('search-table');
 ?>
@@ -60,7 +60,8 @@ $this->loadModule('search-table');
 <div class="pull-right" style="position: relative">
  
 
-<?php if (BTMain::getUser()->name):?>
+<?php if (BTMain::getUser()->name && (!in_array("-99",BTMain::getUser()->groups))): ?>
+
   <!-- Search Box -->
   <?php $this->loadModule('search'); ?>
   <!-- Search Box ends -->
