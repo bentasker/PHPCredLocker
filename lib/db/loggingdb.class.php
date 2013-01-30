@@ -41,7 +41,12 @@ function logEntry($cred,$action){
 
 $loggingenabled = BTMain::getConf()->loggingenabled;
 
-$user = BTMain::getUser()->name;
+// Added to allow logging of Portal actions without revealing email addresses
+if (BTMain::getUser()->PortalID){
+  $user = BTMain::getUser()->PortalID;
+}else{
+  $user = BTMain::getUser()->name;
+}
 
 $useres = $this->stringEscape($user);
 $credes = $this->stringEscape($cred);
