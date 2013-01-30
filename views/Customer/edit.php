@@ -15,10 +15,11 @@ $db = new CustDB;
 $notifications->setPageTitle("Edit ".Lang::_('Customer'));
 
 if (BTMain::getVar('EditCustSubmitted')){
+$cust = new CredLockCust;
 
 
 
-if ($db->editCustomer(BTMain::getVar('id'),htmlspecialchars(BTMain::getVar('FrmName')),BTMain::getVar('frmGroup'),htmlspecialchars(BTMain::getVar('FrmconName')),htmlspecialchars(BTMain::getVar('FrmSurname')),htmlspecialchars(BTMain::getVar('FrmEmail')))){
+if ($cust->edit(BTMain::getVar('id'),htmlspecialchars(BTMain::getVar('FrmName')),BTMain::getVar('frmGroup'),htmlspecialchars(BTMain::getVar('FrmconName')),htmlspecialchars(BTMain::getVar('FrmSurname')),htmlspecialchars(BTMain::getVar('FrmEmail')))){
 
 
 $notifications->setNotification("EditCustSuccess");

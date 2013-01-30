@@ -40,14 +40,47 @@ if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)) {
 
     if (BTMain::getConf()->custPortalEnabled){
     global $notifications;
-    $notifications->setNotification("<div class='alert alert-success'>The customer has been successfully added to the customer portal and can use the password <i>$password</i> to manage their credentials</div>");
+    $not->className = 'alert alert-success';
+    $not->text = "The customer has been successfully added to the customer portal and can use the password <i>$password</i> to manage their credentials";
+
+    $notifications->setNotification($not);
     }
+
+
+
 }
 
 return $id;
 
 }
 
+
+
+
+
+
+function edit($id,$name,$group,$firstname,$surname,$email){
+
+$db = new CustDB;
+
+if (!$db->editCustomer($id,$name,$group,$firstname,$surname,$email)){
+return false;
+}
+
+$db = new AuthDB;
+if ($db->editPortalCustDetails($id,$email)){
+  return true;
+  }else{
+  global $notifications;
+  $notifications->setNotification('CustPortalFail');
+
+  }
+
+
+
+
+
+}
 
 
 

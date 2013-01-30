@@ -14,6 +14,8 @@ $notifs->HomePageTextNotLoggedIn->text = 'You must log in to use this system';
 $notifs->HomePageTextLoggedIn->className = 'HomePgText';
 $notifs->HomePageTextLoggedIn->text = 'Welcome to PHPCredLocker, please use the menus to proceed';
 
+$notifs->CustPortalFail->className = 'alert alert-info';
+$notifs->CustPortalFail->text = "The customer has been successfully updated, but the customer portal record could not be updated. The customer will need to continue to use their old details";
 
 
 $notifs->addCustSuccess->className = 'alert alert-success';

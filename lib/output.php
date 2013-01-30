@@ -474,7 +474,7 @@ function setCustomJS($js){
 $this->customJS[] = "$js";
 }
 
-
+/** TODO add support for custom notifications passed as an argument **/
 }
 
 
