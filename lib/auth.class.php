@@ -217,7 +217,11 @@ $password = rtrim($password," ");
 $username = rtrim($username," ");
 
   if (!$user = $db->retrieveUserCreds($username)){
-  return false;
+    // Not a user, user. Check the Portal login
+    $cust = new CredLockCust;
+    if ((!BTMain::getConf()->custPortalEnabled) || (!$user = $cust->checkLogin($username))){
+      return false;
+    }
   }
 
 

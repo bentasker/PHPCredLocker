@@ -42,6 +42,9 @@ if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)) {
     global $notifications;
     $not->className = 'alert alert-success';
     $not->text = "The customer has been successfully added to the customer portal and can use the password <i>$password</i> to manage their credentials";
+    // This echo is a temporary thing until I update Notifications
+    echo "<div class='{$not->className}'>{$not->text}</div>";
+
 
     $notifications->setNotification($not);
     }
@@ -58,7 +61,9 @@ return $id;
 
 
 
-
+/** Edit a Customer record - including updating the portal details (i.e. update the email address if changed)
+*
+*/
 function edit($id,$name,$group,$firstname,$surname,$email){
 
 $db = new CustDB;
@@ -77,6 +82,30 @@ if ($db->editPortalCustDetails($id,$email)){
   }
 
 
+
+
+
+}
+
+
+/** Called by ProgAuth::ProcessLogin - See if the supplied username matches any in the PortalDB
+*
+* @arg username
+*
+* @return object or false
+*/
+function checkLogin($username){
+$db = new AuthDB;
+
+if (!$user = $db->getPortalByUsername($username)){
+return false;
+}
+$crypt = new Crypto;
+
+// Set the customer indicator
+$user->membergroup = "-99,";
+$user->Name = $crypt->decrypt($user->ContactName,'auth')." ".$crypt->decrypt($user->Surname,'auth');
+return $user;
 
 
 

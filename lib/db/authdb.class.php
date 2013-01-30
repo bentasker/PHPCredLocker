@@ -73,6 +73,20 @@ return $this->runQuery();
 }
 
 
+/** See if a Customer Portal record exists, and return it if it does
+* @arg username
+*
+* @return object
+*/
+function getPortalByUsername($username){
+$crypt = new Crypto;
+$username=$this->stringEscape($crypt->encrypt($username,'auth'));
+$sql = "SELECT a.*, b.ContactName, b.ContactSurname FROM #__CustPortal as a LEFT JOIN #__Cust as b ON a.id = b.id WHERE a.`email`='$username'";
+$this->setQuery($sql);
+return $this->loadResult();
+}
+
+
 
 /** If an IP has crossed the ban threshold, ban them
 *
