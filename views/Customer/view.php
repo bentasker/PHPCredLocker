@@ -75,10 +75,11 @@ $notifications->setBreadcrumb($path);
 <th></th><th></th><th></th></tr>
 
 <?php
-
+$x = 0;
 
 
 foreach ($customers as $customer){
+$x++;
 ob_start();
 $cname = $crypt->decrypt($customer->CredName,'CredType');
 ?>
@@ -124,7 +125,14 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
 
 <?php
 
+if (!isset($custs[$cname])){
 $custs[$cname] = ob_get_clean();
+}else{
+$custs[$cname."-".$x] = ob_get_clean();
+
+}
+
+
 }
 ksort($custs);
 echo implode("\n",$custs);
