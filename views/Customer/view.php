@@ -89,12 +89,22 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
     <?php echo $cname;?>
   </td>
 
-  
+
   <td class="passViewNotif" onclick="getCreds('<?php echo $customer->id;?>');">
   <input type="hidden" id="clickCount<?php echo $customer->id;?>" value="0" disabled="disabled">
     <input type="hidden" id="PassCount<?php echo $customer->id;?>" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
-    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display<span class='DisPwdText'> Password</span></span>
+    <span class='retrievePassword' id='retrievePassword<?php echo $customer->id;?>'>Display<span class='DisPwdText'> 
+
+  <?php if (($portallogin != 1) || ($customer->hidden !=1)): ?>
+      Password
+  <?php else: ?>
+      Username <input type="hidden" disabled="disabled" id="credHidden<?php echo $customer->id; ?>">
+  <?php endif; ?>
+</span></span>
   </td>
+
+   
+
 
   <td>
     <span id='Address<?php echo $customer->id;?>' class='CredAddress'></span>
@@ -110,7 +120,7 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
 
 
 <td class='editicon' onclick="window.location.href = 'index.php?option=editCred&id=<?php echo $customer->id;?>'">
-<i class="icon-pencil"></i>
+ <?php if (($portallogin != 1) || ($customer->hidden !=1)): ?><i class="icon-pencil"></i><?php endif; ?>
 </td>
 
   <td class='delicon' onclick="DelCred('<?php echo $customer->id;?>');">

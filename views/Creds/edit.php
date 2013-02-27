@@ -30,6 +30,12 @@ $group = BTMain::getVar('frmGroup');
 $address = BTMain::getVar('frmAddress');
 $uname = BTMain::getVar('frmUser');
 $group = BTMain::getVar('frmGroup');
+
+if (BTMain::getUser()->PortalLogin != 1){
+$hidden = BTMain::getVar('frmHidden');
+}else{
+$hidden = 0;
+}
   
   if (!BTMain::getConnTypeSSL()){
 	    $crypt = new Crypto;
@@ -51,7 +57,7 @@ if ($uname == "NOCHANGE"){ $uname = false; }
 
 
   // Add the cred to the db
-  if ($creds->editCred($id,$credtype,$cred,$clicky,$group,$address,$uname)){
+  if ($creds->editCred($id,$credtype,$cred,$clicky,$group,$address,$uname,$hidden)){
   // Success
   $notifications->setNotification("addCredSuccess");
       $data->cred->id = $id;
@@ -119,14 +125,14 @@ $crypt->safety = 0;
 
 <label for='FrmCredType'><?php echo Lang::_("Credential Type");?></label><select id="FrmCredType" name="FrmCredType" readonly='readonly'>
 <?php 
-foreach ($credtypes as $cred){
+foreach ($credtypes as $credt){
 
 ?>
-<option value="<?php echo $cred->id;?>" 
-<?php if ($credtype == $cred->id):?>
+<option value="<?php echo $credt->id;?>" 
+<?php if ($credtype == $credt->id):?>
 selected
 <?php endif; ?>
-><?php echo htmlspecialchars($crypt->decrypt($cred->Name,'CredType'));?></option>
+><?php echo htmlspecialchars($crypt->decrypt($credt->Name,'CredType'));?></option>
 <?php
 
 }
@@ -139,6 +145,10 @@ unset($crypt);
 <label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential">NOCHANGE</textarea>
 <a href="javascript: genPwd('frmCredential',10);">Generate Password</a>
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress" value="NOCHANGE">
+
+<?php if (BTMain::getUser()->PortalLogin != 1): ?>
+<label for="frmCredentialHidden">Hide from Customer</label><input type="checkbox" name="frmHidden" id="frmHidden" value="1" <?php if ($cred->hidden){ echo "checked"; }?>>
+<?php endif; ?>
 
 <?php
 

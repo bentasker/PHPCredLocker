@@ -478,6 +478,7 @@ $sqls = array(
   `Address` blob,
   `UName` blob,
   `Custom` blob,
+  `hidden` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `idx_Cred_Group` (`Group`),
   KEY `idx_cred_cust` (`cust`)

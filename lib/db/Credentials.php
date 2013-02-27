@@ -60,7 +60,7 @@ $ACL = BTMain::buildACLQuery();
 
 $id = $this->stringEscape($id);
 
-$sql = "SELECT Hash, Clicky, Address, UName, CredType, `Group` FROM #__Cred WHERE id='$id' AND ($ACL)";
+$sql = "SELECT Hash, Clicky, Address, UName, CredType, `hidden`, `Group` FROM #__Cred WHERE id='$id' AND ($ACL)";
 $this->setQuery($sql);
 
 
@@ -211,7 +211,7 @@ return false;
 *
 * @return object
 */
-function addCred($cust,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '')
+function addCred($cust,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '',$hidden = 0)
 {
 
 
@@ -239,10 +239,11 @@ $cust = $this->stringEscape($cust);
 $clicky = $this->stringEscape($clicky);
 $date = date('Y-m-d H:i:s');
 $group = $this->stringEscape($group);
+$hidden = $this->stringEscape($hidden);
 
 
-$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`) ".
-"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname')";
+$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`,`hidden`) ".
+"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname','$hidden')";
 $this->setQuery($sql);
 
 $id = $this->insertID();
@@ -272,7 +273,7 @@ $id = $this->insertID();
 *
 * @return object
 */
-function editCred($id,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '')
+function editCred($id,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '', $hidden = 0)
 {
 
 
@@ -280,6 +281,7 @@ function editCred($id,$credtype,$cred,$clicky,$group = 1,$address = '', $uname =
 $crypt = new Crypto;
 $ACL = BTMain::buildACLQuery();
 $credtype = $this->stringEscape($credtype);
+$hidden = $this->stringEscape($hidden);
 $id = $this->stringEscape($id);
 $date = date('Y-m-d H:i:s');
 $group = $this->stringEscape($group);
@@ -287,7 +289,7 @@ $group = $this->stringEscape($group);
 
 // build the SQL
 
-$sql = "UPDATE #__Cred SET `Added`='$date', `Group`='$group',";
+$sql = "UPDATE #__Cred SET `Added`='$date', `Group`='$group', hidden='$hidden',";
 
 if ($cred){
 $cred = $crypt->encrypt($cred,'Cre'.$credtype);
@@ -312,6 +314,7 @@ $uname = $crypt->encrypt($uname,'Cre'.$credtype);
 $uname = $this->stringEscape($uname);
 $sql .= "`UName`='$uname',";
 }
+
 
 // Get rid of the last comma to prevent a syntax error
 $sql = rtrim($sql,",");

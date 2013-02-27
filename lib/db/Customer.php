@@ -171,7 +171,7 @@ $log->logEntry($id,5);
 
 $ACL = BTMain::buildACLQuery();
 
-$sql = "SELECT a.CredType, a.id, b.Name as CredName, c.Name FROM #__Cred as a LEFT JOIN #__CredTypes as b on a.CredType = b.id LEFT JOIN #__Cust as c ON a.cust = c.id ".
+$sql = "SELECT a.CredType, a.id, a.hidden, b.Name as CredName, c.Name FROM #__Cred as a LEFT JOIN #__CredTypes as b on a.CredType = b.id LEFT JOIN #__Cust as c ON a.cust = c.id ".
 "WHERE a.cust='$id' AND (" . str_replace("`Group`","a.`Group`",$ACL) . ") AND (" . str_replace("`Group`","c.`Group`",$ACL) . ")";
 $this->setQuery($sql);
 return $this->loadResults();

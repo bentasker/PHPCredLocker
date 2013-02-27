@@ -96,8 +96,12 @@ function Credtimer(id)
   if (count <= 0 || cancel == 1)
   {
      clearInterval(counter);
+     if (document.getElementById('credHidden'+id)){
+     field.innerHTML = 'Display<span class="DisPwdText"> Username</span>';  
+     }else{
+     field.innerHTML = 'Display<span class="DisPwdText"> Password</span>';  
+     }
      
-     field.innerHTML = 'Display<span class="DisPwdText"> Password</span>';
      document.getElementById('Address'+id).innerHTML = '';
      document.getElementById('UserName'+id).innerHTML = '';
      document.getElementById('Password'+id).innerHTML = '';
@@ -106,7 +110,7 @@ function Credtimer(id)
      return;
   }
 
-  field.innerHTML = 'Displaying Password for ' +count+ ' seconds';
+  field.innerHTML = 'Displaying for ' +count+ ' seconds';
 }
 
 

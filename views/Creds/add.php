@@ -20,6 +20,7 @@ if (BTMain::getVar('addCredSubmitted')){
   $cred = BTMain::getVar('frmCredential');
   $addr = BTMain::getVar('frmAddress');
   $user = BTMain::getVar('frmUser');
+  $hidden = BTMain::getVar('frmHidden');
   
   if (!BTMain::getConnTypeSSL()){
 	    $crypt = new Crypto;
@@ -30,7 +31,7 @@ if (BTMain::getVar('addCredSubmitted')){
 	 }
 
 
-  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user);
+  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user,$hidden);
   // Add the cred to the db
   if ($newcred){
   // Success
@@ -124,7 +125,7 @@ echo implode("\n",$custdets);
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 
 
-
+<label for="frmCredentialHidden">Hide from Customer</label><input type="checkbox" name="frmHidden" id="frmHidden" value="1">
 <?php include 'lib/includes/groupSelection.php'; ?>
 
 

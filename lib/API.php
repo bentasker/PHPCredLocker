@@ -82,7 +82,13 @@ case 'retCred':
     $key = 'Cre'.$cred->CredType;
 
     // Build the response
+
+    if ((BTMain::getUser()->PortalLogin != 1) || ($cred->hidden !=1)){
     $pass = htmlspecialchars($crypt->decrypt($cred->Hash,$key));
+    }else{
+    $pass = "<span style='font-size: x-small'>You are not authorised to view this password</span>";
+    }
+
     $address = htmlspecialchars($crypt->decrypt($cred->Address,$key));
     $uname = htmlspecialchars($crypt->decrypt($cred->UName,$key));
 
