@@ -22,7 +22,7 @@ defined('_CREDLOCK') or die;
 
 	<ul class="dropdown-menu" role="menu" id='CurUserMenu' aria-Labelled-by='dLabel'>
 	  <li><a href="index.php?option=logout">Log Out</a></li>
-	  <li><a href="index.php?option=changePassword">Change Password</a></li>
+	 <?php if (BTMain::getUser()->PortalLogin != 1):?> <li><a href="index.php?option=changePassword">Change Password</a></li><?php endif; ?>
 	</ul>
 
 

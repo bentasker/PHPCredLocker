@@ -80,7 +80,7 @@ $salt = $auth->createSalt();
 $pass = md5($password.$salt);
 
 
-
+ global $notifications;
 
 if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)){
  
@@ -92,13 +92,17 @@ if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)){
     $not->text = "The customer has been successfully added to the customer portal and can use the password <i>$password</i> to manage their credentials";
     // This echo is a temporary thing until I update Notifications
     echo "<div class='{$not->className}'>{$not->text}</div>";
-    $notifications->setNotification($not);
-    }
+   // $notifications->setNotification($not);
+    
+
+}else{
+    echo "<div class='alert alert-error'>Unable to update Customer Portal details</div>";
+}
 
   
 
   
-
+return true;
 
 
 
