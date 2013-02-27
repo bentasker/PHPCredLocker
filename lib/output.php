@@ -223,7 +223,7 @@ $resourcespath = $coreres->resourcespath;
     <?php endforeach;?>
 
 
-      <script id='kFile' src="Resources/info.php?<?php echo md5(session_id().$_SERVER['REMOTE_ADDR']); ?>" type="text/javascript"></script>
+      <script id='kFile' src="Resources/info.php?<?php $frs = BTMain::getSessVar('cacheFrustrate'); echo md5(session_id().$_SERVER['REMOTE_ADDR']).$frs; ?><?php $notif=BTMain::getVar('notif'); if (!empty($notif) && ($notif == 'LoginFailed' || $notif == 'LoggedOut' || $notif == 'InvalidSession')){ echo "&destSession=Y"; BTMain::setSessVar('cacheFrustrate',mt_rand());}?>" type="text/javascript"></script>
 
 
       <?php

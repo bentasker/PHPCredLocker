@@ -35,6 +35,22 @@ chdir(dirname(__FILE__)."/../");
 // Load the framework
 require_once 'lib/Framework/main.php';
 
+
+if (isset($_COOKIE['PHPCredLockerKeySet']) && BTMain::getVar('destSession') == 'Y'){
+
+$expires = strtotime("-2 days");
+setcookie("PHPCredLockerKeySet", 1, $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
+BTMain::unsetSessVar('tls');
+BTMain::unsetSessVar('KeyExpiry');
+BTMain::unsetSessVar('apiterms');
+
+$_COOKIE['PHPCredLockerKeySet'] = 0;
+
+}
+
+
+
+
 $tls = BTMain::getSessVar('tls');
 $expiry = BTMain::getSessVar('KeyExpiry');
 
