@@ -10,9 +10,10 @@ defined('_CREDLOCK') or die;
 global $notifications;
 $custom = new CustDB;
 $custom->connreuse = 1;
+$portallogin = BTMain::getUser()->PortalLogin;
 
 
-
+if ($portallogin != 1){
 // Get the customer details
 $custdetails = $custom->getCustomerDetail(BTMain::getVar('id'));
 
@@ -23,6 +24,8 @@ $notifications->setPageTitle("View ".Lang::_('Customer'));
   return;
 
   }
+
+}
 
 
 // Get credentials
@@ -50,7 +53,7 @@ $notifications->setBreadcrumb($path);
 
 
 
-
+<?php if ($portallogin != 1): ?>
 <h1>Credentials for <?php echo $customer; ?></h1>
 
 
@@ -60,6 +63,8 @@ $notifications->setBreadcrumb($path);
 <button id='AddCredBtnTop' onclick="window.location.href='index.php?option=addCred&cust=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Add Credential</button>
 
 </div>
+
+<?php endif; ?>
 
 <input type="hidden" id="defaultInterval" value="<?php echo BTMain::getConf()->CredDisplay; ?>">
 <table class='credTbl table table-hover' id='CredsTbl'>
@@ -108,7 +113,7 @@ $cname = $crypt->decrypt($customer->CredName,'CredType');
 </td>
 
   <td class='delicon' onclick="DelCred('<?php echo $customer->id;?>');">
-  <i class="icon-remove"></i>
+  <?php if ($portallogin != 1): ?><i class="icon-remove"></i><?php endif; ?>
   </td>
 
   <td id='CredPluginOutput<?php echo $customer->id;?>' class="CredPluginOutput">
@@ -130,9 +135,13 @@ echo implode("\n",$custs);
 <br />
 
 
+<?php if ($portallogin != 1): ?>
+
 <div class='viewButtons'>
 
 <button id='EditCustBtnBottom' onclick="window.location.href='index.php?option=EditCustomer&id=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Edit <?php echo Lang::_('Customer');?></button>
 <button id='AddCredBtnBottom' onclick="window.location.href='index.php?option=addCred&cust=<?php echo htmlspecialchars(BTMain::getVar('id')); ?>';" class='btn btn-primary'>Add Credential</button>
 
 </div>
+
+<?php endif; ?>

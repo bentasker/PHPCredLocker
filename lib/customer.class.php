@@ -67,19 +67,37 @@ return $id;
 function edit($id,$name,$group,$firstname,$surname,$email){
 
 $db = new CustDB;
+$auth = new ProgAuth;
 
 if (!$db->editCustomer($id,$name,$group,$firstname,$surname,$email)){
 return false;
 }
 
 $db = new AuthDB;
-if ($db->editPortalCustDetails($id,$email)){
-  return true;
-  }else{
-  global $notifications;
-  $notifications->setNotification('CustPortalFail');
+// We add the customer to the portal, even if we won't let them log-in (i.e. the portal is disabled)
+$password = $auth->generatePassword();
+$salt = $auth->createSalt();
+$pass = md5($password.$salt);
 
-  }
+
+
+
+if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)){
+ 
+
+
+   
+
+    $not->className = 'alert alert-success';
+    $not->text = "The customer has been successfully added to the customer portal and can use the password <i>$password</i> to manage their credentials";
+    // This echo is a temporary thing until I update Notifications
+    echo "<div class='{$not->className}'>{$not->text}</div>";
+    $notifications->setNotification($not);
+    }
+
+  
+
+  
 
 
 

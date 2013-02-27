@@ -26,7 +26,20 @@ $crypt = new Crypto;
 
 $groups = $auth->retrieveGroupNames();
 
-if ($multiselect != 1):
+if (BTMain::getUser->PortalLogin() == 1):?>
+
+
+<select name="frmGroup" id="frmGroup" style="display: none;">
+<option value="<?php if (isset($preselect)){ echo $preselect; } else{ echo 0;}?>">nochange</option>
+</select>
+
+</select>
+
+
+<?php else: ?>
+
+
+<?php if ($multiselect != 1):
 ?> 
 <label for="frmGroup">Group</label><select name="frmGroup" id="frmGroup">
 <option value='null'> -- Select Group --</option>
@@ -77,3 +90,5 @@ unset($grps);
 ?>
 </fieldset>
 <?php endif;?>
+
+<?php endif; ?>

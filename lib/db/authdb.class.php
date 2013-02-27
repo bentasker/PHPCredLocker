@@ -49,28 +49,14 @@ $active = $this->stringEscape($active);
 
 
 
-$sql = "INSERT INTO #__CustPortal VALUES('$id','$email','$pass','$active')";
+$sql = "INSERT INTO #__CustPortal VALUES('$id','$email','$pass','$active') ON DUPLICATE KEY UPDATE `email`='$email'";
 $this->setQuery($sql);
 return $this->runQuery();
 
 }
 
 
-/** Edit the Portal login details for the specified customer - Passwords done seperately
-*
-* @arg id - Customer ID
-* @arg email - Customers login email address
-*
-*/
-function editPortalCustDetails($id,$email){
-$crypt = new Crypto;
-$id = $this->stringEscape($id);
-$email = $this->stringEscape($crypt->encrypt($email,'auth'));
 
-$sql = "UPDATE #__CustPortal SET `email`='$email' WHERE `id`='$id'";
-$this->setQuery($sql);
-return $this->runQuery();
-}
 
 
 /** See if a Customer Portal record exists, and return it if it does

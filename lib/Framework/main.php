@@ -151,10 +151,18 @@ return "sess=" . BTMain::getVar('sess') . "&hsh=" . BTMain::getVar('hsh');
 function buildACLQuery($tbl = false){
 $groups = BTMain::getUser()->groups;
 $tab ='';
-
 if ($tbl){
 $tab = "$tbl.";
 }
+
+
+if (BTMain::getUser()->PortalLogin == '1'){
+return "$tab.cust = '".BTMain::getUser()->PortalID."' ";
+
+}
+
+
+
 
 if (!in_array("-1",$groups)){
 return "$tab`Group`=" . implode(" OR $tab`Group`=",$groups) ;

@@ -22,6 +22,9 @@ $notifications = new notifications;
 $option = BTMain::getVar('option');
 $auth = new ProgAuth;
 
+$custportalmethods = array("logout","editCred");
+
+
     // See if the user has an active session
     if (BTMain::getsessVar('Session')){
     
@@ -71,7 +74,10 @@ unset($cred);
 
 
 
-
+if ((BTMain::getUser()->PortalLogin == 1) && (!in_array($option,$custportalmethods))){
+$option = 'viewCust';
+BTMain::setVar('id',BTMain::getUser()->PortalID);
+}
 
 
 switch ($option){
