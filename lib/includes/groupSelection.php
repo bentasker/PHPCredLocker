@@ -26,7 +26,7 @@ $crypt = new Crypto;
 
 $groups = $auth->retrieveGroupNames();
 
-if (BTMain::getUser->PortalLogin() == 1):?>
+if (BTMain::getUser()->PortalLogin == 1):?>
 
 
 <select name="frmGroup" id="frmGroup" style="display: none;">
