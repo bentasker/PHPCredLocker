@@ -30,6 +30,7 @@ $group = BTMain::getVar('frmGroup');
 $address = BTMain::getVar('frmAddress');
 $uname = BTMain::getVar('frmUser');
 $group = BTMain::getVar('frmGroup');
+$comment = BTMain::getVar('frmComment');
 
 if (BTMain::getUser()->PortalLogin != 1){
 $hidden = BTMain::getVar('frmHidden');
@@ -43,6 +44,7 @@ $hidden = 0;
 	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);
 	    $address = $crypt->xordstring(base64_decode($address),$tlskey);
 	    $uname = $crypt->xordstring(base64_decode($uname),$tlskey);
+	    $comment = $crypt->xordstring(base64_decode($comment),$tlskey);
 	 }
 
 
@@ -54,10 +56,11 @@ if ($clicky == "NOCHANGE"){ $clicky = false; }
 if ($group == "NOCHANGE"){ $group = false; }
 if ($address == "NOCHANGE"){ $address = false; }
 if ($uname == "NOCHANGE"){ $uname = false; }
+if ($comment == 'NOCHANGE'){ $comment = false; }
 
 
   // Add the cred to the db
-  if ($creds->editCred($id,$credtype,$cred,$clicky,$group,$address,$uname,$hidden)){
+  if ($creds->editCred($id,$credtype,$cred,$comment, $clicky,$group,$address,$uname,$hidden)){
   // Success
   $notifications->setNotification("addCredSuccess");
       $data->cred->id = $id;
@@ -144,6 +147,9 @@ unset($crypt);
 
 <label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential">NOCHANGE</textarea>
 <a href="javascript: genPwd('frmCredential',10);">Generate Password</a>
+
+<label for="frmComment"><?php echo Lang::_("Comment");?></label><input type="text" name="frmComment" id="frmComment" value="NOCHANGE">
+
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress" value="NOCHANGE">
 
 <?php if (BTMain::getUser()->PortalLogin != 1): ?>

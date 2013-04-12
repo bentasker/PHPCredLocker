@@ -278,7 +278,7 @@ $id = $this->insertID();
 *
 * @return object
 */
-function editCred($id,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '', $hidden = 0)
+function editCred($id,$credtype,$cred,$comment, $clicky,$group = 1,$address = '', $uname = '', $hidden = 0)
 {
 
 
@@ -318,6 +318,13 @@ if ($uname){
 $uname = $crypt->encrypt($uname,'Cre'.$credtype);
 $uname = $this->stringEscape($uname);
 $sql .= "`UName`='$uname',";
+}
+
+if ($comment){
+$comment = $crypt->encrypt($comment,'Cre'.$credtype);
+$comment = $this->stringEscape($comment);
+$sql .= "`comment`='$comment',";
+
 }
 
 
