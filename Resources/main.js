@@ -224,7 +224,8 @@ function checkNewCred(){
   var cred = document.getElementById('frmCredential'),
       user = document.getElementById('frmUser'),
       addr = document.getElementById('frmAddress'),
-      grp = document.getElementById('frmGroup');
+      grp = document.getElementById('frmGroup'),
+      comment = document.getElementById('frmComment');
       
       
       
@@ -248,6 +249,7 @@ if (enabledEncryption()){
  cred.value = Base64.encode(xorestr(cred.value,retKey()));
  user.value = Base64.encode(xorestr(user.value,retKey()));
  addr.value = Base64.encode(xorestr(addr.value,retKey()));
+ comment.value = Base64.encode(xorestr(comment.value,retKey()));
 }
 return true;
 

@@ -21,3 +21,4 @@ $lang['Address'] = 'URL';
 $lang['User'] = 'User';
 $lang['User Groups'] = 'User Groups';
 $lang['UserGroup'] = 'Group';
+$lang['Comment'] = 'Comment';

@@ -21,6 +21,7 @@ if (BTMain::getVar('addCredSubmitted')){
   $addr = BTMain::getVar('frmAddress');
   $user = BTMain::getVar('frmUser');
   $hidden = BTMain::getVar('frmHidden');
+  $comment = BTMain::getVar('frmComment');
   
   if (!BTMain::getConnTypeSSL()){
 	    $crypt = new Crypto;
@@ -28,10 +29,11 @@ if (BTMain::getVar('addCredSubmitted')){
 	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);
 	    $addr = $crypt->xordstring(base64_decode($addr),$tlskey);
 	    $user = $crypt->xordstring(base64_decode($user),$tlskey);
+	    $comment = $crypt->xordstring(base64_decode($comment),$tlskey);
 	 }
 
 
-  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user,$hidden);
+  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,$comment,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user,$hidden);
   // Add the cred to the db
   if ($newcred){
   // Success
@@ -121,6 +123,8 @@ echo implode("\n",$custdets);
 
 <label for="frmCredential"><?php echo Lang::_("Password");?></label><textarea id="frmCredential" name="frmCredential"></textarea>
 <a href="javascript: genPwd('frmCredential',10);">Generate Password</a>
+
+<label for="frmComment"><?php echo Lang::_("Comment");?></label><input type="text" name="frmComment" id="frmComment">
 
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 

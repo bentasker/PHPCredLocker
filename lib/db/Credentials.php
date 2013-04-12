@@ -211,7 +211,7 @@ return false;
 *
 * @return object
 */
-function addCred($cust,$credtype,$cred,$clicky,$group = 1,$address = '', $uname = '',$hidden = 0)
+function addCred($cust,$credtype,$cred,$comment,$clicky,$group = 1,$address = '', $uname = '',$hidden = 0)
 {
 
 
@@ -231,10 +231,15 @@ if (!empty($cred)){
 $cred = $crypt->encrypt($cred,'Cre'.$credtype);
 }
 
+if (!empty($comment)){
+$comment = $crypt->encrypt($cred,'Cre'.$comment);
+}
+
 $address = $this->stringEscape($address);
 $uname = $this->stringEscape($uname);
 $credtype = $this->stringEscape($credtype);
 $cred = $this->stringEscape($cred);
+$comment = $this->stringEscape($comment);
 $cust = $this->stringEscape($cust);
 $clicky = $this->stringEscape($clicky);
 $date = date('Y-m-d H:i:s');
@@ -242,8 +247,8 @@ $group = $this->stringEscape($group);
 $hidden = $this->stringEscape($hidden);
 
 
-$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`,`hidden`) ".
-"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname','$hidden')";
+$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`,`hidden`,`comment`) ".
+"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname','$hidden','$comment')";
 $this->setQuery($sql);
 
 $id = $this->insertID();
