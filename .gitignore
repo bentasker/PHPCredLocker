@@ -7,3 +7,4 @@ conf/crypto.php
 testcreds
 testdata
 testdata/*
+update/
