@@ -82,10 +82,11 @@ foreach ($customers as $customer){
 $x++;
 ob_start();
 $cname = $crypt->decrypt($customer->CredName,'CredType');
+$comment = $crypt->decrypt($customer->comment,'Cre'.$customer->CredType);
 ?>
 
 <tr class="CredDisp" id='CredDisp<?php echo $customer->id;?>'>
-  <td>
+  <td <?php if (!empty($comment)):?>title="<?php echo htmlspecialchars($comment);?>"<?php endif;?>>
     <?php echo $cname;?>
   </td>
 
@@ -163,3 +164,9 @@ echo implode("\n",$custs);
 </div>
 
 <?php endif; ?>
+
+
+<script type="text/javascript">
+$('#CredsTbl *').tooltip({track: true, fade: 250});
+</script>
+
