@@ -931,6 +931,18 @@ menu.appendChild(ele);
  * as it means a longer request.
  * 
  */
+
+
+function inlineDeCrypt(){
+ var i, eles = document.getElementsByClassName('inlineTLS');
+ 
+ for (i=0;i < eles.length;i++){
+   eles[i].innerHTML = decryptAPIResp(eles[i].innerHTML,retKey());   
+ }  
+  
+}
+
+
 function xorestr(str,key){
     if (!enabledEncryption()){ return str; }
     

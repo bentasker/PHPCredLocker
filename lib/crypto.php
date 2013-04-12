@@ -83,6 +83,11 @@ foreach ($str as $string){
 
 
 
+function inlineEncrypt($string){
+return "<div class='inlineTLS'>".base64_encode($this->xorestring(base64_encode($string),$tlskey = BTMain::getsessVar('tls')))."</div>";
+}
+
+
 /** Xor the provided string to encrypt it
 *
 * @arg str - string

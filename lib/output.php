@@ -222,7 +222,7 @@ $resourcespath = $coreres->resourcespath;
 	    <link rel="stylesheet" type="text/css" href='<?php echo $coreres->resources->resourcespath; ?>/<?php echo $css;?>.css'/>
     <?php endforeach;?>
 
-
+      <style type="text/css">.inlineTLS {display: inline;}</style>
       <script id='kFile' src="Resources/info.php?<?php $frs = BTMain::getSessVar('cacheFrustrate'); echo md5(session_id().$_SERVER['REMOTE_ADDR']).$frs; ?><?php $notif=BTMain::getVar('notif'); if (!empty($notif) && ($notif == 'LoginFailed' || $notif == 'LoggedOut' || $notif == 'InvalidSession')){ echo "&destSession=Y"; BTMain::setSessVar('cacheFrustrate',mt_rand());}?>" type="text/javascript"></script>
 
 
@@ -266,7 +266,7 @@ $resourcespath = $coreres->resourcespath;
 
 <!-- Fire the default scripts when the browser reports document ready -->
     <script type="text/javascript">
-    var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); <?php if (BTMain::getUser()->name):?>sesscheck = setInterval("checkSession()",120000);<?php endif;?>});
+    var sesscheck; jQuery(document).ready(function() {  checkKeyAvailable(); inlineDeCrypt();<?php if (BTMain::getUser()->name):?>sesscheck = setInterval("checkSession()",120000);<?php endif;?>});
     </script>
 
 <?php
