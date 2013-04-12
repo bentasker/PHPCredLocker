@@ -565,7 +565,7 @@ $sqls = array(
 
 'CREATE TABLE #__CustPortal( `id` INT NOT NULL, `email` TEXT, `pass` TEXT, `active` TINYINT(1), PRIMARY KEY (`id`));',
 'CREATE UNIQUE INDEX idx_portal_logins ON #__CustPortal(`email`(100));',
-'CREATE INDEX ifdx_active_portal ON #__CustPortal(`active`);,'
+'CREATE INDEX idx_active_portal ON #__CustPortal(`active`);'
 
 );
 
