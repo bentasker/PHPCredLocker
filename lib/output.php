@@ -147,10 +147,10 @@ $coreres->css->jquerytooltip->fname = 'jquery.tooltip';
 
 $coreres->js->jquery->fname = 'jquery';
 $coreres->js->jquery->forcemin = '.min';
-$coreres->js->bootstrap->fname = 'bootstrap';
-$coreres->js->bootstrap->path = 'bootstrap/js/';
 $coreres->js->jquerytooltip->fname = 'jquery.tooltip';
 $coreres->js->jquerytooltip->forcemin = '.min';
+$coreres->js->bootstrap->fname = 'bootstrap';
+$coreres->js->bootstrap->path = 'bootstrap/js/';
 $coreres->js->main->fname = 'main';
 $coreres->js->base64->fname = 'base64';
 
