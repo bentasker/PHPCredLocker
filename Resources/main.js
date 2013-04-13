@@ -12,7 +12,7 @@ Copyright (c) 2012 Ben Tasker
 */
 
 
-var counter=false, cancel='', dispcred, interval;
+var counter=false, cancel='', dispcred, interval,terms;
 
 
 
@@ -1090,11 +1090,24 @@ function decryptAPIResp(str,key){
 
 
 function getDivider(){
+  
+    if(typeof(Storage)!=="undefined" && sessionStorage.Delimiter){
+	return sessionStorage.getItem('Delimiter');
+  }
+  
  return getDelimiter(); 
 }
 
 
 function getTerms(a){
+  
+  if(typeof(Storage)!=="undefined"){
+	if (!terms){
+      terms = JSON.parse(sessionStorage.getItem('Terminology'))
+	}
+      return Base64.decode(terms[a.toString()]);
+  }
+  
   return Base64.decode(getTerminology(a));
 }
 
@@ -1143,7 +1156,7 @@ function retKey(){
 function checkKeyAvailable(){
  
   
- if(typeof getKey != 'function') {
+ if(!getKey && typeof getTLSKey != 'function') {
    
    if (confirm("Key retrieval failed - Attempting to rectify, Click OK to continue - Screen may refresh")){
    
@@ -1156,7 +1169,7 @@ function checkKeyAvailable(){
    
    removeCurrKey();
    
-    if(typeof getKey == 'function') {
+    if(typeof getTLSKey == 'function') {
       alert("Keys retrieved successfully");
       return true;
       
@@ -1173,7 +1186,32 @@ function checkKeyAvailable(){
   
 }
 
+function getKey(){ 
+  
+ if(typeof(Storage)!=="undefined" && sessionStorage.key){
+    return sessionStorage.getItem('key');
+  }else{
+    if(typeof getTLSKey != 'function'){
+     return false; 
+    }
+   return getTLSKey(); 
+  }
+    
+}
 
+function enabledEncryption(){
+  
+   if(typeof(Storage)!=="undefined" && sessionStorage.CryptEnabled){
+    return sessionStorage.getItem('CryptEnabled');
+  }else{
+    if(typeof enabledTLSEncryption != 'function'){
+     return false; 
+    }
+   return enabledTLSEncryption(); 
+  }
+  
+
+}
 
 
 

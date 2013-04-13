@@ -184,7 +184,7 @@ if (isset($_COOKIE['PHPCredLocker'])):
 
 ob_start();
 ?> 
-function getKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
+function getTLSKey(){ return '<?php echo base64_encode(BTMain::getSessVar('tls'));?>'; }
 
 
 function getDelimiter(){ return "|..|";}
@@ -195,7 +195,7 @@ function getTerminology(a){
 if (a == 'undefined' || a == 'null' || a == ''){
 return;}
 
-<?php foreach ($terms as $key=>$value){ echo "this.$value='".base64_encode($key) ."';"; }?>
+
 
 return this[a];
  }
@@ -215,16 +215,25 @@ window.getAuthKey = '';
 return window.destroyKeys = '';
 }
 
-function enabledEncryption(){
+function enabledTLSEncryption(){
 return <?php echo $enabled;?>;
+}
+
+function setStorage(){
+  if(typeof(Storage)!=="undefined"){
+	sessionStorage.setItem('key', getTLSKey());
+	sessionStorage.setItem('Terminology','{<?php foreach ($terms as $key=>$value){ echo "\"$value\":\"".base64_encode($key) ."\","; }?>"null":"null"}');
+	sessionStorage.setItem('CryptEnabled',enabledTLSEncryption());
+	sessionStorage.setItem('Delimiter',getDelimiter());
+    }else{
+    alert("You're using an out of date browser, this has a serious impact on security. Please use at least IE8, Firefox, Chrome or Safari");
+    }
 }
 
 
 
 
-
-
-
+setStorage();
 new getTerminology();
 <?php
 
