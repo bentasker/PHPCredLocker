@@ -43,6 +43,24 @@ return md5($salt.date('y-m-dHis'));
 }
 
 
+/** bcrypt the pass
+*
+* Ta to Jon Hulka on stackoverflow for this function!
+*
+*/
+function blowfishCrypt($password,$cost)
+{
+    $chars='./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    $salt=sprintf('$2a$%02d$',$cost);
+//For PHP >= PHP 5.3.7 use this instead (as per martinstoeckli's suggestion)
+//    $salt=sprintf('$2y$%02d$',$cost);
+    //Create a 22 character salt -edit- 2013.01.15 - replaced rand with mt_rand
+    mt_srand();
+    for($i=0;$i<22;$i++) $salt.=$chars[mt_rand(0,63)];
+    return crypt($password,$salt);
+}
+
+
 /** Generate a random password of the specified length
 *
 * @arg length - INT
@@ -109,8 +127,8 @@ function editUser($username,$pass,$RName, $groups){
 	// We need to create a salt for the password
 	$user->salt = $this->createSalt();
 
-	// Salt the password
-	$user->pass = md5($pass.$user->salt);
+	// Salt the password - why the hell was I using MD5 here?? I don't remember doing that - embarassing
+	$user->pass = $this->blowfishCrypt(md5($pass.$user->salt),12);
 
 	// Get the plaintext password out of memory
 	unset($pass);
@@ -145,7 +163,7 @@ function createUser($username,$plaintextPass,$RealName, $groups){
 $user->salt = $this->createSalt();
 
 // Salt the password
-$user->pass = md5($plaintextPass.$user->salt);
+$user->pass = $this->blowfishCrypt(md5($plaintextPass.$user->salt),12);
 $user->RealName = $RealName;
 $user->groups = $groups;
 $user->username = $username;
@@ -233,7 +251,7 @@ unset($crypt);
 // Get the valid hash out of memory as we have it in an array anyway
 unset($user->pass);
 
-    if( md5($password.$pass[1]) != $pass[0]){
+    if( crypt(md5($password.$pass[1]),$pass[0]) != $pass[0]){
       return $this->logFailedAttempt($username,$db);
       }
 
