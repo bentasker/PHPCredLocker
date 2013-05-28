@@ -33,7 +33,7 @@ BTMain::unsetSessVar('FormToken');
 
       $pass = BTMain::getVar('frmPass');
 
-	    if (!BTMain::getConnTypeSSL()){
+	    if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $crypt = new Crypto;
 	    $tlskey = BTMain::getsessVar('tls');
 	    $pass = $crypt->xordstring(base64_decode($pass),$tlskey);

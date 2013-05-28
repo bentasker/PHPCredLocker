@@ -23,7 +23,7 @@ if (BTMain::getVar('addCredSubmitted')){
   $hidden = BTMain::getVar('frmHidden');
   $comment = BTMain::getVar('frmComment');
   
-  if (!BTMain::getConnTypeSSL()){
+  if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $crypt = new Crypto;
 	    $tlskey = BTMain::getsessVar('tls');
 	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);

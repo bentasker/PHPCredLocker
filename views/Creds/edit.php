@@ -38,7 +38,7 @@ $hidden = BTMain::getVar('frmHidden');
 $hidden = 0;
 }
   
-  if (!BTMain::getConnTypeSSL()){
+  if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $crypt = new Crypto;
 	    $tlskey = BTMain::getsessVar('tls');
 	    $cred = $crypt->xordstring(base64_decode($cred),$tlskey);

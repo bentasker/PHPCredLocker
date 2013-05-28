@@ -25,7 +25,7 @@ $email = BTMain::getVar('FrmEmail');
 
 
 
-	if (!BTMain::getConnTypeSSL()){
+	if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $tlskey = BTMain::getsessVar('tls');
 	    $frmname = $crypt->xordstring(base64_decode($frmname),$tlskey);
 	    $fname = $crypt->xordstring(base64_decode($fname),$tlskey);
