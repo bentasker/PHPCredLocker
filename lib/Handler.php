@@ -40,7 +40,7 @@ $custportalmethods = array("logout","editCred");
     $key = BTMain::getSessVar('AuthKey');
     $pass = BTMain::getVar('FrmPass');
     
-    if (!BTMain::getConnTypeSSL()){
+    if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
     $pass =& $crypt->xordstring(base64_decode($pass),$key);
     }
 

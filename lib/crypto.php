@@ -180,7 +180,7 @@ return $str.":".$str2;
 */
 function genXorPadding(){
 
-if (BTMain::getConnTypeSSL()){
+if (BTMain::getConnTypeSSL() && !BTMain::getConf()->forceTLS){
 return "a";
 }
 

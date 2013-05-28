@@ -54,7 +54,7 @@ $option = BTMain::getVar('option');
 
 
 
-	if (!BTMain::getConnTypeSSL()){
+	if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $tlskey = BTMain::getsessVar('tls');
 	    $option = base64_decode($crypt->xordstring(base64_decode($option),$tlskey));
 	 }

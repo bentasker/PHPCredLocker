@@ -606,6 +606,7 @@ function credlocker_install_stage_2(){
 <input type="hidden" name="template" value="EstDeus">
 <input type="hidden" name="JSMinName" value=".min">
 <input type="hidden" name="forceSSL" value="false">
+<input type="hidden" name="forceTLS" value="true">
 
 <table>
 <tr>
