@@ -128,7 +128,7 @@ function editUser($username,$pass,$RName, $groups){
 	$user->salt = $this->createSalt();
 
 	// Salt the password - why the hell was I using MD5 here?? I don't remember doing that - embarassing
-	$user->pass = $this->blowfishCrypt(md5($pass.$user->salt),12);
+	$user->pass = $this->blowfishCrypt($pass.$user->salt,12);
 
 	// Get the plaintext password out of memory
 	unset($pass);
@@ -163,7 +163,7 @@ function createUser($username,$plaintextPass,$RealName, $groups){
 $user->salt = $this->createSalt();
 
 // Salt the password
-$user->pass = $this->blowfishCrypt(md5($plaintextPass.$user->salt),12);
+$user->pass = $this->blowfishCrypt($plaintextPass.$user->salt,12);
 $user->RealName = $RealName;
 $user->groups = $groups;
 $user->username = $username;
@@ -251,12 +251,20 @@ unset($crypt);
 // Get the valid hash out of memory as we have it in an array anyway
 unset($user->pass);
 
-    if( crypt(md5($password.$pass[1]),$pass[0]) != $pass[0]){
-      return $this->logFailedAttempt($username,$db);
+
+    if (crypt($password.$pass[1],$pass[0]) != $pass[0]){
+	// Check for a match on the old schema, there's only a risk of hash collision if the stored password is MD5
+	if (md5($password.$pass[1]) == $pass[0]){
+	  // We need to update the stored hash to use the new schema. Still don't remember going with MD5. Should know better!
+	  $db->updPass($username,$this->blowfishCrypt($password.$pass[1],12),$pass[1]);
+	}else{
+	  return $this->logFailedAttempt($username,$db);
+	}
+
       }
 
 // Create a Session ID
-    $sessID = md5(date('YmdHis') . mt_rand(10,80000) . mt_rand(11,500) . $username . mt_rand(0,90000));
+    $sessID = sha1(date('YmdHis') . mt_rand(10,80000) . mt_rand(11,500) . $username . mt_rand(0,90000));
 
 // Get the hashes out of memory
     unset($password);
@@ -337,6 +345,7 @@ fclose($fh);
 
 return true;
 }
+
 
 
 /** Invalid Login

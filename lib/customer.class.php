@@ -33,7 +33,8 @@ if (!$id){
 // We add the customer to the portal, even if we won't let them log-in (i.e. the portal is disabled)
 $password = $auth->generatePassword();
 $salt = $auth->createSalt();
-$pass = md5($password.$salt);
+$pass = ProgAuth::blowfishCrypt($password.$salt,12);
+
 
 
 if ($db->addCusttoPortal($id,$email,$pass.":".$salt,1)) {
@@ -77,7 +78,7 @@ $db = new AuthDB;
 // We add the customer to the portal, even if we won't let them log-in (i.e. the portal is disabled)
 $password = $auth->generatePassword();
 $salt = $auth->createSalt();
-$pass = md5($password.$salt);
+$pass = ProgAuth::blowfishCrypt($password.$salt,12);
 
 
  global $notifications;

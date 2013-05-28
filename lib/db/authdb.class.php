@@ -215,6 +215,25 @@ return $this->runQuery();
 }
 
 
+
+/** Update a user's password hash in the database
+*
+*/
+function updPass($user,$hash,$salt){
+  $crypt = new Crypto;
+  $user = $this->stringEscape($user);
+  $hash = $this->stringEscape($crypt->encrypt($hash.":".$salt,'auth'));
+
+  $sql = "UPDATE #__Users SET `pass`='$hash' WHERE `username`='$user'";
+  
+  $this->setQuery($sql);
+  $result = $this->runQuery();
+
+}
+
+
+
+
 /** Edit user
 *
 * @arg user - Object containing all User details to be inserted
