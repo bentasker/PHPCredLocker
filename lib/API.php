@@ -207,7 +207,7 @@ $endpadding = $crypt->genXorPadding();
 
 $op = $padding.$opDivider.ob_get_clean().$opDivider.$endpadding;
 
-if (!BTMain::getConnTypeSSL()){
+if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 $op = base64_encode($crypt->xorestring(base64_encode($op),$tlskey));
 }
 
