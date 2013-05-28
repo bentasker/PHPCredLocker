@@ -232,7 +232,7 @@ $cred = $crypt->encrypt($cred,'Cre'.$credtype);
 }
 
 if (!empty($comment)){
-$comment = $crypt->encrypt($cred,'Cre'.$comment);
+$comment = $crypt->encrypt($comment,'Cre'.$credtype);
 }
 
 $address = $this->stringEscape($address);
