@@ -15,7 +15,7 @@
   /* Rejig the content */
   body {padding-left: 0px !important; padding-right:0px !important;}
   h1 {font-size: 20px; line-height: 22px;}
-  #ContentWrap {border-radius: 0px !important; width: 100%; padding: 0px;}
+  #ContentWrap {border-radius: 0px !important; width: 96%; padding: 0px; padding-left: 2%; padding-right: 2%;}
   .content {width: 100%}
   
   .btn {font-size: smaller}
