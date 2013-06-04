@@ -53,7 +53,7 @@ echo 'Fail">Not Available';
 <tr><th>Connection Type</th><td class="test<?php if (BTMain::getConnTypeSSL()){
 echo 'Pass">SSL Enabled';
 }else{
-echo 'Fail">SSL Not Enabled'
+echo 'Fail">SSL Not Enabled';
 }
 ?>
 </td></tr>
