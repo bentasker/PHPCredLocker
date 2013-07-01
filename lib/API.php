@@ -86,7 +86,7 @@ case 'retCred':
     if ((BTMain::getUser()->PortalLogin != 1) || ($cred->hidden !=1)){
     $pass = htmlspecialchars($crypt->decrypt($cred->Hash,$key));
     }else{
-    $pass = "<span style='font-size: x-small'>You are not authorised to view this password</span>";
+    $pass = "<span style='font-size: x-small'><i class='icon-ban-circle'></i> You are not authorised to view this password</span>";
     }
 
     $address = htmlspecialchars($crypt->decrypt($cred->Address,$key));
