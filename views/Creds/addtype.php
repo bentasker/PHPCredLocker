@@ -39,7 +39,9 @@ $submitted = 1;
 include('lib/includes/gatherEntropy.php');
 unset($submitted);
  
-if(!$crypt->addKey($newkey,$newid)){
+$klength = BTMain::getVar('kLength');
+
+if(!$crypt->addKey($newkey,$newid,$klength)){
 
 
 $notifications->setNotification("KeyGenerationFailed");

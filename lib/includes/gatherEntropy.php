@@ -11,7 +11,9 @@
 
 defined('_CREDLOCK') or die;
 
-
+if (!$crypt){
+  $crypt = new Crypto;
+}
 
 
 // Are we processing the generated or outputting the field
@@ -22,7 +24,7 @@ $entropy = str_replace(",","",BTMain::getVar('gEntropy'));
 
 $entropyseed = mt_rand(1000,999000);
 
-$x = 1100;
+$x = BTMain::getVar('kLength');
 
 
 
@@ -50,13 +52,6 @@ $prkey = substr($prkey, mt_rand(0,475), 25);
 
 $newkey = $entropyseed . $prkey . $entropy . $seed;
 
-
-
-if (!$crypt){
-$crypt = new Crypto;
-}
-
-
 $newkey = $crypt->encrypt($newkey,'ONEWAY',$ecrypt);
 
 
@@ -75,6 +70,9 @@ $notifications->RequireCSS('Entropy');
 
 
 ?>
+<label for="keyLength">Key Length</label>
+<input id="keyLength" type="text" name="kLength" value="<?php echo $crypt->getKeyLength();?>">
+
 <div id="EntropyGeneration">
 
 <div class='EntropyDiv' id="ClickDiv" title="Move your around mouse randomly whilst clicking. Box will turn green when sufficient clicks have been registered"></div>

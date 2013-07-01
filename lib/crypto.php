@@ -29,6 +29,16 @@ $this->cipher = $cipher;
 
 
 
+/** Get the system configured keyLength
+*
+*/
+function getKeyLength(){
+  if (!$this->cipher){
+  $this->loadConfig();
+  }
+return $this->cipher->keyLength;
+}
+
 
 /** XOR functions Although the keys currently used are symmetric, 
     the JS function doesn't seem to cope well with converting the 
@@ -211,16 +221,21 @@ return $str;
 *
 * @return
 */
-function addKey(&$newkey,$newid){
+function addKey(&$newkey,$newid,$klength = false){
 
 
 $this->loadConfig();
 
+if (!$klength || empty($klength) || $klength < $this->cipher->keyLength){
+  $klength = $this->cipher->keyLength;
+}
+
+
 // Trim to the required keylength
-$newkey = substr( $newkey, 0,$this->cipher->keyLength);
+$newkey = substr( $newkey, 0, $klength);
 
 $cryptconf = fopen(getcwd() . '/conf/crypto.php','a');
-$str = "\n\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';\n";
+$str = "\n\$crypt->Cre$newid = '" . str_replace("'",'"',$newkey) . "';";
 fwrite($cryptconf,$str);
 
 unset($newkey);
