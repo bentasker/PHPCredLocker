@@ -120,7 +120,7 @@ $i = 0;
 	// Originally passed this through substr, not sure why - tired I guess
         $a = ord($str[$i]);
 
-	// Perform a bitwise XOR
+	// Perform a bitwise XOR using both parts of the key
         $b = ($a ^ ord($k[0][$kpos])) ^ ord($k[1][$kpos]);    
         
     
@@ -306,7 +306,7 @@ return openssl_encrypt($string, $this->cipher->OpenSSL->Cipher, $this->keys->$ty
 
 
 
-function encrypt_doubleROT13(&$string,$type){ return "If you've enabled this, you really shouldn't be in charge of Crypto Settings!"; }
+function encrypt_doubleROT13(&$string,$type){ return base64_decode("SWYgeW91J3ZlIGVuYWJsZWQgdGhpcywgeW91IHJlYWxseSBzaG91bGRuJ3QgYmUgaW4gY2hhcmdlIG9mIENyeXB0byBTZXR0aW5ncyE="); }
 
 
 
