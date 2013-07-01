@@ -466,7 +466,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
      cnt.value = limit;
     count = limit;
       Address.innerHTML = resp[3];
-      Pass.innerHTML = resp[2];
+      Pass.innerHTML = '<input class="passDisp" onclick="this.select();" type="text" value="'+resp[2]+'" title="Click to select" name="null"/>';
       User.innerHTML = resp[4];
       Pluginout.innerHTML = resp[5];
       clicky.innerHTML = 'Displaying Password for ' +count+ ' seconds';
