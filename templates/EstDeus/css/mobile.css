@@ -28,6 +28,8 @@
   .CredAddress {word-break: break-all;}
   .CredPluginOutput * {font-size: x-small; padding: 0px; margin: 0px;}
   .BreadCrumbs {width: 100%;}
+  i.addrDisp {display: inline-block;}
+  span.addrDisp {display: none; font-size: 0.8em;}
   
 }
 

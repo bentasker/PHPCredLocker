@@ -96,12 +96,20 @@ case 'retCred':
 	  $pass = "<a href='$pass' target=_blank title='Click to Open'>$pass</a>";
       }
 
-    // If a URL has been entered without http - See #31
-    if (substr($address,0,3) == "www"){
-    $address = "http://".$address;
+    $address_anchor = '';
+    if (!empty($address)){
+
+      // If a URL has been entered without http - See #31
+      if (substr($address,0,3) == "www"){
+      $address = "http://".$address;
+      }
+
+      $address_anchor = "<a href='$address' target=_blank><span class='addrDisp' id='addrDisp' onclick='alert(\"$address\");'>".
+      $address."</span></a><i class='icon-globe addrDisp' onclick=\"$('#addrDisp').css('display','inline');$(this).css('display','none');\"></i>";
+
     }
 
-    echo $pass.$opDivider."<a href='$address' target=_blank>".$address."</a>" .$opDivider. 
+    echo $pass.$opDivider.$address_anchor.$opDivider. 
 	 $uname . $opDivider;
 
 
