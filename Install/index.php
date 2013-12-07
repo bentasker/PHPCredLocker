@@ -2,7 +2,7 @@
 /** PHPCredLocker Installer File
 *
 * Copyright (C) 2012 B Tasker
-* Released under GNU GPL V2
+* Released under GNU AGPL V3
 * See LICENSE
 *
 */
@@ -275,7 +275,7 @@ return;
 
 
 // Create the file header
-$str = "<?php\n/** Crypto Keys\n*\n*KEEP THIS FILE SECRET!\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU GPL V2\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
+$str = "<?php\n/** Crypto Keys\n*\n*KEEP THIS FILE SECRET!\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU AGPL V3\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
 
 fwrite($fh,$str);
 
@@ -413,7 +413,7 @@ return;
 
 
 // Create the file header
-$str = "<?php\n/** System Configuration\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU GPL V2\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
+$str = "<?php\n/** System Configuration\n*\n* Copyright (C) 2012 B Tasker\n* Released under GNU AGPL V3\n* See LICENSE\n*\n*/\ndefined('_CREDLOCK') or die;\n\n";
 
 fwrite($fh,$str);
   foreach ($_POST as $key=>$value){

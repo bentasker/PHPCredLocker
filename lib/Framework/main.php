@@ -4,7 +4,7 @@
 * System's central class, contains often used resources
 *
 * Copyright (C) 2012 Ben Tasker
-* Released under GNU GPL V2
+* Released under GNU AGPL V3
 * See LICENSE
 *
 */

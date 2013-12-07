@@ -2,7 +2,7 @@
 /** ExternalResources plugin - Allows static assets (JS and CSS) normally in the resources directory to be stored on a seperate server
 *
 * Copyright (C) 2012 B Tasker
-* Released under GNU GPL V2
+* Released under GNU AGPL V3
 * See LICENSE
 *
 */

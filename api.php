@@ -2,7 +2,7 @@
 /** API Entry Point
 *
 * Copyright (C) 2012 B Tasker
-* Released under GNU GPL V2
+* Released under GNU AGPL V3
 * See LICENSE
 *
 */

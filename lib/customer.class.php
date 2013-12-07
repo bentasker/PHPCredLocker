@@ -2,7 +2,7 @@
 /** Customer Portal related functions
 *
 * Copyright (c) 2012 B Tasker
-* Released under GNU GPL V2
+* Released under GNU AGPL V3
 * See LICENSE
 *
 */ 
