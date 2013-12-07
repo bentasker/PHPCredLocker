@@ -32,7 +32,7 @@ require 'conf/plugins/AffinityLive/config.php';
 function getPlgDetails(){
 $details->Name = "plg_AffinityLive_Logging";
 $details->author = 'B Tasker';
-$details->License = 'GNU GPL V2';
+$details->License = 'GNU AGPL V3';
 
 return $details;
 

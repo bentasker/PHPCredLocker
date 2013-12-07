@@ -33,7 +33,7 @@ function getPlgDetails(){
 $details->Name = "plg_ExternalResources";
 $details->Description = "Allows the contents of the Resources directory (excluding info.php) to be moved to another server";
 $details->Author = 'B Tasker';
-$details->License = 'GNU GPL V2';
+$details->License = 'GNU AGPL V3';
 return $details;
 }
 
