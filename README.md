@@ -5,8 +5,10 @@ See http://www.bentasker.co.uk/documentation/phpcredlocker/163-phpcredlocker for
 documentation.
 
 Copyright (C) 2012 B Tasker
-Released under GNU GPL V2 - http://www.gnu.org/licenses/gpl-2.0.html - All
+Released under GNU Affero GPL V3 - http://www.gnu.org/licenses/agpl-3.0.txt - All
 rights not  explicitly permitted by the license are reserved
+
+(Version 1 was released under GNU GPL V2, later versions are only available under the AGPL)
 
 ------------------------------
 
@@ -22,3 +24,14 @@ https to ensure that all credentials are protected in transit.
 
 You can view a demo at http://demo.bentasker.co.uk/PHPCredLocker/ including all
 developed plugins.
+
+
+
+Why the AGPL?
+---------------
+
+As a rule, I release most software under the GNU GPL V2 (or sometimes 3), PHPCredlocker is different however.
+
+Given the intended use-case of CredLocker, it's not the operator who is 'at risk'. It's those who own the systems/sites that the stored credentials allow access to. Therefore, it's only right that they at least be given opportunity to inspect the source of the system holding their credentials. 
+
+The AGPL works in exactly the same way as the GPL, but with an additional caveat - If you're running CredLocker as a web service, the users must be able to download a copy of the source.
