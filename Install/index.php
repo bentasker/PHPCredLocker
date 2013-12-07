@@ -480,6 +480,7 @@ $sqls = array(
   `Custom` blob,
   `hidden` tinyint(1) DEFAULT 0,
   `comment` blob DEFAULT NULL,
+  `blind` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `idx_Cred_Group` (`Group`),
   KEY `idx_cred_cust` (`cust`)
