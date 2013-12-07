@@ -8,7 +8,7 @@ Description: Javascript function for PHPCredLocker.
   
   Will definitely be improved upon in later releases.  
   
-License: GNU GPL V2 -  See http://www.gnu.org/licenses/gpl-2.0.html
+License: GNU AGPL V3 -  See http://www.gnu.org/licenses/agpl-3.0.html
 
 Repo: https://github.com/bentasker/PHPCredLocker/
 ---------------------------------------------------------------
