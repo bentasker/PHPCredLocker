@@ -970,6 +970,11 @@ function blindpass(plain){
    return false; 
   }
   
+  if (pass.len < 6){
+   alert("Password is too short");
+   return blindpass(plain);
+  }
+  
   key = processblindpass(pass);
   
   // Encrypt the pass with the generated key
