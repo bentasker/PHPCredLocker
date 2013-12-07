@@ -416,7 +416,7 @@ function comparePwds(){
 	
 function getCreds(id){
 
-var xmlhttp, resp, limit, cnt, count, option,
+var xmlhttp, resp, limit, cnt, count, option,doubleblind,
     clicky = document.getElementById('retrievePassword'+id),
     Address = document.getElementById('Address'+id),
     User = document.getElementById('UserName'+id),
@@ -465,6 +465,17 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     cnt = document.getElementById('PassCount'+id);
      cnt.value = limit;
     count = limit;
+      doubleblind = resp[6];
+      
+      // Do we need to ask the user for a decryption key for the pass?
+      if (doubleblind == 1){
+	resp[2] = unblindpass(resp[2]);
+	if (!resp[2]){
+	    alert("You provided an incorrect decryption key");
+	    return;
+	}
+      }
+      
       Address.innerHTML = resp[3];
       Pass.innerHTML = '<input class="passDisp" onclick="this.select();" type="text" value="'+resp[2]+'" title="Click to select" name="null"/>';
       User.innerHTML = resp[4];
@@ -931,6 +942,53 @@ menu.appendChild(ele);
  * as it means a longer request.
  * 
  */
+
+
+
+function unblindpass(ciphertext){
+  var plaintext,pass,key,
+  prompttext = 'Please enter the decryption phrase for this password';
+  pass = prompt(prompttext," ");
+  
+  if (pass==' ' || !pass || pass == null){
+   return false; 
+  }
+  
+  key = processblindpass(pass);
+  plaintext = xordstr(ciphertext,key);
+  
+  return plaintext;
+}
+
+
+function blindpass(plain){
+  var cipher,pass,key,
+  prompttext = 'Please enter an encryption phrase for this password';
+  pass = prompt(prompttext," ");
+  
+  if (pass==' ' || !pass || pass == null){
+   return false; 
+  }
+  
+  key = processblindpass(pass);
+  
+  // Encrypt the pass with the generated key
+  cipher = xorestr(ciphertext,key);
+  
+  // Return the cipher text
+  return cipher;
+  
+}
+
+
+function processblindpass(pass){
+ var key,idx;
+ key = Base64.encode(pass);
+ idx = key.len / 2;
+ key = key.substring(0,idx) + ":" + key.substring(idx+1);
+ 
+ return key; 
+}
 
 
 function inlineDeCrypt(){
