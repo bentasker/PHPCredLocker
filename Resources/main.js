@@ -969,7 +969,7 @@ menu.appendChild(ele);
 
 
 function unblindpass(ciphertext){
-  var plaintext,pass,key,check,
+  var plaintext,pass,key,check,str,
   prompttext = 'Please enter the decryption phrase for this password';
   
   
@@ -1002,13 +1002,13 @@ function unblindpass(ciphertext){
   key = processblindpass(pass);
   plaintext = xordstr(Base64.decode(ciphertext),key);
   check = plaintext.split("|..|");
-  
+  str = Base64.decode(check[1]);
   // Check whether decryption was successful
-  if (check[0] != "1"){
+  if (check[0] != "1" || checksum(str+pass) != check[2]){
    return false; 
   }
   
-  return Base64.decode(check[1]);
+  return str;
 }
 
 
@@ -1053,7 +1053,7 @@ function blindpass(plain){
   key = processblindpass(pass);
   
   // Encrypt the pass with the generated key
-  cipher = Base64.encode(xorestr("1|..|"+Base64.encode(plain),key));
+  cipher = Base64.encode(xorestr("1|..|"+Base64.encode(plain)+"|..|"+checksum(plain+pass),key));
   
   
   // Return the cipher text
@@ -1366,6 +1366,18 @@ function enabledEncryption(){
 
 }
 
+// Written by Schnaader/Joelpt of StackOverflow - http://stackoverflow.com/questions/811195/fast-open-source-checksum-for-small-strings
+function checksum(s)
+{
+  var i;
+  var chk = 0x12345678;
+
+  for (i = 0; i < s.length; i++) {
+    chk += (s.charCodeAt(i) * i);
+  }
+
+  return chk;
+}
 
 
 
