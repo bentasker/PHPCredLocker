@@ -129,7 +129,9 @@ echo implode("\n",$custdets);
 
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 
+<div style="display: none;">
 <label for="dblBlind" title="<?php echo Lang::_("EnableDoubleBlindStorage-tooltip"); ?>"><?php echo Lang::_("EnableDoubleBlindStorage"); ?></label><input type="checkbox" name="dblBlind" value="1" id="dblBlind">
+</div>
 
 <label for="frmCredentialHidden">Hide from Customer</label><input type="checkbox" name="frmHidden" id="frmHidden" value="1">
 <?php include 'lib/includes/groupSelection.php'; ?>
