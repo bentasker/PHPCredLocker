@@ -110,7 +110,7 @@ case 'retCred':
     }
 
     echo $pass.$opDivider.$address_anchor.$opDivider. 
-	 $uname . $opDivider;
+	 $uname . $opDivider . $cred->blind .$opDivider;
 
 
     // Call any configured plugins

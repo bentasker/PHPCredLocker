@@ -60,7 +60,7 @@ $ACL = BTMain::buildACLQuery();
 
 $id = $this->stringEscape($id);
 
-$sql = "SELECT Hash, Clicky, Address, UName, CredType, `hidden`, `Group` FROM #__Cred WHERE id='$id' AND ($ACL)";
+$sql = "SELECT Hash, Clicky, Address, UName, CredType, `hidden`, `Group`,`blind` FROM #__Cred WHERE id='$id' AND ($ACL)";
 $this->setQuery($sql);
 
 
@@ -211,7 +211,7 @@ return false;
 *
 * @return object
 */
-function addCred($cust,$credtype,$cred,$comment,$clicky,$group = 1,$address = '', $uname = '',$hidden = 0)
+function addCred($cust,$credtype,$cred,$comment,$clicky,$group = 1,$address = '', $uname = '',$hidden = 0,$dblblind=0)
 {
 
 
@@ -247,8 +247,8 @@ $group = $this->stringEscape($group);
 $hidden = $this->stringEscape($hidden);
 
 
-$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`,`hidden`,`comment`) ".
-"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname','$hidden','$comment')";
+$sql = "INSERT INTO #__Cred (`cust`,`Added`,`Group`,`Hash`,`CredType`,`Clicky`,`Address`,`UName`,`hidden`,`comment`,`blind`) ".
+"VALUES ('$cust','$date','$group','$cred','$credtype','$clicky','$address','$uname','$hidden','$comment',".(int)$dblblind.")";
 $this->setQuery($sql);
 
 $id = $this->insertID();

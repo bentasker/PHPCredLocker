@@ -22,3 +22,5 @@ $lang['User'] = 'User';
 $lang['User Groups'] = 'User Groups';
 $lang['UserGroup'] = 'Group';
 $lang['Comment'] = 'Comment';
+$lang['EnableDoubleBlindStorage'] = "Enable Browser side decryption";
+$lang['EnableDoubleBlindStorage-tooltip'] = "When saving the credential, you will be asked to enter a password (which is never sent to the server). When viewing the credential, you will be asked for the password and your browser will be unable to decrypt the credential unless you provide the correct details";

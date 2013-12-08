@@ -22,6 +22,7 @@ if (BTMain::getVar('addCredSubmitted')){
   $user = BTMain::getVar('frmUser');
   $hidden = BTMain::getVar('frmHidden');
   $comment = BTMain::getVar('frmComment');
+  $dblblind = BTMain::getVar('dblBlind');
   
   if (!BTMain::getConnTypeSSL() || BTMain::getConf()->forceTLS){
 	    $crypt = new Crypto;
@@ -33,7 +34,7 @@ if (BTMain::getVar('addCredSubmitted')){
 	 }
 
 
-  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,$comment,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user,$hidden);
+  $newcred = $creds->addCred(BTMain::getVar('cust'),BTMain::getVar('FrmCredType'),$cred,$comment,BTMain::getVar('frmClicky'),BTMain::getVar('frmGroup'),$addr,$user,$hidden,$dblblind);
   // Add the cred to the db
   if ($newcred){
   // Success
@@ -128,6 +129,7 @@ echo implode("\n",$custdets);
 
 <label for="frmAddress"><?php echo Lang::_("Address");?></label><input type="text" name="frmAddress" id="frmAddress">
 
+<label for="dblBlind" title="<?php echo Lang::_("EnableDoubleBlindStorage-tooltip"); ?>"><?php echo Lang::_("EnableDoubleBlindStorage"); ?></label><input type="checkbox" name="dblBlind" value="1" id="dblBlind">
 
 <label for="frmCredentialHidden">Hide from Customer</label><input type="checkbox" name="frmHidden" id="frmHidden" value="1">
 <?php include 'lib/includes/groupSelection.php'; ?>

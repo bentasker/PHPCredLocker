@@ -12,7 +12,7 @@ Copyright (c) 2012 Ben Tasker
 */
 
 
-var counter=false, cancel='', dispcred, interval,terms;
+var counter=false, cancel='', dispcred, interval,terms,multiblind=false,blindpassval;
 
 
 
@@ -221,11 +221,13 @@ function checkNewCust(){
 function checkNewCred(){
 
   
-  var cred = document.getElementById('frmCredential'),
+  var credb,
+      cred = document.getElementById('frmCredential'),
       user = document.getElementById('frmUser'),
       addr = document.getElementById('frmAddress'),
       grp = document.getElementById('frmGroup'),
-      comment = document.getElementById('frmComment');
+      comment = document.getElementById('frmComment'),
+      blind = document.getElementById('dblBlind');
       
       
       
@@ -245,6 +247,24 @@ document.getElementById('frmClicky').value = 1;
 
 if (enabledEncryption()){ 
  
+ // Do we need to make this double blind?
+ if (blind.checked == true){
+   setMultiBlind(2);
+   credb = blindpass(cred.value);
+   if (credb){
+      cred.value = credb;
+      user.value = blindpass(user.value);
+      
+      // Technically un-necessary as the counter should have hit 0, but play it safe.
+      unsetMultiBlind();
+   }else{
+    alert("Aborting save");
+    return false;
+   }
+   
+ }
+  
+  
  // Calculate the encrypted value
  cred.value = Base64.encode(xorestr(cred.value,retKey()));
  user.value = Base64.encode(xorestr(user.value,retKey()));
@@ -465,11 +485,14 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
     cnt = document.getElementById('PassCount'+id);
      cnt.value = limit;
     count = limit;
-      doubleblind = resp[6];
+      doubleblind = resp[5];
       
       // Do we need to ask the user for a decryption key for the pass?
       if (doubleblind == 1){
+	setMultiBlind(2);
 	resp[2] = unblindpass(resp[2]);
+	resp[4] = unblindpass(resp[4]);
+	unsetMultiBlind();
 	if (!resp[2]){
 	    alert("You provided an incorrect decryption key");
 	    return;
@@ -479,7 +502,7 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       Address.innerHTML = resp[3];
       Pass.innerHTML = '<input class="passDisp" onclick="this.select();" type="text" value="'+resp[2]+'" title="Click to select" name="null"/>';
       User.innerHTML = resp[4];
-      Pluginout.innerHTML = resp[5];
+      Pluginout.innerHTML = resp[6];
       clicky.innerHTML = 'Displaying Password for ' +count+ ' seconds';
       
       if (counter){
@@ -948,14 +971,36 @@ menu.appendChild(ele);
 function unblindpass(ciphertext){
   var plaintext,pass,key,check,
   prompttext = 'Please enter the decryption phrase for this password';
-  pass = prompt(prompttext," ");
+  
+  
+  if (!multiblind || !blindpassval || blindpassval == null || multiblind == 0){
+      pass = prompt(prompttext," ");
+      
+      // Remember the password if multiblind is configured
+      if (multiblind && multiblind > 0){
+	blindpassval = pass;
+      }
+  }else{
+   // Decrease the counter by 1
+   multiblind--;
+   
+   // Grab the password
+   pass = blindpassval;
+   
+   // If the counter is now at 0, unset the password
+   if (multiblind == 0){
+      unsetMultiBlind();
+   }
+   
+  }
+  
   
   if (pass==' ' || !pass || pass == null){
    return false; 
   }
   
   key = processblindpass(pass);
-  plaintext = xordstr(ciphertext,key);
+  plaintext = xordstr(Base64.decode(ciphertext),key);
   check = plaintext.split("|..|");
   
   // Check whether decryption was successful
@@ -963,14 +1008,38 @@ function unblindpass(ciphertext){
    return false; 
   }
   
-  return base64.decode(check[1]);
+  return Base64.decode(check[1]);
 }
+
+
 
 
 function blindpass(plain){
   var cipher,pass,key,
   prompttext = 'Please enter an encryption phrase for this password';
-  pass = prompt(prompttext," ");
+  
+  
+  if (!multiblind || !blindpassval || blindpassval == null || multiblind == 0){
+      pass = prompt(prompttext," ");
+      
+      // Remember the password if multiblind is configured
+      if (multiblind && multiblind > 0){
+	blindpassval = pass;
+      }
+  }else{
+   // Decrease the counter by 1
+   multiblind--;
+   
+   // Grab the password
+   pass = blindpassval;
+   
+   // If the counter is now at 0, unset the password
+   if (multiblind == 0){
+      unsetMultiBlind();
+   }
+   
+  }
+  
   
   if (pass==' ' || !pass || pass == null){
    return false; 
@@ -984,8 +1053,8 @@ function blindpass(plain){
   key = processblindpass(pass);
   
   // Encrypt the pass with the generated key
-  cipher = xorestr(ciphertext,key);
-  cipher = "1|..|"+base64.encode(cipher);
+  cipher = Base64.encode(xorestr("1|..|"+Base64.encode(plain),key));
+  
   
   // Return the cipher text
   return cipher;
@@ -1002,6 +1071,20 @@ function processblindpass(pass){
  return key; 
 }
 
+
+// Set so that the unblind pass won't be requested for x number of decryptions (so that we can do pass, user and address without asking for the pass 3 times)
+function setMultiBlind(num){
+  multiblind=num;
+  blindpassval=false;
+  
+}
+
+
+// Unset multi-blind
+function unsetMultiBlind(){
+    multiblind=false;
+    blindpassval=false; 
+}
 
 function inlineDeCrypt(){
  var i, eles = document.getElementsByClassName('inlineTLS');
