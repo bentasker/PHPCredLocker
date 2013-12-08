@@ -202,9 +202,38 @@ case 'delGroup':
 
 case 'searchCredValue':
     BTMain::checkSuperAdmin();
+    require_once 'lib/db/Credentials.php';
+    require_once 'lib/db/Customer.php';
+    $db = new CredDB();
+    $custdb = new CustDB();
+
+
     $credtype = BTMain::getVar('id');
     $pass = $crypt->xordstring(base64_decode(BTMain::getVar('pass')),$tlskey);
-    echo "You submitted $credtype and $pass";
+
+    $searchpass = $crypt->encrypt($pass,'Cre'.$credtype);
+    
+
+    $creds = $db->searchKeyVal($searchpass,$credtype);
+    $credtypeData = $db->getCredType($credtype);
+    $credtypeData->Name = $crypt->decrypt($credtypeData->Name,'CredType');
+
+    // Return an empty response if no creds were found
+    if (!$creds){
+	break;
+    }
+
+    echo "<h3>".Lang::_('Credential Type').": {$credtypeData->Name}</h3>\n<br />".
+	  "<table class='credsearchResults'>\n".
+	  "<tr><th>".Lang::_('Customer')."</th><th>".Lang::_('User')."</th><th></th></tr>";
+
+    foreach ($creds as $cred){
+      
+      $customer = $custdb->getCustomerDetail($cred->cust);
+      echo "<tr><td>".$crypt->decrypt($customer->Name,'Customer') . "</td><td>".$crypt->decrypt($cred->Uname,"Cre".$credtype)."</td>".
+	    "<td class='editicon' onclick=\"window.location.href='index.php?option=editCred&id={$cred->id}';\"><i class='icon-pencil'></i></td></tr>";
+    }
+    echo "</table>\n<br />";
 
 break;
 

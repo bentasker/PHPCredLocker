@@ -199,6 +199,21 @@ return false;
 }
 
 
+
+/** Search for a password string within the database - the string to search must be passed pre-encrypted.
+*
+* @arg searchpass - cryptostring to search
+*
+* @return object
+*/
+function searchKeyVal($searchpass,$credtype){
+  $sql = "SELECT `id`,`cust`,`Uname` FROM #__Cred WHERE `blind`=0 AND `CredType`='".(int)$credtype."' AND `hash`='".$this->stringEscape($searchpass)."'";
+  $this->setQuery($sql);
+  return $this->loadResults();
+}
+
+
+
 /** Insert a new Credential into the database
 *
 * @arg cust - INT

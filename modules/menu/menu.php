@@ -81,6 +81,7 @@ $this->loadModule('search-table');
       <li><a href="index.php?option=viewGrps"><?php echo Lang::_("User Groups");?></a></li>
       <li><a href="index.php?option=listCredTypes"><?php echo Lang::_("Cred Types");?></a></li>
       <li><a href="index.php?option=pluginInfo">Plugins</a></li>  
+      <li><a href="index.php?option=searchCreds">Search Credential Values</a></li>
       <li><a href="index.php?option=About">About</a></li>
       </ul>
 

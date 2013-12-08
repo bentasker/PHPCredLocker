@@ -32,13 +32,19 @@ $frmToken = ProgAuth::generateFormToken();
 <input type="hidden" name="searchCredSubmitted" value="1">
 <input type="hidden" name="FormToken" value="<?php echo $frmToken; ?>">
 
+<p></p>
+<p>Use this page to identify all records for a given password - whether to ensure passwords aren't being re-used or because you know one has been compromised</p>
+<p>Double-blind passwords can not be included in the search (as the system doesn't have a decryption key for them).</p>
 
-<label for="frmPass">Password Confirm</label><input type="password" name="frmPass" id="frmPass">
+<label for="frmPass"></label><input type="password" name="frmPass" id="frmPass">
 
 <input type="submit" class="btn btn-primary" value="Search Credentials">
 
+<div id='LoadingIndicator' style="display:none" class="alert-info">Searching.....</div>
+
 <?php foreach ($credtypes as $credtype): ?>
 <span style="display: none" class="CredTypeID"><?php echo $credtype->id;?></span>
+<span style="display: none" class="CredTypeIndicator" id="CredTypeID<?php echo $credtype->id;?>"></span>
 <?php endforeach;?>
 
 </form>

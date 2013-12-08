@@ -251,10 +251,11 @@ function submitSearchCred(){
       pass = Base64.encode(xorestr(document.getElementById("frmPass").value,key)),
       option = cryptReq('searchCredValue',key),
       results = document.getElementById("ResultsTable");
-      
+      document.getElementById('LoadingIndicator').style.display = 'block';
+      results.innerHTML = '';
       
   for (i=0; i<types.length; i++){
-  
+    document.getElementById('CredTypeID'+types[i].innerHTML).innerHTML = 1;
     searchCred(types[i].innerHTML,pass,option,key,results);
     
   }
@@ -266,7 +267,7 @@ function submitSearchCred(){
 
 
 function searchCred(id,pass,option,key,results){
-    var xmlhttp,resp,res;
+    var xmlhttp,resp,res,checks,i,complete=0;
   
     if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
       xmlhttp=new XMLHttpRequest();
@@ -275,25 +276,45 @@ function searchCred(id,pass,option,key,results){
     }
 
     xmlhttp.onreadystatechange=function(){
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-      {
-	resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
-	// Check for an invalid verb response
-	if (resp[1] == 2){
-	  return unknownAPICommand(); 
-	}
-	  res = document.createElement("Div");
-	  res.innerHTML = resp[2];
-	  results.appendChild(res);  
-	}
+	if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	{
+	    resp = decryptAPIResp(xmlhttp.responseText,key).split(getDivider());
+	    // Check for an invalid verb response
+	    if (resp[1] == 2){
+	      return unknownAPICommand(); 
+	    }
+	    
+	    if (resp[2] != '' && resp[2] != null){
+	      res = document.createElement("Div");
+	      res.innerHTML = resp[2];
+	      results.appendChild(res);  
+	    }
+	    document.getElementById('CredTypeID'+id).innerHTML = 0;
+	      
+	    checks = document.getElementsByClassName('CredTypeIndicator');
+	    // Are all searches complete (should we hide the searching notification?)
+	    for (i=0;i<checks.length;i++){
+		if (checks[i].innerHTML == 1){
+		  break;
+		}
+		complete=1;
+	    }
+	    
+	    if (complete == 1){
+		document.getElementById('LoadingIndicator').style.display = 'none';
+		// Get the results table fresh out of the DOM
+		if (document.getElementById("ResultsTable").innerHTML == ''){
+		  results.innerHTML = '<div class="alert-info">No matches found</div>';
+		}
+	    }
+	    
+	  }
 	
     }
-  
-  
-  
-  xmlhttp.open("POST","api.php",true);
-  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send('option='+option+'&id='+id+'&pass='+pass);
+    // Send the request
+    xmlhttp.open("POST","api.php",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send('option='+option+'&id='+id+'&pass='+pass);
  
 }
 

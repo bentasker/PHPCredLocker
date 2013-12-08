@@ -57,3 +57,5 @@ td.delicon {width:2%;}
 
 input.passDisp, input.passDisp:focus {border: 0px; box-shadow: 0 0 0 0px; background: transparent; cursor: pointer; width: auto; padding: 0px; margin-bottom: 0px; height: auto; max-width: 100px;}
 i.addrDisp {display: none;}
+
+.credsearchResults th {text-align: left;}
