@@ -200,6 +200,14 @@ case 'delGroup':
     break;
 
 
+case 'searchCredValue':
+    BTMain::checkSuperAdmin();
+    $credtype = BTMain::getVar('id');
+    $pass = $crypt->xordstring(base64_decode(BTMain::getVar('pass')),$tlskey);
+    echo "You submitted $credtype and $pass";
+
+break;
+
 
 default:
   ob_clean();

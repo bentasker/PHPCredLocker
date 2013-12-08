@@ -63,7 +63,8 @@ $apiterms = array(
 			"delUser",
 			"delCredType",
 			"delCust",
-			"delGroup"
+			"delGroup",
+			"searchCredValue"
 				    );
 
 

@@ -182,6 +182,10 @@ $html->content = $html->loadView('user.changePass');
 break;
 
 
+case 'searchCreds':
+$html->content = $html->loadView('CredSearch.search');
+break;
+
 default:
 $html->content = $html->genDefaultPage();
 
