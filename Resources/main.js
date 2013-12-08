@@ -492,16 +492,16 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	setMultiBlind(2);
 	resp[2] = unblindpass(resp[2]);
 
-
+	// Check that decryption worked
 	if (!resp[2]){
-	  
-	    
+    
 	    dispcred=id;
 	    count=0;
 	    cnt.value=0;
-	    counter=setInterval("Credtimer('"+id+"')", 1000);
+	    counter=setInterval("Credtimer('"+id+"')", 2000);
       
 	    clicky.innerHTML = 'Decryption Failed';
+	    unsetMultiBlind();
 	    return false;
 	}
 	
