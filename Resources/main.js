@@ -946,7 +946,7 @@ menu.appendChild(ele);
 
 
 function unblindpass(ciphertext){
-  var plaintext,pass,key,
+  var plaintext,pass,key,check,
   prompttext = 'Please enter the decryption phrase for this password';
   pass = prompt(prompttext," ");
   
@@ -956,8 +956,14 @@ function unblindpass(ciphertext){
   
   key = processblindpass(pass);
   plaintext = xordstr(ciphertext,key);
+  check = plaintext.split("|..|");
   
-  return plaintext;
+  // Check whether decryption was successful
+  if (check[0] != "1"){
+   return false; 
+  }
+  
+  return base64.decode(check[1]);
 }
 
 
@@ -979,6 +985,7 @@ function blindpass(plain){
   
   // Encrypt the pass with the generated key
   cipher = xorestr(ciphertext,key);
+  cipher = "1|..|"+base64.encode(cipher);
   
   // Return the cipher text
   return cipher;
