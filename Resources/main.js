@@ -491,12 +491,23 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
       if (doubleblind == 1){
 	setMultiBlind(2);
 	resp[2] = unblindpass(resp[2]);
+
+
+	if (!resp[2]){
+	  
+	    
+	    dispcred=id;
+	    count=0;
+	    cnt.value=0;
+	    counter=setInterval("Credtimer('"+id+"')", 1000);
+      
+	    clicky.innerHTML = 'Decryption Failed';
+	    return false;
+	}
+	
 	resp[4] = unblindpass(resp[4]);
 	unsetMultiBlind();
-	if (!resp[2]){
-	    alert("You provided an incorrect decryption key");
-	    return;
-	}
+	
       }
       
       Address.innerHTML = resp[3];
