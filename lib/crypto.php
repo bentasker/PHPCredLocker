@@ -65,10 +65,10 @@ return $this->cipher->keyLength;
 */
 function &xordstring($str,&$key){
 
-$keylength = strlen($key);
 $kpos = 0;
 $en = "";
 $k = explode(":",$key);
+$keylength = strlen($k[0]);
 $str = explode(" ",$str);
 
 foreach ($str as $string){
@@ -107,11 +107,12 @@ return "<div class='inlineTLS'>".base64_encode($this->xorestring(base64_encode($
 */
 function xorestring(&$str,&$key){
 
-$keylength = strlen($key);
+
 $strlength = strlen($str);
 $kpos = 0;
 $en = "";
 $k = explode(":",$key);
+$keylength = strlen($k[0]);
 
 $i = 0;
 
