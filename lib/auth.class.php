@@ -403,7 +403,7 @@ $expiry = strtotime($user->Expires);
 
       require "sessions/sessions-$expiry-{$_COOKIE['PHPCredLocker']}.session.php";
 
-	  if ($sessKey != $user->SessKey){
+	  if (!isset($sessKey) || empty($sessKey) || $sessKey != $user->SessKey){
 	      $this->LoginInvalid();
 	    }
 
