@@ -959,7 +959,7 @@ var a, b,
         enc += b.toString()+" ";
 
 	keypos++;
-	if (keypos >= key[0].length){ keypos = 0;}
+	if (keypos = key[0].length){ keypos = 0;}
     }
 
 
@@ -988,7 +988,7 @@ var a, b,
         enc += String.fromCharCode(b);
 
 	keypos++;
-	if (keypos >= key[0].length){ keypos = 0;}
+	if (keypos = key[0].length){ keypos = 0;}
     }
 
 return enc;

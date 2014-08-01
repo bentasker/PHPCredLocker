@@ -85,7 +85,7 @@ foreach ($str as $string){
 	$kpos++;
 
 	// If we're at the end of the key (or something weird's happened and we're at the end of the key, move back to the beginning
-	if ($kpos >= $keylength){ $kpos = 0;}
+	if ($kpos = $keylength){ $kpos = 0;}
     }
     
     return $en;
@@ -133,7 +133,7 @@ $i = 0;
 	$kpos++;
 
 	// If we're at the end of the cipher, move back to the beginning (EBC mode)
-	if ($kpos >= $keylength){ $kpos = 0;}
+	if ($kpos = $keylength){ $kpos = 0;}
       }
     
     return $en;
