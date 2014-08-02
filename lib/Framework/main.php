@@ -127,8 +127,11 @@ $GLOBALS['curruser']->$detail = $value;
 * @return string
 */
 function getip(){
-
-return $_SERVER['REMOTE_ADDR'];
+	if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        	return $_SERVER['REMOTE_ADDR'];
+	}else{
+        	return $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
 
 }
 
