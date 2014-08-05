@@ -330,8 +330,13 @@ $str = '';
 // Create a string for the cookie
 $cookieVal = md5($str . mt_rand(10,80000) . mt_rand(11,500) . mt_rand(0,90000) );
 
+$conf = BTMain::getConf();
+
+// As of PHPCRED-28, the config file can be used to override the hostname used in the cookie (useful if you're behind a reverse proxy)
+$host = (!empty($conf->CredlockerHost) && ($conf->CredlockerHost != 'DEFAULT'))? $conf->CredlockerHost : $_SERVER['HTTP_HOST'];
+
 // Set the cookie
-setcookie("PHPCredLocker", $cookieVal, $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
+setcookie("PHPCredLocker", $cookieVal, $expires, dirname($_SERVER["REQUEST_URI"]), $host, $conf->forceSSL);
 
 // Write to the sessions directory
 $filename = "$expires-$cookieVal";

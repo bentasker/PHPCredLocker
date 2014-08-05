@@ -39,7 +39,12 @@ require_once 'lib/Framework/main.php';
 if (isset($_COOKIE['PHPCredLockerKeySet']) && BTMain::getVar('destSession') == 'Y'){
 
 $expires = strtotime("-2 days");
-setcookie("PHPCredLockerKeySet", 1, $expires, dirname($_SERVER["REQUEST_URI"]), $_SERVER['HTTP_HOST'], BTMain::getConf()->forceSSL);
+
+// See PHPCRED-28
+$conf = BTMain::getConf();
+$host = (!empty($conf->CredlockerHost) && ($conf->CredlockerHost != 'DEFAULT'))? $conf->CredlockerHost : $_SERVER['HTTP_HOST'];
+
+setcookie("PHPCredLockerKeySet", 1, $expires, dirname($_SERVER["REQUEST_URI"]), $host, $conf->forceSSL);
 BTMain::unsetSessVar('tls');
 BTMain::unsetSessVar('KeyExpiry');
 BTMain::unsetSessVar('apiterms');
