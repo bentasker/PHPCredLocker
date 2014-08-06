@@ -107,9 +107,12 @@ $this->setQuery($sql);
 $tries =$this->loadResult();
 
     if ($tries->failcount > $threshold){
-     $sql = "INSERT INTO #__bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";
+      $sql = "INSERT INTO #__bannedIPs (`IP`,`Expiry`) VALUES ('$ip','$bantime') ON DUPLICATE KEY UPDATE `Expiry`='$bantime'";
       $this->setQuery($sql);
-    $this->runQuery();
+      $this->runQuery();
+
+      $log = new Logging;
+      $log->logEntry($ip,19);
 
     }
 

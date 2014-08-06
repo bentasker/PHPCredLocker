@@ -34,6 +34,7 @@ class Logging extends BTDB{
 *  16: Credential Type Deleted
 *  17: Credential Type Edited
 *  18: User Group Edited
+*  19: IP Banned (New in v1.25)
 *
 * @return boolean
 */
