@@ -154,15 +154,20 @@ return $this->loadResult();
 */
 function editCredType($id,$name){
 $crypt = new Crypto;
-$id = $this->stringEscape($id);
+$sqid = $this->stringEscape($id);
 
 $name = $crypt->encrypt($name,'CredType');
 $name = $this->stringEscape($name);
 
-$sql = "UPDATE #__CredTypes SET `Name`='$name' WHERE id='$id'";
+$sql = "UPDATE #__CredTypes SET `Name`='$name' WHERE id='$sqid'";
 $this->setQuery($sql);
 
-return $this->runQuery();
+$stat = $this->runQuery();
+
+$log = new Logging;
+$log->logEntry($id,17);
+
+return $stat;
 
 }
 
