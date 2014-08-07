@@ -163,8 +163,8 @@ $excludes = array("58","59","60","61","62","63","64","91","92","93","94","95","9
 // Gives us a 2048bit string
 // Upped from 1024 because commit cae0ac5 increases the likelihood of key repetition
   while ($x <= 256){
-	$key = mt_rand(48,122);
-	$key2 = mt_rand(48,122);
+	$key = self::generateNum(48,122);
+	$key2 = self::generateNum(48,122);
 
 	if (in_array($key,$excludes)){ continue; }
 	if (in_array($key2,$excludes)){ continue; }
@@ -390,6 +390,32 @@ return mcrypt_decrypt($this->cipher->MCrypt->Encryption,$this->keys->$type,$ciph
 
 
 
+/** Used when generating encryption keys
+*
+* Filched from http://codeascraft.com/2012/07/19/better-random-numbers-in-php-using-devurandom/
+*
+* @arg min - minimum 
+* @arg max - maximum
+*
+* @return string
+*/
+static function generateNum($min = 0, $max = 0x7FFFFFFF){
+
+  $diff = $max - $min;
+    if ($diff < 0 || $diff > 0x7FFFFFFF) {
+	throw new RuntimeException("Bad range");
+    }
+    $bytes = mcrypt_create_iv(4, MCRYPT_DEV_URANDOM);
+    if ($bytes === false || strlen($bytes) != 4) {
+        throw new RuntimeException("Unable to get 4 bytes");
+    }
+    $ary = unpack("Nint", $bytes);
+    $val = $ary['int'] & 0x7FFFFFFF;   // 32-bit safe                           
+    $fp = (float) $val / 2147483647.0; // convert to [0,1]                          
+    return round($fp * $diff) + $min;
+
+
+}
 
 
 
