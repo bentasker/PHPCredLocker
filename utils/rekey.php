@@ -194,6 +194,7 @@ foreach ($ctypes as $credtype){
 	$db->runQuery();
 }
 unset($ctypes);
+unset($credtypes);
 
 $output->_("");
 $confirm = $input->read("CredTypes have been re-keyed, Please log into the front end and ensure that you can view Credential Type names correctly");
@@ -206,6 +207,53 @@ if ($confirm != "YES"){
 }
 
 
+// Customers require a little more work!
+
+$output->_("Preparing to Re-Key Customers");
+
+$db->setQuery("SELECT * FROM #__Cust");
+$customers = $db->loadResults();
+$ccustomers = array();
+
+foreach ($customers as $customer){
+
+	$customer->Name = $crypt->decrypt($customer->Name,'Customer');
+	$customer->ContactName = $crypt->decrypt($customer->ContactName,'Customer');
+	$customer->ContactSurname = $crypt->decrypt($customer->ContactSurname,'Customer');
+	$customer->Email = $crypt->decrypt($customer->Email,'Customer');
+	$ccustomers[] = $customer;
+
+}
 
 
+$output->_("Generating new encryption key");
+$newkeys->keys->Customer = Utils::genKey($keylength);
+$newkeys->writekeyfile();
+
+
+// Encrypt and update
+
+foreach ($ccustomers as $customer){
+
+	$customer->Name = $crypt->encrypt($customer->Name,'Customer');
+	$customer->ContactName = $crypt->encrypt($customer->ContactName,'Customer');
+	$customer->ContactSurname = $crypt->encrypt($customer->ContactSurname,'Customer');
+	$customer->Email = $crypt->encrypt($customer->Email,'Customer');
+
+
+	$sql = "UPDATE #__Cust SET `Name`='".$db->stringEscape($customer->Name)."', `ContactName`='".$db->stringEscape($customer->ContactName)."',".
+		"`ContactSurname`='".$db->stringEscape($customer->ContactSurname)."',`Email`='".$db->stringEscape($customer->Email)."' WHERE `id`=".(int)$customer->id;
+	$db->setQuery($sql);
+	$db->runQuery();
+}
+unset($ccustomers);
+unset($customers);
+$output->_("");
+$confirm = $input->read("Customers have been re-keyed, Please log into the front end and ensure that you can view Customer names and details correctly");
+
+// Probably need to do a little more to hold the users hand here really
+if ($confirm != "YES"){
+	$output->_("Aborting");
+	die;
+}
 
