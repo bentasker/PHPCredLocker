@@ -34,7 +34,7 @@ class cryptokeyscli{
 
 		fwrite($fh,"<?php\n /** Crypto Keys\n * KEEP THIS FILE SECRET\n * \n */\n defined('_CREDLOCK') or die; \n");
 
-		fwrite($fh,"/** Cipher settings */\n");
+		fwrite($fh,"\n\n/** Cipher settings */\n\n");
 
 		foreach ($this->cipher as $k=>$v){
 
@@ -49,10 +49,10 @@ class cryptokeyscli{
 		}
 
 
-		fwrite($fh,"/** KEYS FOLLOW */\n");
+		fwrite($fh,"\n\n/** KEYS FOLLOW */\n");
 		
 		foreach ($this->keys as $k=>$v){
-			fwrite($fh,"\$crypt->$k = '$v';\n");
+			fwrite($fh,"\$crypt->$k = '$v';\n\n");
 		}
 
 		fclose($fh);
@@ -153,8 +153,10 @@ foreach ($passes as $user=>$pass){
 	$db->runQuery();
 }
 
+unset($passes);
 $output->_("");
 $confirm = $input->read("User database has been re-keyed. Please LOG IN to the web interface to check it's worked. If it has type YES to continue");
+
 
 // Probably need to do a little more to hold the users hand here really
 if ($confirm != "YES"){
@@ -163,6 +165,45 @@ if ($confirm != "YES"){
 }
 
 
+
+
+// Credtypes are similarly simple, just the name to switch
+
+$output->_("Preparing to Re-Key Credential Types");
+
+$db->setQuery("SELECT * FROM #__CredTypes");
+$credtypes = $db->loadResults();
+
+$ctypes = array();
+
+foreach ($credtypes as $credtype){
+	$credtype->Name = $crypt->decrypt($credtype->Name,'CredType');
+	$ctypes[] = $credtype;
+}
+
+
+$output->_("Generating new encryption key");
+$newkeys->keys->CredType = Utils::genKey($keylength);
+$newkeys->writekeyfile();
+
+// Encrypt and update
+
+foreach ($ctypes as $credtype){
+	$name = $crypt->encrypt($credtype->Name,'CredType');
+	$db->setQuery("UPDATE #__CredTypes SET `Name`='".$db->stringEscape($name)."' WHERE `id`=".(int)$credtype->id);
+	$db->runQuery();
+}
+unset($ctypes);
+
+$output->_("");
+$confirm = $input->read("CredTypes have been re-keyed, Please log into the front end and ensure that you can view Credential Type names correctly");
+
+
+// Probably need to do a little more to hold the users hand here really
+if ($confirm != "YES"){
+	$output->_("Aborting");
+	die;
+}
 
 
 
