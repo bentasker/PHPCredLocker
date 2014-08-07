@@ -136,6 +136,22 @@ foreach ($users as $user){
 	$passes[$user->username] = $crypt->decrypt($user->pass,'auth');	
 }
 
+// We also need to grab any data in the Customer Portal table and re-encrypt that
+$sql = "SELECT * FROM #__CustPortal";
+$db->setQuery($sql);
+$cportal = $db->loadResults();
+$ccportal = array();
+
+foreach ($cportal as $cust){
+
+	$cust->email = $crypt->decrypt($cust->email,'auth');
+	$cust->pass = $crypt->decrypt($cust->pass,'auth');
+	$ccportal[] = $cust;
+
+}
+
+
+
 
 $output->_("Generating new encryption key");
 
@@ -152,6 +168,17 @@ foreach ($passes as $user=>$pass){
 	$db->setQuery($sql);
 	$db->runQuery();
 }
+
+
+foreach ($ccportal as $cust){
+	$cust->email = $crypt->encrypt($cust->email,'auth');
+	$cust->pass = $crypt->encrypt($cust->pass,'auth');
+
+	$sql = "UPDATE #__CustPortal SET `email`='".$db->stringEscape($cust->email)."', `pass`='".$db->stringEscape($cust->pass)."' WHERE id=".(int) $cust->id;
+	$db->setQuery($sql);
+	$db->runQuery();
+}
+
 
 unset($passes);
 $output->_("");
@@ -297,6 +324,8 @@ if ($confirm != "YES"){
 	$output->_("Aborting");
 	die;
 }
+
+
 
 
 
