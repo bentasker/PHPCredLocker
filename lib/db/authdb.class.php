@@ -151,6 +151,10 @@ $this->runQuery();
 */
 function DelUser($username){
 
+$log = new Logging;
+$log->logEntry($username,2);
+
+
 $username = $this->stringEscape($username);
 $sql = "DELETE FROM #__Users WHERE `username`='$username'";
 $this->setQuery($sql);
