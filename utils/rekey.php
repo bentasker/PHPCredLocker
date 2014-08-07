@@ -257,3 +257,46 @@ if ($confirm != "YES"){
 	die;
 }
 
+
+
+
+// Groups next, relatively straight forward
+
+$output->_("Preparing to Re-Key Groups");
+$db->setQuery("SELECT * FROM #__Groups");
+$groups = $db->loadResults();
+$cgroups = array();
+
+foreach ($groups as $group){
+
+	$group->Name = $crypt->decrypt($group->Name,'Groups');
+	$cgroups[] = $group;
+}
+
+$output->_("Generating new encryption key");
+$newkeys->keys->Groups = Utils::genKey($keylength);
+$newkeys->writekeyfile();
+
+
+foreach ($cgroups as $group){
+
+	$group->Name = $crypt->encrypt($group->Name,'Groups');
+	$sql = "UPDATE #__Groups SET `Name`='".$group->Name."' WHERE `id`=".(int)$group->id;
+	$db->setQuery($sql);
+	$db->runQuery();
+
+}
+
+unset($cgroups);
+unset($groups);
+$output->_("");
+$confirm = $input->read("Groups have been re-keyed, Please log into the front end and ensure that you can view Group names correctly");
+
+// Probably need to do a little more to hold the users hand here really
+if ($confirm != "YES"){
+	$output->_("Aborting");
+	die;
+}
+
+
+
