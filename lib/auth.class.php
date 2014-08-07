@@ -238,7 +238,8 @@ $username = rtrim($username," ");
     // Not a user, user. Check the Portal login
     $cust = new CredLockCust;
     if ((!BTMain::getConf()->custPortalEnabled) || (!$user = $cust->checkLogin($username))){
-      return false;
+      // Even if the username is invalid, we don't want an attacker to be able to use bans as a means of identifying valid usernames
+      return $this->logFailedAttempt($username,$db); 
     }
   }
 
