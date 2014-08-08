@@ -92,6 +92,7 @@ chdir(dirname(__FILE__)."/../");
 // Load the framework and config etc
 require_once 'lib/Framework/main.php';
 require_once 'lib/crypto.php';
+require_once 'conf/plugins.php';
 
 
 $output = new CLIOutput;
@@ -221,7 +222,7 @@ foreach ($ctypes as $credtype){
 	$db->runQuery();
 }
 unset($ctypes);
-unset($credtypes);
+// unset($credtypes); // Deliberately leaving this set, saves a query later
 
 $output->_("");
 $confirm = $input->read("CredTypes have been re-keyed, Please log into the front end and ensure that you can view Credential Type names correctly");
@@ -326,6 +327,99 @@ if ($confirm != "YES"){
 }
 
 
+// Now the tricky bit... Creds!
+// We already have the credtypes in memory, so we'll work through them one by one.
 
+$output->_("Preparing to re-key credentials (likely to take some time)");
+
+$autoauth = false;
+
+if (file_exists(CREDLOCK_PLUGIN_PATH."/AutoAuth/AutoAuth.php")){
+	$autoauth = true;
+	$output->_("AutoAuth plugin detected. Will also be re-keyed");
+}
+
+
+// Work through a credtype at a time
+
+foreach ($credtypes as $credtype){
+
+
+	$sql = "SELECT * FROM #__Cred WHERE `CredType`=".(int)$credtype->id;
+	$db->setQuery($sql);
+	$creds = $db->loadResults();
+	$ccreds = array();
+
+	$output->_("\tProcessing Credtype ".$credtype->id);
+
+	foreach ($creds as $cred){
+		$cred->Hash = $crypt->decrypt($cred->Hash,'Cre'.$cred->CredType);
+		$cred->Address = $crypt->decrypt($cred->Address,'Cre'.$cred->CredType);
+		$cred->UName = $crypt->decrypt($cred->UName,'Cre'.$cred->CredType);
+		$cred->Custom = $crypt->decrypt($cred->Custom,'Cre'.$cred->CredType);
+		$cred->comment = $crypt->decrypt($cred->comment,'Cre'.$cred->CredType);
+		$ccreds[] = $cred;
+	}
+
+	if ($autoauth){
+		$sql = "SELECT * FROM #__AutoAuth";
+		$db->setQuery($sql);
+		$aauth = $db->loadResults();
+		$caauth = array();
+		
+
+		foreach ($aauth as $auth){
+			$auth->Settings = $crypt->decrypt($auth->Settings,'Cre'.$cred->CredType);
+			$caauth[] = $auth;
+		}
+
+	}
+
+
+	$output->_("\t Generating new encryption key");
+	$newkeys->keys->Cre.$credtype->id = Utils::genKey($keylength);
+	$newkeys->writekeyfile();
+
+	foreach ($ccreds as $cred){
+		$cred->Hash = $crypt->encrypt($cred->Hash,'Cre'.$cred->CredType);
+		$cred->Address = $crypt->encrypt($cred->Address,'Cre'.$cred->CredType);
+		$cred->UName = $crypt->encrypt($cred->UName,'Cre'.$cred->CredType);
+		$cred->Custom = $crypt->encrypt($cred->Custom,'Cre'.$cred->CredType);
+		$cred->comment = $crypt->encrypt($cred->comment,'Cre'.$cred->CredType);
+
+		$sql = "UPDATE #__Cred SET `Hash`='".$db->stringEscape($cred->Hash)."', `Address`='".$db->stringEscape($cred->Address)."',".
+			"`UName`='".$db->stringEscape($cred->UName)."',`Custom`='".$db->stringEscape($cred->Custom)."',`comment`='".$db->stringEscape($cred->comment)."' ".
+			"WHERE id=".(int)$cred->id;
+		$db->setQuery($sql);
+		$db->runQuery();
+	}
+
+
+	if ($autoauth){
+
+		foreach ($caauth as $auth){
+			$auth->Settings = $crypt->encrypt($auth->Settings,'Cre'.$cred->CredType);
+			$db->setQuery("UPDATE #__AutoAuth SET `Settings`='".$db->stringEscape($auth->Settings)."' WHERE `CredType`=".(int)$auth->CredType);
+			$db->runQuery();
+		}
+	}
+
+	$output->_(" ");
+	unset($ccreds);
+
+}
+
+
+$output->_("");
+$confirm = $input->read("Credentials have been re-keyed, Please log into the front end and ensure that you can view credentials correctly");
+
+// Probably need to do a little more to hold the users hand here really
+if ($confirm != "YES"){
+	$output->_("Aborting");
+	die;
+}
+
+
+$output->_("Re-Key complete, exiting....");
 
 
