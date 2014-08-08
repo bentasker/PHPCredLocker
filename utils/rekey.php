@@ -28,6 +28,10 @@ class cryptokeyscli{
 	}
 
 
+
+	/** Write the objects keys to crypto.php
+	*
+	*/
 	function writekeyfile(){
 
 		$fh = fopen('conf/crypto.php','w');
@@ -59,6 +63,7 @@ class cryptokeyscli{
 	}
 
 
+
 	/** Remove keys for any CredTypes that are no longer in the database
 	*
 	* @arg credtypeids - array
@@ -88,6 +93,9 @@ class cryptokeyscli{
 
 
 
+/** Utility class
+*
+*/
 class Utils{
 	static function genKey($len){
 	      $newkey = null;
@@ -142,14 +150,20 @@ if (!copy("conf/crypto.php","conf/crypto.backup.php")){
 }
 
 
-
+// Prepare a few bits
 $db = new BTDB;
 $crypt = new Crypto;
-$currentkeys = new cryptokeyscli(); // We use this object to make sure we've got a copy of the original
+//$currentkeys = new cryptokeyscli(); // We use this object to make sure we've got a copy of the original
 $newkeys = new cryptokeyscli(); // We'll be making the changes in here
 
 
 $keylength = $newkeys->cipher->keyLength;
+
+// TODO: Do we want to let the user change the keylength (and maybe the cipher?)
+
+
+
+		/** User Re-Key */
 
 $output->_("Preparing to Re-Key Users");
 
@@ -221,6 +235,12 @@ if ($confirm != "YES"){
 
 
 
+
+
+		/** Credtypes Re-Key */
+
+
+
 // Credtypes are similarly simple, just the name to switch
 
 $output->_("Preparing to Re-Key Credential Types");
@@ -259,6 +279,14 @@ if ($confirm != "YES"){
 	$output->_("Aborting");
 	die;
 }
+
+
+
+
+
+
+
+		/** Customers Re-Key */
 
 
 // Customers require a little more work!
@@ -314,6 +342,13 @@ if ($confirm != "YES"){
 
 
 
+
+
+
+		/** Groups Re-Key */
+
+
+
 // Groups next, relatively straight forward
 
 $output->_("Preparing to Re-Key Groups");
@@ -353,6 +388,12 @@ if ($confirm != "YES"){
 }
 
 
+
+
+
+		/** Credentials Re-Key */
+
+
 // Now the tricky bit... Creds!
 // We already have the credtypes in memory, so we'll work through them one by one.
 
@@ -380,6 +421,8 @@ foreach ($credtypes as $credtype){
 
 	$output->_("\tProcessing Credtype ".$credtype->id);
 
+
+	// Work through each of the creds with this credtype
 	foreach ($creds as $cred){
 		$cred->Hash = $crypt->decrypt($cred->Hash,'Cre'.$cred->CredType);
 		$cred->Address = $crypt->decrypt($cred->Address,'Cre'.$cred->CredType);
@@ -389,6 +432,8 @@ foreach ($credtypes as $credtype){
 		$ccreds[] = $cred;
 	}
 
+
+	// Process the AutoAuth records if any exist
 	if ($autoauth){
 		$sql = "SELECT * FROM #__AutoAuth";
 		$db->setQuery($sql);
@@ -408,6 +453,8 @@ foreach ($credtypes as $credtype){
 	$newkeys->keys->Cre.$credtype->id = Utils::genKey($keylength);
 	$newkeys->writekeyfile();
 
+
+	// Encrypt and save
 	foreach ($ccreds as $cred){
 		$cred->Hash = $crypt->encrypt($cred->Hash,'Cre'.$cred->CredType);
 		$cred->Address = $crypt->encrypt($cred->Address,'Cre'.$cred->CredType);
@@ -437,6 +484,7 @@ foreach ($credtypes as $credtype){
 
 }
 
+// Get rid of any defunct keys
 $output->_("Tidying Keys");
 $newkeys->tidyKeys($credtypeids);
 $newkeys->writekeyfile();
