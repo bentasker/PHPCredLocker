@@ -58,6 +58,32 @@ class cryptokeyscli{
 		fclose($fh);
 	}
 
+
+	/** Remove keys for any CredTypes that are no longer in the database
+	*
+	* @arg credtypeids - array
+	*/
+	function tidyKeys($credtypeids){
+
+		foreach ($this->keys as $k => $v){
+			// Ignore non Credtype keys
+			if ($k == 'CredType' || substr($k,0,3) != 'Cre'){
+				continue;
+			}
+
+			$id = substr($k,3);
+
+			// Check whether the key is in use
+			if (!in_array($id,$credtypeids)){
+
+				// Nope, drop it from the object
+				unset($this->keys->$k);
+			}
+
+		}
+
+	}
+
 }
 
 
@@ -341,9 +367,11 @@ if (file_exists(CREDLOCK_PLUGIN_PATH."/AutoAuth/AutoAuth.php")){
 
 
 // Work through a credtype at a time
+$credtypeids = array(); // We'll use this later
 
 foreach ($credtypes as $credtype){
 
+	$credtypeids[] = $credtype->id;
 
 	$sql = "SELECT * FROM #__Cred WHERE `CredType`=".(int)$credtype->id;
 	$db->setQuery($sql);
@@ -409,9 +437,15 @@ foreach ($credtypes as $credtype){
 
 }
 
+$output->_("Tidying Keys");
+$newkeys->tidyKeys($credtypeids);
+$newkeys->writekeyfile();
+
 
 $output->_("");
 $confirm = $input->read("Credentials have been re-keyed, Please log into the front end and ensure that you can view credentials correctly");
+
+
 
 // Probably need to do a little more to hold the users hand here really
 if ($confirm != "YES"){
