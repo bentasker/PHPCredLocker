@@ -12,7 +12,7 @@ defined('_CREDLOCK') or die;
 
 
 
-$versionmaj = "1.15";
+$versionmaj = "1.16";
 $versionmin = "";
 $status = "";
 
