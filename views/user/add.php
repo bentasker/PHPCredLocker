@@ -93,7 +93,7 @@ $frmToken = ProgAuth::generateFormToken();
 
 
 <label for="frmPass">Password</label><input type="password" name="frmPass" autocomplete="off" onkeyup="testPassword(this.value);" id="frmPass">
-<a href="javascript: var p = genPwd('r',10); alert('The users generated password is: '+p); document.getElementById('frmPass').value = p; document.getElementById('frmPassConf').value = p;">Generate Password</a>
+<a href="#" onclick='var p = genPwd('r',10); alert('The users generated password is: '+p); document.getElementById('frmPass').value = p; document.getElementById('frmPassConf').value = p;">Generate Password</a>
 <span id="passStrength"></span>
 <div id="PassNoMatch" style="display: none;" class="alert alert-error"></div>
 
