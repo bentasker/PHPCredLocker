@@ -27,6 +27,16 @@ developed plugins.
 
 
 
+Issue Tracking
+---------------
+
+The project is managed within a private JIRA instance, however a HTML mirror of issues/features is maintained at http://projects.bentasker.co.uk/jira_projects/browse/PHPCRED.html
+
+If you think you've found a bug, or want to ask a question, send an email to phpcredlocker **AT** bentasker.co.uk
+
+
+
+
 Why the AGPL?
 ---------------
 
